@@ -1,0 +1,13 @@
+﻿#home .item 
+{   
+    color: white;
+    background: linear-gradient(to right, #3a7bd5, #3a6073);
+}
+#home .item a
+{
+    color: white;
+}
+#home .item a:hover
+{
+    text-decoration: none;
+}

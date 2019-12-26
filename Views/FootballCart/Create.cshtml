@@ -1,0 +1,50 @@
+﻿@model HomeViewModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+<section>
+    <div class="container">
+        <div class="row justify-content-center py-3">
+            <div class="col-6">
+                <a asp-controller="Home" asp-action="Index" class="btn btn-warning"><i class="fas fa-long-arrow-alt-left"></i></a>
+            </div>
+        </div>
+        <div class="row justify-content-center pt-3">
+            <div class="col-6">
+                <form method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-group">
+                        <label asp-for="@Model.FootballPlayerId">Football Player</label>
+                        <select asp-for="@Model.FootballPlayerId" class="form-control" asp-items="@(new SelectList(Model.FootballPlayers, "Id", "Firstname"))">
+                            <option selected disabled value="">Seçin</option>
+                        </select>
+                        <span asp-validation-for="@Model.FootballPlayerId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@Model.CartId">Cart</label>
+                        <select asp-for="@Model.CartId" id="Oss" class="form-control" asp-items="@(new SelectList(Model.Carts, "Id", "Name"))">
+                            <option selected disabled value="">Seçin</option>
+                        </select>
+                        <span asp-validation-for="@Model.CartId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@Model.Date">Date</label>
+                        <input asp-for="@Model.Date" type="text" class='datepicker-here form-control' data-language='en' data-date-format="dd mm yyyy" />
+                        <span asp-validation-for="@Model.Date" class="text-danger"></span>
+                    </div>
+                    <div class="form-group d-flex justify-content-end">
+                        <button type="submit" class="btn btn-success"> Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}
+
