@@ -17,10 +17,26 @@ namespace December_24_2019_Football.ViewModels
 
         public IEnumerable<Position> Positions { get; set; }
 
+        public IEnumerable<Team> Teams { get; set; }
+
+        public IEnumerable<Stadium> Stadiums { get; set; }
+
+        public IEnumerable<GameTime> GameTimes { get; set; }
+
+        public IEnumerable<FootballPlayerGameTime> FootballPlayerGameTimes { get; set; }
+
+        public int GameTimeId { get; set; }
+
+        public int TeamId { get; set; }
+
+        public int StadiumId { get; set; }
+
         public int FootballPlayerId { get; set; }
 
         public int CartId { get; set; }
         public int PositionId { get; set; }
+
+        public string FootballPlayersId { get; set; }
 
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }

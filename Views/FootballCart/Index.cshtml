@@ -5,37 +5,65 @@
 
     <section id="home">
         <div class="container">
-            @if (TempData["Operation"] != null)
-            {
-                <div class="row pt-3">
-                    <div class="col-12">
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <p class="mb-0">Əməliyyat uğurla icra edildi.</p>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            }
             <div class="row py-3">
-                <div class="col-12 text-right">
-                    <a asp-action="Create"
-                       class="btn btn-primary">Əlavə et</a>
+                <div class="col-12">
+                    <a asp-controller="Home" class="btn btn-warning"><i class="fas fa-long-arrow-alt-left"></i></a>
                 </div>
             </div>
-            <div class="row py-5">
+            <div class="row align-items-center">
+                <div class="col-2">
+                    <div class="form-group mr-3">
+                        <label>Date to</label>
+                        <input asp-for="Date1" type="text" id="date-1" class='datepicker-here form-control' data-language='en' start-date="false" data-date-format="mm dd yyyy" />
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-group">
+                        <label>Date end</label>
+                        <input asp-for="Date2" type="text" id="date-2" class='datepicker-here form-control' data-language='en' data-date-format="mm dd yyyy" />
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-group">
+                        <label>Position</label>
+                        <select asp-for="PositionId" class="form-control" id="position" asp-items="@(new SelectList(Model.Positions, "Id", "Name"))">
+                            <option selected value="">Choose</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-group">
+                        <label>Cart</label>
+                        <select asp-for="CartId" class="form-control" id="cart" asp-items="@(new SelectList(Model.Carts, "Id", "Name"))">
+                            <option selected value="">Choose</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-2 mt-3">
+                    <div class="form-group mb-0">
+                        <button class="btn btn-outline-info" id="search">Search</button>
+                    </div>
+                </div>
+                <div class="col-2 d-flex justify-content-end mt-3">
+                    <div class="form-group mb-0">
+                        <a asp-controller="FootballCart" asp-action="Create" class="btn btn-outline-primary"><i class="fas fa-plus"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row py-3">
                 <div class="col-12">
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
+                                <th scope="col">Number</th>
                                 <th scope="col">Firstname</th>
                                 <th scope="col">Lastname</th>
                                 <th scope="col">Age</th>
                                 <th scope="col">Position</th>
                                 <th scope="col">Cart</th>
                                 <th scope="col">Date</th>
+                                <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -48,9 +76,17 @@
                                         <td>@item.FootballPlayer.Firstname</td>
                                         <td>@item.FootballPlayer.Lastname</td>
                                         <td>@item.FootballPlayer.Age</td>
-                                        <td>@Model.Positions.FirstOrDefault(c => c.Id == item.FootballPlayer.PositionId).Name</td>
-                                        <td>@item.Cart.Name</td>
-                                        <td>@item.Date</td>
+                                        <td class="position" data-position-id="@Model.Positions.FirstOrDefault(c => c.Id == item.FootballPlayer.PositionId).Id">@Model.Positions.FirstOrDefault(c => c.Id == item.FootballPlayer.PositionId).Name</td>
+                                        <td class="cart" data-cart-id="@item.Cart.Id">@item.Cart.Name</td>
+                                        <td class="date">@item.Date.Date.ToString("MM.dd.yyyy")</td>
+                                        <td>
+                                            <a asp-controller="FootballCart" asp-action="Update" asp-route-id="@item.Id" class="btn btn-outline-warning mr-3" title="Düzəliş et"><i class="far fa-edit"></i></a>
+                                            @if (Model.FootballCarts.Count() > 1)
+                                            {
+                                                <input type="hidden" value="@item.Id" />
+                                                <a asp-action="Delete" asp-route-id="@item.Id" id="DeleteFootballCart" class="btn btn-outline-danger" title="Sil"> <i class="far fa-trash-alt"></i></a>
+                                            }
+                                        </td>
                                     </tr>
                                 }
                             }

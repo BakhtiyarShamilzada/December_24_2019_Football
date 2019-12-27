@@ -74,8 +74,23 @@ namespace December_24_2019_Football.DAL
             builder.Entity(typeof(Team)).HasData(
                new Team { Id = 1, Name = "Amigos", CountryId = 1 },
                new Team { Id = 2, Name = "Mamacitas", CountryId = 1 },
-               new Team { Id = 1, Name = "Liverpool FC", CountryId = 2 },
-               new Team { Id = 2, Name = "Manchester City", CountryId = 2 }
+               new Team { Id = 3, Name = "Liverpool FC", CountryId = 2 },
+               new Team { Id = 4, Name = "Manchester City", CountryId = 2 }
+           );
+
+            builder.Entity(typeof(Stadium)).HasData(
+               new Stadium { Id = 1, Name = "Infinity Ring", Address = "‎1 Scarlet Knight Way" },
+               new Stadium { Id = 2, Name = "Paragon Field", Address = "Jake Nevin Field House" }
+           );
+
+            builder.Entity(typeof(GameTime)).HasData(
+               new GameTime { Id = 1, TeamId = 1, StadiumId = 1, Date = new DateTime(2019, 12, 26) },
+               new GameTime { Id = 2, TeamId = 2, StadiumId = 2, Date = new DateTime(2019, 12, 27) }
+           );
+
+            builder.Entity(typeof(FootballPlayerGameTime)).HasData(
+               new FootballPlayerGameTime { Id = 1, FootballPlayerId = 1, GameTimeId = 1},
+               new FootballPlayerGameTime { Id = 2, FootballPlayerId = 2, GameTimeId = 2}
            );
         }
     }

@@ -16,22 +16,22 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                     <div class="form-group">
-                        <label asp-for="@Model.FootballPlayerId">Football Player</label>
-                        <select asp-for="@Model.FootballPlayerId" class="form-control" asp-items="@(new SelectList(Model.FootballPlayers, "Id", "Firstname"))">
-                            <option selected disabled value="">Seçin</option>
+                        <label asp-for="@Model.TeamId">Team</label>
+                        <select asp-for="@Model.TeamId" class="form-control" asp-items="@(new SelectList(Model.Teams, "Id", "Name"))">
+                            <option selected disabled value="">Choose</option>
                         </select>
-                        <span asp-validation-for="@Model.FootballPlayerId" class="text-danger"></span>
+                        <span asp-validation-for="@Model.TeamId" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="@Model.CartId">Cart</label>
-                        <select asp-for="@Model.CartId" id="Oss" class="form-control" asp-items="@(new SelectList(Model.Carts, "Id", "Name"))">
-                            <option selected disabled value="">Seçin</option>
+                        <label asp-for="@Model.StadiumId">Stadium</label>
+                        <select asp-for="@Model.StadiumId" id="Oss" class="form-control" asp-items="@(new SelectList(Model.Stadiums, "Id", "Name"))">
+                            <option selected disabled value="">Choose</option>
                         </select>
-                        <span asp-validation-for="@Model.CartId" class="text-danger"></span>
+                        <span asp-validation-for="@Model.StadiumId" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="@Model.Date">Date</label>
-                        <input asp-for="@Model.Date" type="text" class='datepicker-here form-control' data-language='en' data-date-format="dd mm yyyy" />
+                        <input asp-for="@Model.Date" type="text" class='datepicker-here form-control' data-language='en' data-date-format="dd mm yyyy" data-timepicker="true" />
                         <span asp-validation-for="@Model.Date" class="text-danger"></span>
                     </div>
                     <div class="form-group d-flex justify-content-end">

@@ -101,33 +101,25 @@
             });
     })
 
-    //$(document).on('click', '#search', function () {
-    //    let date1 = new Date($('#date-1').val());
-    //    let date2 = new Date($('#date-2').val());
+    $('.football-players-id').each(function () {
+        if ($(this).prop('checked') == true) {
+            let footballPlayerId = $(this).attr('data-football-players-id');
+            $('#FootballPlayersId').val($('#FootballPlayersId').val() + footballPlayerId + ",");
+        }
+    })
+    
 
-    //    let positionId = $('#position').val();
-    //    let cartId = $('#cart').val();
-
-    //    $("table tbody tr").filter(function () {
-    //        let date = new Date($(this).children('td.date').text());
-    //        let positionTd = $(this).children('td.position').attr('data-position-id');
-    //        let cartTd = $(this).children('td.cart').attr('data-cart-id');
-    //        if (date1 == "Invalid Date" && date2 != "Invalid Date" && positionId == null && cartId == null) {
-    //            $(this).toggle(date <= date2)
-    //        }
-    //        else if (date1 != "Invalid Date" && date2 == "Invalid Date" && positionId == null && cartId == null) {
-    //            $(this).toggle(date >= date1)
-    //        }
-    //        else if (date1 != "Invalid Date" && date2 != "Invalid Date" && positionId != null && cartId == null) {
-    //            $(this).toggle(date >= date1 && date <= date2 && positionId == positionTd)
-    //        }
-    //        else if (date1 != "Invalid Date" && date2 != "Invalid Date" && positionId == null && cartId != null) {
-    //            $(this).toggle(date >= date1 && date <= date2 && cartId == cartTd)
-    //        }
-    //        else {
-    //            $(this).toggle(date >= date1 && date <= date2 && positionId == positionTd && cartId == cartTd)
-    //        }
-    //        });
-    //})   
+    $(document).on('click', '.football-players-id', function () {
+        let footballPlayerId = $(this).attr('data-football-players-id');
+        if ($(this).prop('checked') == true) {
+            $('#FootballPlayersId').val($('#FootballPlayersId').val() + footballPlayerId + ",");
+        }
+        else {
+            let arr = $('#FootballPlayersId').val().split(',');
+            arr = arr.filter(el => el != footballPlayerId);
+            $('#FootballPlayersId').val(arr.join(','));
+        }
+        
+    })
 
 })
