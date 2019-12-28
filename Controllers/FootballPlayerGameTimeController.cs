@@ -33,14 +33,19 @@ namespace December_24_2019_Football.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(HomeViewModel homeViewModel)
+        public async Task<IActionResult> Create(int id, HomeViewModel homeViewModel)
         {
+            if (homeViewModel.FootballPlayersId == null)
+            {
+                ModelState.AddModelError("", "Choose football player");
+                return RedirectToAction("Create", id);
+            }
             string[] footballPlayersId = homeViewModel.FootballPlayersId.Split(",");
-            foreach (var id in footballPlayersId)
+            foreach (var Id in footballPlayersId)
             {
                try
                 {
-                    int footballPlayerId = Convert.ToInt32(id);
+                    int footballPlayerId = Convert.ToInt32(Id);
 
                     //save
                     FootballPlayerGameTime footballPlayerGameTime = new FootballPlayerGameTime
@@ -71,7 +76,7 @@ namespace December_24_2019_Football.Controllers
             {
                 FootballPlayers = _context.FootballPlayers,
                 Positions = _context.Positions,
-                FootballPlayerGameTimes = footballPlayerGameTimes,
+                FootballPlayerGameTimes = footballPlayerGameTimes
             };
             return View(homeViewModel);
         }
@@ -79,12 +84,17 @@ namespace December_24_2019_Football.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(int id, HomeViewModel homeViewModel)
         {
+            if (homeViewModel.FootballPlayersId == null)
+            {
+                ModelState.AddModelError("", "Choose football player");
+                return RedirectToAction("Update", id);
+            }
             IEnumerable<FootballPlayerGameTime> footballPlayerGameTimesFromDb = _context.FootballPlayerGameTimes.Where(fg => fg.GameTimeId == id);
             foreach (var item in footballPlayerGameTimesFromDb)
             {
                 _context.FootballPlayerGameTimes.Remove(item);
             }
-
+          
             string[] footballPlayersId = homeViewModel.FootballPlayersId.Split(",");
             foreach (var Id in footballPlayersId)
             {

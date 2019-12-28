@@ -58,15 +58,13 @@ namespace December_24_2019_Football.Controllers
         {
             if (id == null) return NotFound();
             FootballCart footballCart = await _context.FootballCarts.FindAsync(id);
-            Cart cart = await _context.Carts.FindAsync(footballCart.CartId);
-            FootballPlayer footballPlayer = await _context.FootballPlayers.FindAsync(footballCart.FootballPlayerId);
             if (footballCart == null) return NotFound();
             HomeViewModel homeViewModel = new HomeViewModel
             {
                 Carts = _context.Carts,
                 FootballPlayers = _context.FootballPlayers,
-                CartId = cart.Id,
-                FootballPlayerId = footballPlayer.Id,
+                CartId = footballCart.CartId,
+                FootballPlayerId = footballCart.FootballPlayerId,
                 Date = footballCart.Date
             };
             return View(homeViewModel);

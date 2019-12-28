@@ -1,5 +1,11 @@
 ﻿$(document).ready(function () {
 
+    // Select initial date from `eventDates`
+    $picker = $('.datepicker-here').each(function () {
+        var currentDate = currentDate = new Date();
+        $(this).data('datepicker').selectDate(new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()));
+    })
+
     $(document).on('click', '#DeleteFootballPlayer', function (e) {
         var FootballPlayerId = $(this).prev().val();
         e.preventDefault();
@@ -72,6 +78,78 @@
             });
     })
 
+    $(document).on('click', '#DeleteGameTime', function (e) {
+        var GameTimeId = $(this).prev().val();
+        e.preventDefault();
+        swal({
+            title: "Are you sure ?",
+            text: "Once deleted, you will not be able to recover this !",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax(
+                        {
+                            url: "/Ajax/DeleteByGameTimeId?GameTimeId=" + GameTimeId,
+                            type: "POST",
+                            success: function (res) {
+                                $("table").fadeIn();
+                                $("tbody").html(res);
+                                swal("Deleted !", {
+                                    icon: "success",
+                                });
+                            },
+                            error: function () {
+                                swal("An error occurred !", {
+                                    icon: "error",
+                                });
+                            }
+                        });
+
+                } else {
+                    swal("This is safe !");
+                }
+            });
+    })
+
+    $(document).on('click', '#DeleteStadium', function (e) {
+        var StadiumId = $(this).prev().val();
+        e.preventDefault();
+        swal({
+            title: "Are you sure ?",
+            text: "Once deleted, you will not be able to recover this !",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax(
+                        {
+                            url: "/Ajax/DeleteByStadiumId?StadiumId=" + StadiumId,
+                            type: "POST",
+                            success: function (res) {
+                                $("table").fadeIn();
+                                $("tbody").html(res);
+                                swal("Deleted !", {
+                                    icon: "success",
+                                });
+                            },
+                            error: function () {
+                                swal("An error occurred !", {
+                                    icon: "error",
+                                });
+                            }
+                        });
+
+                } else {
+                    swal("This is safe !");
+                }
+            });
+    })
+
     $(document).on('change', '#input-date', function () {
         console.log($(this).val())
     })
@@ -107,8 +185,7 @@
             $('#FootballPlayersId').val($('#FootballPlayersId').val() + footballPlayerId + ",");
         }
     })
-    
-
+   
     $(document).on('click', '.football-players-id', function () {
         let footballPlayerId = $(this).attr('data-football-players-id');
         if ($(this).prop('checked') == true) {
@@ -120,6 +197,19 @@
             $('#FootballPlayersId').val(arr.join(','));
         }
         
+    })
+    
+    $(document).on('change', '#CreatePhoto', function (e) {
+        if ($(this).val() != "") {
+            if ([...e.target.files][0].type.match("image/*")) {
+                let reader = new FileReader();
+                reader.onloadend = function (read) {
+                    $('#CurrentImageArea').fadeIn();
+                    $('#CurrentImage').attr('src', read.target.result);
+                }
+                reader.readAsDataURL([...e.target.files][0]);
+            }
+        }
     })
 
 })

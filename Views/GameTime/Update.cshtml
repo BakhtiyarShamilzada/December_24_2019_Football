@@ -1,0 +1,57 @@
+﻿@model HomeViewModel
+@{
+    ViewData["Title"] = "Update";
+}
+
+<section>
+    <div class="container">
+        <div class="row pt-3">
+            <div class="col-12">
+                <h3 class="mb-0 text-center">Game time update</h3>
+            </div>
+        </div>
+        <div class="row justify-content-center py-3">
+            <div class="col-6">
+                <a asp-action="Index" class="btn btn-warning"><i class="fas fa-long-arrow-alt-left"></i></a>
+            </div>
+        </div>
+        <div class="row justify-content-center pt-3">
+            <div class="col-6">
+                <form method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-group">
+                        <label asp-for="@Model.TeamId">Football Player</label>
+                        <select asp-for="@Model.TeamId" class="form-control" asp-items="@(new SelectList(Model.Teams, "Id", "Name"))">
+                            <option selected disabled value="">Seçin</option>
+                        </select>
+                        <span asp-validation-for="@Model.TeamId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@Model.StadiumId">Cart</label>
+                        <select asp-for="@Model.StadiumId" id="Oss" class="form-control" asp-items="@(new SelectList(Model.Stadiums, "Id", "Name"))">
+                            <option selected disabled value="">Seçin</option>
+                        </select>
+                        <span asp-validation-for="@Model.StadiumId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@Model.Date">Date</label>
+                        <input asp-for="@Model.Date" type="text" class='datepicker-here form-control' data-language='en' data-date-format="dd mm yyyy" data-timepicker="true" />
+                        <span asp-validation-for="@Model.Date" class="text-danger"></span>
+                    </div>
+                    <div class="form-group d-flex justify-content-end">
+                        <button type="submit" class="btn btn-success">Edit</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}
+
+

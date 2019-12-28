@@ -5,17 +5,21 @@ using System.Threading.Tasks;
 using December_24_2019_Football.DAL;
 using December_24_2019_Football.Models;
 using December_24_2019_Football.ViewModels;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using static December_24_2019_Football.Utilities.Utilities;
 
 namespace December_24_2019_Football.Controllers
 {
     public class AjaxController : Controller
     {
         private readonly AppDbContext _context;
-        public AjaxController(AppDbContext context)
+        private readonly IHostingEnvironment _env;
+        public AjaxController(AppDbContext context, IHostingEnvironment env)
         {
             _context = context;
+            _env = env;
         }
         public IActionResult Index()
         {
@@ -58,6 +62,7 @@ namespace December_24_2019_Football.Controllers
         public async Task<IActionResult> DeleteByFootballPlayerId(int FootballPlayerId)
         {
             FootballPlayer footballPlayer = await _context.FootballPlayers.FindAsync(FootballPlayerId);
+            RemoveImage(_env.WebRootPath, footballPlayer.Image);
             _context.FootballPlayers.Remove(footballPlayer);
             await _context.SaveChangesAsync();
             TempData["Operation"] = true;
@@ -83,6 +88,31 @@ namespace December_24_2019_Football.Controllers
                 Positions = _context.Positions
             };
             return PartialView("_FootballCartsPartialView", homeViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteByGameTimeId(int GameTimeId)
+        {
+            GameTime gameTime = await _context.GameTimes.FindAsync(GameTimeId);
+            _context.GameTimes.Remove(gameTime);
+            await _context.SaveChangesAsync();
+            TempData["Operation"] = true;
+            HomeViewModel homeViewModel = new HomeViewModel
+            {
+                GameTimes = _context.GameTimes.Include(fc => fc.Team).Include(fc => fc.Stadium)
+            };
+            return PartialView("_GameTimesPartialView", homeViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteByStadiumId(int StadiumId)
+        {
+            Stadium stadium = await _context.Stadiums.FindAsync(StadiumId);
+            RemoveImage(_env.WebRootPath, stadium.Image);
+            _context.Stadiums.Remove(stadium);
+            await _context.SaveChangesAsync();
+            TempData["Operation"] = true;
+            return PartialView("_StadiumsPartialView", _context.Stadiums);
         }
     }
 }

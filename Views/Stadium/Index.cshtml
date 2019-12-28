@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Stadium>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<section id="home">
+    <div class="container">
+        @if (TempData["Operation"] != null)
+        {
+            <div class="row pt-3">
+                <div class="col-12">
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <p class="mb-0">Operation successful.</p>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="row pt-3">
+            <div class="col-12">
+                <h3 class="mb-0 text-center">Stadiums</h3>
+            </div>
+        </div>
+        <div class="row py-3">
+            <div class="col-12 d-flex justify-content-between">
+                <a asp-controller="Home" class="btn btn-warning"><i class="fas fa-long-arrow-alt-left"></i></a>
+                <a asp-action="Create" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+            </div>
+        </div>
+        <div class="row py-3">
+            <div class="col-12">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Number</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Address</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int counter = 1;
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <th scope="row">@(counter++)</th>
+                                    <td><img style="width:100px" src="~/images/@item.Image" /></td>
+                                    <td>@item.Name</td>
+                                    <td>@item.Address</td>
+                                    <td>
+                                        <a asp-action="Update" asp-route-id="@item.Id" class="btn btn-outline-warning mr-3" title="Düzəliş et"><i class="far fa-edit"></i></a>
+                                        @if (Model.Count() > 1)
+                                        {
+                                            <input type="hidden" value="@item.Id" />
+                                            <a asp-action="Delete" asp-route-id="@item.Id" id="DeleteStadium" class="btn btn-outline-danger" title="Sil"> <i class="far fa-trash-alt"></i></a>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+

@@ -25,6 +25,8 @@ namespace December_24_2019_Football.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Image");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50);
@@ -100,6 +102,8 @@ namespace December_24_2019_Football.Migrations
                     b.Property<string>("Firstname")
                         .IsRequired()
                         .HasMaxLength(50);
+
+                    b.Property<string>("Image");
 
                     b.Property<string>("Lastname")
                         .HasMaxLength(50);
@@ -207,6 +211,8 @@ namespace December_24_2019_Football.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Address");
+
+                    b.Property<string>("Image");
 
                     b.Property<string>("Name");
 

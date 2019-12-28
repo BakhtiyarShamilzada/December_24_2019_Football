@@ -17,3 +17,6 @@
 #sidebar .sidebar-header {
     background: linear-gradient(to bottom, #373b44, #4286f4);
 }
+.pointer-checkbox {
+    cursor: pointer;
+}

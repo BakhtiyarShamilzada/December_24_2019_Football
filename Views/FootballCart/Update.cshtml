@@ -5,6 +5,11 @@
 
 <section>
     <div class="container">
+        <div class="row pt-3">
+            <div class="col-12">
+                <h3 class="mb-0 text-center">Football cart update</h3>
+            </div>
+        </div>
         <div class="row justify-content-center py-3">
             <div class="col-6">
                 <a asp-action="Index" class="btn btn-warning"><i class="fas fa-long-arrow-alt-left"></i></a>
@@ -18,15 +23,28 @@
                     <div class="form-group">
                         <label asp-for="@Model.FootballPlayerId">Football Player</label>
                         <select asp-for="@Model.FootballPlayerId" class="form-control" asp-items="@(new SelectList(Model.FootballPlayers, "Id", "Firstname"))">
-                            <option selected disabled value="">Seçin</option>
+                            <option selected disabled value="">Choose</option>
                         </select>
                         <span asp-validation-for="@Model.FootballPlayerId" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="@Model.CartId">Cart</label>
-                        <select asp-for="@Model.CartId" id="Oss" class="form-control" asp-items="@(new SelectList(Model.Carts, "Id", "Name"))">
-                            <option selected disabled value="">Seçin</option>
-                        </select>
+                        <label class="w-100" asp-for="@Model.CartId">Cart</label>
+                        <div class="row">
+                            @{
+                                int counter = 1;
+                                foreach (var item in Model.Carts)
+                                {
+                                    <div class="col-6">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" id="customRadioInline@(counter)" name="CartId" @(Model.CartId == item.Id ? "checked" : "") value="@item.Id" class="custom-control-input">
+                                            <label class="custom-control-label" for="customRadioInline@(counter)">
+                                                <img class="w-50 mr-5" src="~/images/@item.Image" for="customRadioInline@(++counter)" />
+                                            </label>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
                         <span asp-validation-for="@Model.CartId" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -37,7 +55,7 @@
                     <div class="form-group d-flex justify-content-end">
                         <button type="submit" class="btn btn-success">Edit</button>
                     </div>
-                    
+
                 </form>
             </div>
         </div>

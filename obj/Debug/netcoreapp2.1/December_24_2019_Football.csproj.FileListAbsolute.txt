@@ -42,3 +42,9 @@ C:\Users\Bakht\OneDrive\Desktop\GTS\December_24_2019_Football\December_24_2019_F
 C:\Users\Bakht\OneDrive\Desktop\GTS\December_24_2019_Football\December_24_2019_Football\obj\Debug\netcoreapp2.1\Razor\Views\GameTime\Create.g.cshtml.cs
 C:\Users\Bakht\OneDrive\Desktop\GTS\December_24_2019_Football\December_24_2019_Football\obj\Debug\netcoreapp2.1\Razor\Views\FootballPlayerGameTime\Create.g.cshtml.cs
 C:\Users\Bakht\OneDrive\Desktop\GTS\December_24_2019_Football\December_24_2019_Football\obj\Debug\netcoreapp2.1\Razor\Views\FootballPlayerGameTime\Update.g.cshtml.cs
+C:\Users\Bakht\OneDrive\Desktop\GTS\December_24_2019_Football\December_24_2019_Football\obj\Debug\netcoreapp2.1\Razor\Views\GameTime\Update.g.cshtml.cs
+C:\Users\Bakht\OneDrive\Desktop\GTS\December_24_2019_Football\December_24_2019_Football\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_GameTimesPartialView.g.cshtml.cs
+C:\Users\Bakht\OneDrive\Desktop\GTS\December_24_2019_Football\December_24_2019_Football\obj\Debug\netcoreapp2.1\Razor\Views\Stadium\Index.g.cshtml.cs
+C:\Users\Bakht\OneDrive\Desktop\GTS\December_24_2019_Football\December_24_2019_Football\obj\Debug\netcoreapp2.1\Razor\Views\Stadium\Create.g.cshtml.cs
+C:\Users\Bakht\OneDrive\Desktop\GTS\December_24_2019_Football\December_24_2019_Football\obj\Debug\netcoreapp2.1\Razor\Views\Stadium\Update.g.cshtml.cs
+C:\Users\Bakht\OneDrive\Desktop\GTS\December_24_2019_Football\December_24_2019_Football\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_StadiumsPartialView.g.cshtml.cs

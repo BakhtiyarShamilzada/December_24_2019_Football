@@ -144,7 +144,7 @@ using December_24_2019_Football.ViewModels;
             WriteLiteral("</td>\r\n            <td>\r\n                ");
             EndContext();
             BeginContext(552, 164, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f30ba9e444304a3e96e7b46d6b8f6c54", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1d2e5ce632804e09ae38e15a6bbf560a", async() => {
                 BeginContext(685, 27, true);
                 WriteLiteral("<i class=\"far fa-edit\"></i>");
                 EndContext();
@@ -202,7 +202,7 @@ WriteAttributeValue("", 842, item.Id, 842, 8, false);
             WriteLiteral(" />\r\n                    ");
             EndContext();
             BeginContext(876, 151, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5748d53cacba463cb09c0902488ffd42", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "6d066c6cf6f54cdb834e5e80af211568", async() => {
                 BeginContext(990, 33, true);
                 WriteLiteral(" <i class=\"far fa-trash-alt\"></i>");
                 EndContext();

@@ -1,0 +1,26 @@
+﻿@model HomeViewModel
+@{
+    int counter = 1;
+    foreach (var item in Model.GameTimes)
+    {
+        <tr>
+            <th scope="row">@(counter++)</th>
+            <td>@item.Team.Name</td>
+            <td>@item.Stadium.Name</td>
+            <td>@item.Stadium.Address</td>
+            <td class="date">
+                @item.Date.ToString("MM.dd.yyyy")<br />
+                @item.Date.ToString("HH:mm")
+            </td>
+            <td>
+                <a asp-controller="FootballPlayerGameTime" asp-action="Update" asp-route-id="@item.Id" class="btn btn-outline-info mr-3" title="Add Football Player"><i class="fas fa-users-cog"></i></a>
+                <a asp-action="Update" asp-route-id="@item.Id" class="btn btn-outline-warning mr-3" title="Edit"><i class="far fa-edit"></i></a>
+                @if (Model.GameTimes.Count() > 1)
+                {
+                    <input type="hidden" value="@item.Id" />
+                    <a asp-action="Delete" asp-route-id="@item.Id" id="DeleteGameTime" class="btn btn-outline-danger" title="Delete"> <i class="far fa-trash-alt"></i></a>
+                }
+            </td>
+        </tr>
+    }
+}
