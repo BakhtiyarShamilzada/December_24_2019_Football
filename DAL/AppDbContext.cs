@@ -17,12 +17,11 @@ namespace December_24_2019_Football.DAL
         public DbSet<Position> Positions { get; set; }
         public DbSet<FootballPlayer> FootballPlayers { get; set; }
         public DbSet<Cart> Carts { get; set; }
+        public DbSet<GameTime> GameTimes { get; set; }
         public DbSet<FootballCart> FootballCarts { get; set; }
-
         public DbSet<Country> Countries { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<Stadium> Stadiums { get; set; }
-        public DbSet<GameTime> GameTimes { get; set; }
         public DbSet<FootballPlayerGameTime> FootballPlayerGameTimes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -55,37 +54,37 @@ namespace December_24_2019_Football.DAL
                new Cart { Id = 2, Name = "Yellow"}
            );
 
+            builder.Entity(typeof(Stadium)).HasData(
+              new Stadium { Id = 1, Name = "Infinity Ring", Address = "‎1 Scarlet Knight Way" },
+              new Stadium { Id = 2, Name = "Paragon Field", Address = "Jake Nevin Field House" }
+          );
+
+            builder.Entity(typeof(Team)).HasData(
+              new Team { Id = 1, Name = "Amigos", CountryId = 1 },
+              new Team { Id = 2, Name = "Mamacitas", CountryId = 1 },
+              new Team { Id = 3, Name = "Liverpool FC", CountryId = 2 },
+              new Team { Id = 4, Name = "Manchester City", CountryId = 2 }
+          );
+
+            builder.Entity(typeof(GameTime)).HasData(
+               new GameTime { Id = 1, TeamId = 1, StadiumId = 1, Date = new DateTime(2019, 12, 26) },
+               new GameTime { Id = 2, TeamId = 2, StadiumId = 2, Date = new DateTime(2019, 12, 27) }
+           );
+
             builder.Entity(typeof(FootballCart)).HasData(
-               new FootballCart { Id = 1, FootballPlayerId = 1, CartId = 1 },
-               new FootballCart { Id = 2, FootballPlayerId = 2, CartId = 2 },
-               new FootballCart { Id = 3, FootballPlayerId = 3, CartId = 1 },
-               new FootballCart { Id = 4, FootballPlayerId = 4, CartId = 2 },
-               new FootballCart { Id = 5, FootballPlayerId = 5, CartId = 1 },
-               new FootballCart { Id = 6, FootballPlayerId = 6, CartId = 2 },
-               new FootballCart { Id = 7, FootballPlayerId = 7, CartId = 1 },
-               new FootballCart { Id = 8, FootballPlayerId = 8, CartId = 2 }
+               new FootballCart { Id = 1, FootballPlayerId = 1, CartId = 1, GameTimeId = 1 },
+               new FootballCart { Id = 2, FootballPlayerId = 2, CartId = 2, GameTimeId = 2 },
+               new FootballCart { Id = 3, FootballPlayerId = 3, CartId = 1, GameTimeId = 1 },
+               new FootballCart { Id = 4, FootballPlayerId = 4, CartId = 2, GameTimeId = 2 },
+               new FootballCart { Id = 5, FootballPlayerId = 5, CartId = 1, GameTimeId = 1 },
+               new FootballCart { Id = 6, FootballPlayerId = 6, CartId = 2, GameTimeId = 2 },
+               new FootballCart { Id = 7, FootballPlayerId = 7, CartId = 1, GameTimeId = 1 },
+               new FootballCart { Id = 8, FootballPlayerId = 8, CartId = 2, GameTimeId = 2 }
            );
 
             builder.Entity(typeof(Country)).HasData(
                new Country { Id = 1, Name = "Mexico" },
                new Country { Id = 2, Name = "Brazil" }
-           );
-
-            builder.Entity(typeof(Team)).HasData(
-               new Team { Id = 1, Name = "Amigos", CountryId = 1 },
-               new Team { Id = 2, Name = "Mamacitas", CountryId = 1 },
-               new Team { Id = 3, Name = "Liverpool FC", CountryId = 2 },
-               new Team { Id = 4, Name = "Manchester City", CountryId = 2 }
-           );
-
-            builder.Entity(typeof(Stadium)).HasData(
-               new Stadium { Id = 1, Name = "Infinity Ring", Address = "‎1 Scarlet Knight Way" },
-               new Stadium { Id = 2, Name = "Paragon Field", Address = "Jake Nevin Field House" }
-           );
-
-            builder.Entity(typeof(GameTime)).HasData(
-               new GameTime { Id = 1, TeamId = 1, StadiumId = 1, Date = new DateTime(2019, 12, 26) },
-               new GameTime { Id = 2, TeamId = 2, StadiumId = 2, Date = new DateTime(2019, 12, 27) }
            );
 
             builder.Entity(typeof(FootballPlayerGameTime)).HasData(

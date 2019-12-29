@@ -22,7 +22,7 @@ namespace December_24_2019_Football.Controllers
             HomeViewModel homeViewModel = new HomeViewModel
             {
                 Carts = _context.Carts,
-                FootballCarts = _context.FootballCarts.Include(fc => fc.FootballPlayer).Include(fc => fc.Cart),
+                FootballCarts = _context.FootballCarts.Include(fc => fc.FootballPlayer).Include(fc => fc.Cart).Include(fc => fc.GameTime),
                 Positions = _context.Positions
             };
             return View(homeViewModel);
@@ -33,7 +33,8 @@ namespace December_24_2019_Football.Controllers
             HomeViewModel homeViewModel = new HomeViewModel
             {
                 Carts = _context.Carts,
-                FootballPlayers = _context.FootballPlayers
+                FootballPlayers = _context.FootballPlayers,
+                GameTimes = _context.GameTimes
             };
             return View(homeViewModel);
         }
@@ -46,7 +47,7 @@ namespace December_24_2019_Football.Controllers
             {
                 FootballPlayerId = homeViewModel.FootballPlayerId,
                 CartId = homeViewModel.CartId,
-                Date = homeViewModel.Date
+                GameTimeId = homeViewModel.GameTimeId
             };
             await _context.FootballCarts.AddAsync(footballCart);
             await _context.SaveChangesAsync();
@@ -59,13 +60,16 @@ namespace December_24_2019_Football.Controllers
             if (id == null) return NotFound();
             FootballCart footballCart = await _context.FootballCarts.FindAsync(id);
             if (footballCart == null) return NotFound();
-            HomeViewModel homeViewModel = new HomeViewModel
+            IEnumerable<FootballPlayerGameTime> footballPlayerGameTimes = _context.FootballPlayerGameTimes.Include(btct => btct.GameTime).Where(bct => bct.FootballPlayerId == footballCart.FootballPlayerId);
+
+        HomeViewModel homeViewModel = new HomeViewModel
             {
                 Carts = _context.Carts,
                 FootballPlayers = _context.FootballPlayers,
                 CartId = footballCart.CartId,
                 FootballPlayerId = footballCart.FootballPlayerId,
-                Date = footballCart.Date
+                GameTimeId = footballCart.GameTimeId,
+                GameTimes = footballPlayerGameTimes.Select(fpgt => fpgt.GameTime)
             };
             return View(homeViewModel);
         }
@@ -78,7 +82,7 @@ namespace December_24_2019_Football.Controllers
 
             footballCartFromDb.FootballPlayerId = homeViewModel.FootballPlayerId;
             footballCartFromDb.CartId = homeViewModel.CartId;
-            footballCartFromDb.Date = homeViewModel.Date;
+            footballCartFromDb.GameTimeId = homeViewModel.GameTimeId;
 
             await _context.SaveChangesAsync();
 

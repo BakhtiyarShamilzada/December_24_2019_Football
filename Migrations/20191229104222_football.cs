@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace December_24_2019_Football.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class football : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -53,11 +53,25 @@ namespace December_24_2019_Football.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(maxLength: 50, nullable: false)
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
+                    Image = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Carts", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Countries",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Countries", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -71,6 +85,21 @@ namespace December_24_2019_Football.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Positions", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Stadiums",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    Address = table.Column<string>(nullable: true),
+                    Image = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Stadiums", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -180,6 +209,26 @@ namespace December_24_2019_Football.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Teams",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    CountryId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Teams", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Teams_Countries_CountryId",
+                        column: x => x.CountryId,
+                        principalTable: "Countries",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "FootballPlayers",
                 columns: table => new
                 {
@@ -188,7 +237,8 @@ namespace December_24_2019_Football.Migrations
                     Firstname = table.Column<string>(maxLength: 50, nullable: false),
                     Lastname = table.Column<string>(maxLength: 50, nullable: true),
                     Age = table.Column<int>(nullable: false),
-                    PositionId = table.Column<int>(nullable: false)
+                    PositionId = table.Column<int>(nullable: false),
+                    Image = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -202,13 +252,41 @@ namespace December_24_2019_Football.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "GameTimes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    TeamId = table.Column<int>(nullable: false),
+                    StadiumId = table.Column<int>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GameTimes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_GameTimes_Stadiums_StadiumId",
+                        column: x => x.StadiumId,
+                        principalTable: "Stadiums",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GameTimes_Teams_TeamId",
+                        column: x => x.TeamId,
+                        principalTable: "Teams",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "FootballCarts",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     FootballPlayerId = table.Column<int>(nullable: false),
-                    CartId = table.Column<int>(nullable: false)
+                    CartId = table.Column<int>(nullable: false),
+                    GameTimeId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -225,15 +303,56 @@ namespace December_24_2019_Football.Migrations
                         principalTable: "FootballPlayers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_FootballCarts_GameTimes_GameTimeId",
+                        column: x => x.GameTimeId,
+                        principalTable: "GameTimes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FootballPlayerGameTimes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    FootballPlayerId = table.Column<int>(nullable: false),
+                    GameTimeId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FootballPlayerGameTimes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FootballPlayerGameTimes_FootballPlayers_FootballPlayerId",
+                        column: x => x.FootballPlayerId,
+                        principalTable: "FootballPlayers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_FootballPlayerGameTimes_GameTimes_GameTimeId",
+                        column: x => x.GameTimeId,
+                        principalTable: "GameTimes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
                 table: "Carts",
+                columns: new[] { "Id", "Image", "Name" },
+                values: new object[,]
+                {
+                    { 1, null, "Red" },
+                    { 2, null, "Yellow" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Countries",
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { 1, "Red" },
-                    { 2, "Yellow" }
+                    { 1, "Mexico" },
+                    { 2, "Brazil" }
                 });
 
             migrationBuilder.InsertData(
@@ -252,33 +371,72 @@ namespace December_24_2019_Football.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "FootballPlayers",
-                columns: new[] { "Id", "Age", "Firstname", "Lastname", "PositionId" },
+                table: "Stadiums",
+                columns: new[] { "Id", "Address", "Image", "Name" },
                 values: new object[,]
                 {
-                    { 1, 25, "Messi", "Lionel", 1 },
-                    { 2, 27, "Ronaldo", "Cristiano", 2 },
-                    { 3, 32, "Xavi", "Xavi", 3 },
-                    { 4, 28, "Iniesta", "Andres", 4 },
-                    { 5, 31, "Ibrahimovic", "Zlatan", 5 },
-                    { 6, 26, "Falcao", "Radamel", 6 },
-                    { 7, 29, "Persie", "Robin van", 7 },
-                    { 8, 33, "Pirlo", "Andrea", 8 }
+                    { 1, "‎1 Scarlet Knight Way", null, "Infinity Ring" },
+                    { 2, "Jake Nevin Field House", null, "Paragon Field" }
                 });
 
             migrationBuilder.InsertData(
+                table: "FootballPlayers",
+                columns: new[] { "Id", "Age", "Firstname", "Image", "Lastname", "PositionId" },
+                values: new object[,]
+                {
+                    { 1, 25, "Messi", null, "Lionel", 1 },
+                    { 2, 27, "Ronaldo", null, "Cristiano", 2 },
+                    { 3, 32, "Xavi", null, "Xavi", 3 },
+                    { 4, 28, "Iniesta", null, "Andres", 4 },
+                    { 5, 31, "Ibrahimovic", null, "Zlatan", 5 },
+                    { 6, 26, "Falcao", null, "Radamel", 6 },
+                    { 7, 29, "Persie", null, "Robin van", 7 },
+                    { 8, 33, "Pirlo", null, "Andrea", 8 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Teams",
+                columns: new[] { "Id", "CountryId", "Name" },
+                values: new object[,]
+                {
+                    { 1, 1, "Amigos" },
+                    { 2, 1, "Mamacitas" },
+                    { 3, 2, "Liverpool FC" },
+                    { 4, 2, "Manchester City" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "GameTimes",
+                columns: new[] { "Id", "Date", "StadiumId", "TeamId" },
+                values: new object[] { 1, new DateTime(2019, 12, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 1 });
+
+            migrationBuilder.InsertData(
+                table: "GameTimes",
+                columns: new[] { "Id", "Date", "StadiumId", "TeamId" },
+                values: new object[] { 2, new DateTime(2019, 12, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, 2 });
+
+            migrationBuilder.InsertData(
                 table: "FootballCarts",
-                columns: new[] { "Id", "CartId", "FootballPlayerId" },
+                columns: new[] { "Id", "CartId", "FootballPlayerId", "GameTimeId" },
+                values: new object[,]
+                {
+                    { 1, 1, 1, 1 },
+                    { 3, 1, 3, 1 },
+                    { 5, 1, 5, 1 },
+                    { 7, 1, 7, 1 },
+                    { 2, 2, 2, 2 },
+                    { 4, 2, 4, 2 },
+                    { 6, 2, 6, 2 },
+                    { 8, 2, 8, 2 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "FootballPlayerGameTimes",
+                columns: new[] { "Id", "FootballPlayerId", "GameTimeId" },
                 values: new object[,]
                 {
                     { 1, 1, 1 },
-                    { 2, 2, 2 },
-                    { 3, 1, 3 },
-                    { 4, 2, 4 },
-                    { 5, 1, 5 },
-                    { 6, 2, 6 },
-                    { 7, 1, 7 },
-                    { 8, 2, 8 }
+                    { 2, 2, 2 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -331,9 +489,39 @@ namespace December_24_2019_Football.Migrations
                 column: "FootballPlayerId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_FootballCarts_GameTimeId",
+                table: "FootballCarts",
+                column: "GameTimeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FootballPlayerGameTimes_FootballPlayerId",
+                table: "FootballPlayerGameTimes",
+                column: "FootballPlayerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FootballPlayerGameTimes_GameTimeId",
+                table: "FootballPlayerGameTimes",
+                column: "GameTimeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_FootballPlayers_PositionId",
                 table: "FootballPlayers",
                 column: "PositionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GameTimes_StadiumId",
+                table: "GameTimes",
+                column: "StadiumId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GameTimes_TeamId",
+                table: "GameTimes",
+                column: "TeamId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Teams_CountryId",
+                table: "Teams",
+                column: "CountryId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -357,6 +545,9 @@ namespace December_24_2019_Football.Migrations
                 name: "FootballCarts");
 
             migrationBuilder.DropTable(
+                name: "FootballPlayerGameTimes");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -369,7 +560,19 @@ namespace December_24_2019_Football.Migrations
                 name: "FootballPlayers");
 
             migrationBuilder.DropTable(
+                name: "GameTimes");
+
+            migrationBuilder.DropTable(
                 name: "Positions");
+
+            migrationBuilder.DropTable(
+                name: "Stadiums");
+
+            migrationBuilder.DropTable(
+                name: "Teams");
+
+            migrationBuilder.DropTable(
+                name: "Countries");
         }
     }
 }

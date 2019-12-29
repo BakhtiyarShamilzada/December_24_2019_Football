@@ -212,4 +212,23 @@
         }
     })
 
+    $(document).on('change', '#football-player', function () {
+        var footballPlayerId = $(this).val();
+        if (footballPlayerId) {
+            $.ajax(
+                {
+                    url: "/Ajax/LoadSelectGameTimesByFootballPlayerId?FootballPlayerId=" + footballPlayerId,
+                    type: "POST",
+                    success: function (res) {
+                        $("#game-time").html(res).prepend("<option disabled selected >Choose</option>");
+                    },
+                    error: function () {
+                        swal("Xəta baş verdi !", {
+                            icon: "error",
+                        });
+                    }
+                })
+        }
+    })
+
 })

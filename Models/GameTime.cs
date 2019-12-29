@@ -11,6 +11,7 @@ namespace December_24_2019_Football.Models
         public GameTime()
         {
             FootballPlayerGameTimes = new HashSet<FootballPlayerGameTime>();
+            FootballCarts = new HashSet<FootballCart>();
         }
         public int Id { get; set; }
 
@@ -27,6 +28,7 @@ namespace December_24_2019_Football.Models
 
         public virtual Stadium Stadium { get; set; }
 
+        public virtual ICollection<FootballCart> FootballCarts { get; set; }
         public virtual ICollection<FootballPlayerGameTime> FootballPlayerGameTimes { get; set; }
     }
 }

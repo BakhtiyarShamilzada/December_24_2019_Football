@@ -5,6 +5,19 @@
 
 <section id="home">
     <div class="container">
+        @if (TempData["Operation"] != null)
+        {
+            <div class="row pt-3">
+                <div class="col-12">
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <p class="mb-0">Operation successful.</p>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
         <div class="row pt-3">
             <div class="col-12">
                 <h3 class="mb-0 text-center">Football carts</h3>
@@ -84,7 +97,10 @@
                                     <td>@item.FootballPlayer.Lastname</td>
                                     <td>@item.FootballPlayer.Age</td>
                                     <td class="position" data-position-id="@Model.Positions.FirstOrDefault(c => c.Id == item.FootballPlayer.PositionId).Id">@Model.Positions.FirstOrDefault(c => c.Id == item.FootballPlayer.PositionId).Name</td>
-                                    <td class="date">@item.Date.Date.ToString("MM.dd.yyyy")</td>
+                                    <td class="date">
+                                        @item.GameTime.Date.ToString("MM.dd.yyyy")<br />
+                                        @item.GameTime.Date.ToString("HH:mm")
+                                    </td>
                                     <td>
                                         <a asp-controller="FootballCart" asp-action="Update" asp-route-id="@item.Id" class="btn btn-outline-warning mr-3" title="Düzəliş et"><i class="far fa-edit"></i></a>
                                         @if (Model.FootballCarts.Count() > 1)

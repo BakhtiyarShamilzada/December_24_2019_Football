@@ -1,0 +1,8 @@
+﻿@model IEnumerable<FootballPlayerGameTime>
+@{
+
+    foreach (var item in Model)
+    {
+        <option value="@item.GameTime.Id">@item.GameTime.Date.ToString("dd.MM.yyyy HH:mm")</option>
+    }
+}

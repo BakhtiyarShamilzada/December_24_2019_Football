@@ -1,22 +1,51 @@
-﻿#home .item 
-{   
+﻿#home .item {
     color: white;
     background: linear-gradient(to right, #3a7bd5, #3a6073);
 }
-#home .item a
-{
-    color: white;
-}
-#home .item a:hover
-{
-    text-decoration: none;
-}
+
+    #home .item a {
+        color: white;
+    }
+
+        #home .item a:hover {
+            text-decoration: none;
+        }
+
 #sidebar {
     background: linear-gradient(to top, #373b44, #4286f4);
 }
-#sidebar .sidebar-header {
-    background: linear-gradient(to bottom, #373b44, #4286f4);
-}
+
+    #sidebar .sidebar-header {
+        background: linear-gradient(to bottom, #373b44, #4286f4);
+    }
+
 .pointer-checkbox {
     cursor: pointer;
+}
+
+#sidebar ul li a:hover {
+    color: #0061ff;
+    background: #fff;
+}
+a[aria-expanded="true"] {
+    color: #0061ff;
+    background: #fff;
+}
+    a [aria-expanded="true"] {
+    color: #0061ff;
+    background: #fff;
+}
+
+ul ul {
+    background: linear-gradient(to top, #373b44, #4286f4);
+}
+
+ul ul a {
+    background: transparent;
+    color: #fff;
+}
+
+ul ul a:hover {
+    background: #fff !important;
+    color: #0061ff !important;
 }

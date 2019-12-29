@@ -67,9 +67,9 @@ namespace December_24_2019_Football.Migrations
 
                     b.Property<int>("CartId");
 
-                    b.Property<DateTime>("Date");
-
                     b.Property<int>("FootballPlayerId");
+
+                    b.Property<int>("GameTimeId");
 
                     b.HasKey("Id");
 
@@ -77,17 +77,19 @@ namespace December_24_2019_Football.Migrations
 
                     b.HasIndex("FootballPlayerId");
 
+                    b.HasIndex("GameTimeId");
+
                     b.ToTable("FootballCarts");
 
                     b.HasData(
-                        new { Id = 1, CartId = 1, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), FootballPlayerId = 1 },
-                        new { Id = 2, CartId = 2, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), FootballPlayerId = 2 },
-                        new { Id = 3, CartId = 1, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), FootballPlayerId = 3 },
-                        new { Id = 4, CartId = 2, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), FootballPlayerId = 4 },
-                        new { Id = 5, CartId = 1, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), FootballPlayerId = 5 },
-                        new { Id = 6, CartId = 2, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), FootballPlayerId = 6 },
-                        new { Id = 7, CartId = 1, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), FootballPlayerId = 7 },
-                        new { Id = 8, CartId = 2, Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), FootballPlayerId = 8 }
+                        new { Id = 1, CartId = 1, FootballPlayerId = 1, GameTimeId = 1 },
+                        new { Id = 2, CartId = 2, FootballPlayerId = 2, GameTimeId = 2 },
+                        new { Id = 3, CartId = 1, FootballPlayerId = 3, GameTimeId = 1 },
+                        new { Id = 4, CartId = 2, FootballPlayerId = 4, GameTimeId = 2 },
+                        new { Id = 5, CartId = 1, FootballPlayerId = 5, GameTimeId = 1 },
+                        new { Id = 6, CartId = 2, FootballPlayerId = 6, GameTimeId = 2 },
+                        new { Id = 7, CartId = 1, FootballPlayerId = 7, GameTimeId = 1 },
+                        new { Id = 8, CartId = 2, FootballPlayerId = 8, GameTimeId = 2 }
                     );
                 });
 
@@ -421,6 +423,11 @@ namespace December_24_2019_Football.Migrations
                     b.HasOne("December_24_2019_Football.Models.FootballPlayer", "FootballPlayer")
                         .WithMany("FootballCarts")
                         .HasForeignKey("FootballPlayerId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("December_24_2019_Football.Models.GameTime", "GameTime")
+                        .WithMany("FootballCarts")
+                        .HasForeignKey("GameTimeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

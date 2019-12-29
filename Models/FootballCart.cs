@@ -14,12 +14,11 @@ namespace December_24_2019_Football.Models
 
         public int CartId { get; set; }
 
-        [Required]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
-        public DateTime Date { get; set; }
+        public int GameTimeId { get; set; }
 
         public virtual FootballPlayer FootballPlayer { get; set; }
+
+        public virtual GameTime GameTime { get; set; }
 
         public virtual Cart Cart { get; set; }
     }

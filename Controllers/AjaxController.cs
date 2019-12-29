@@ -29,15 +29,15 @@ namespace December_24_2019_Football.Controllers
         [HttpPost]
         public IActionResult FilterFootballCart(DateTime date1, DateTime date2, int positionId, int cartId)
         {
-            IEnumerable<FootballCart> footballCarts = _context.FootballCarts.Include(fc => fc.FootballPlayer).Include(fc => fc.Cart);
+            IEnumerable<FootballCart> footballCarts = _context.FootballCarts.Include(fc => fc.FootballPlayer).Include(fc => fc.Cart).Include(fc => fc.GameTime);
 
             if (date1.ToString("dd.MM.yyyy") != "01.01.0001")
             {
-                footballCarts = footballCarts.Where(fb => fb.Date >= date1);
+                footballCarts = footballCarts.Where(fb => fb.GameTime.Date >= date1);
             }
             if (date2.ToString("dd.MM.yyyy") != "01.01.0001")
             {
-                footballCarts = footballCarts.Where(fb => fb.Date <= date2);
+                footballCarts = footballCarts.Where(fb => fb.GameTime.Date <= date2);
             }
             if (positionId != 0)
             {
@@ -113,6 +113,13 @@ namespace December_24_2019_Football.Controllers
             await _context.SaveChangesAsync();
             TempData["Operation"] = true;
             return PartialView("_StadiumsPartialView", _context.Stadiums);
+        }
+
+        [HttpPost]
+        public IActionResult LoadSelectGameTimesByFootballPlayerId(int FootballPlayerId)
+        {
+            IEnumerable<FootballPlayerGameTime> footballPlayerGameTimes = _context.FootballPlayerGameTimes.Include(btct => btct.GameTime).Where(bct => bct.FootballPlayerId == FootballPlayerId);
+            return PartialView("_SelectGameTimesPartialView", footballPlayerGameTimes);
         }
     }
 }
