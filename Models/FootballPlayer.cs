@@ -27,12 +27,16 @@ namespace December_24_2019_Football.Models
 
         public int PositionId { get; set; }
 
+        public int TeamId { get; set; }
+
         public string Image { get; set; }
 
         [NotMapped]
         public IFormFile Photo { get; set; }
 
         public virtual Position Position { get; set; }
+
+        public virtual Team Team { get; set; }
 
         public virtual ICollection<FootballCart> FootballCarts { get; set; }
 

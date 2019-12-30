@@ -22,7 +22,7 @@
 
                     <div class="form-group">
                         <label asp-for="@Model.FootballPlayerId">Football Player</label>
-                        <select asp-for="@Model.FootballPlayerId" class="form-control" id="football-player" asp-items="@(new SelectList(Model.FootballPlayers, "Id", "Firstname"))">
+                        <select asp-for="@Model.FootballPlayerId" class="custom-select" id="football-player" asp-items="@(new SelectList(Model.FootballPlayers, "Id", "Firstname"))">
                             <option selected disabled value="">Choose</option>
                         </select>
                         <span asp-validation-for="@Model.FootballPlayerId" class="text-danger"></span>
@@ -49,7 +49,7 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="@Model.GameTimeId">Game</label>
-                        <select asp-for="@Model.GameTimeId" class="form-control" id="game-time">
+                        <select asp-for="@Model.GameTimeId" class="custom-select" id="game-time">
                             <option selected disabled value="">Choose</option>
                         </select>
                         <span asp-validation-for="@Model.GameTimeId" class="text-danger"></span>

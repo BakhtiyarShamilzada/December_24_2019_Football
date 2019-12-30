@@ -111,7 +111,7 @@ using December_24_2019_Football.ViewModels;
                 ");
             EndContext();
             BeginContext(979, 95, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4796452c2d0a43c3a3d86471013cdc43", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3526c182e4004a50b76fd2a6d52002bd", async() => {
                 BeginContext(1028, 42, true);
                 WriteLiteral("<i class=\"fas fa-long-arrow-alt-left\"></i>");
                 EndContext();
@@ -134,7 +134,7 @@ using December_24_2019_Football.ViewModels;
             WriteLiteral("\r\n                ");
             EndContext();
             BeginContext(1092, 78, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d36d1d4ff93f43508249ff63972d583d", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ad776a444e364f64b955112133f62469", async() => {
                 BeginContext(1139, 27, true);
                 WriteLiteral("<i class=\"fas fa-plus\"></i>");
                 EndContext();
@@ -194,7 +194,7 @@ using December_24_2019_Football.ViewModels;
             WriteLiteral("</th>\r\n                                    <td>");
             EndContext();
             BeginContext(2077, 54, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "9168425f6eef408dbe46089bc3dec4f1", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "ff6d35f921ab479e9e3670a8d4d60d12", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -240,7 +240,7 @@ AddHtmlAttributeValue("", 2116, item.Image, 2116, 11, false);
             WriteLiteral("</td>\r\n                                    <td>\r\n                                        ");
             EndContext();
             BeginContext(2337, 134, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "46f0922e7ed54e78a4955f8db8154f67", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0355504a8aab40bbb0957bd491409c10", async() => {
                 BeginContext(2440, 27, true);
                 WriteLiteral("<i class=\"far fa-edit\"></i>");
                 EndContext();
@@ -296,7 +296,7 @@ WriteAttributeValue("", 2653, item.Id, 2653, 8, false);
             WriteLiteral(" />\r\n                                            ");
             EndContext();
             BeginContext(2711, 146, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2251467b697d4c4c82cb81b89b474745", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b1baa6a1257e4165a89ce6a7815814e1", async() => {
                 BeginContext(2820, 33, true);
                 WriteLiteral(" <i class=\"far fa-trash-alt\"></i>");
                 EndContext();

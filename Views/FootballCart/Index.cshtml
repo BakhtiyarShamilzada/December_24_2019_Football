@@ -44,7 +44,7 @@
             <div class="col-2">
                 <div class="form-group">
                     <label>Position</label>
-                    <select asp-for="PositionId" class="form-control" id="position" asp-items="@(new SelectList(Model.Positions, "Id", "Name"))">
+                    <select asp-for="PositionId" class="custom-select" id="position" asp-items="@(new SelectList(Model.Positions, "Id", "Name"))">
                         <option selected value="">Choose</option>
                     </select>
                 </div>
@@ -52,7 +52,7 @@
             <div class="col-2">
                 <div class="form-group">
                     <label>Cart</label>
-                    <select asp-for="CartId" class="form-control" id="cart" asp-items="@(new SelectList(Model.Carts, "Id", "Name"))">
+                    <select asp-for="CartId" class="custom-select" id="cart" asp-items="@(new SelectList(Model.Carts, "Id", "Name"))">
                         <option selected value="">Choose</option>
                     </select>
                 </div>

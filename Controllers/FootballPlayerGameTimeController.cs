@@ -37,8 +37,13 @@ namespace December_24_2019_Football.Controllers
         {
             if (homeViewModel.FootballPlayersId == null)
             {
+                homeViewModel = new HomeViewModel
+                {
+                    FootballPlayers = _context.FootballPlayers.Include(fp => fp.Position),
+                    GameTimeId = id
+                };
                 ModelState.AddModelError("", "Choose football player");
-                return RedirectToAction("Create", id);
+                return View(homeViewModel);
             }
             string[] footballPlayersId = homeViewModel.FootballPlayersId.Split(",");
             foreach (var Id in footballPlayersId)
@@ -86,8 +91,15 @@ namespace December_24_2019_Football.Controllers
         {
             if (homeViewModel.FootballPlayersId == null)
             {
+                IEnumerable<FootballPlayerGameTime> footballPlayerGameTimes = _context.FootballPlayerGameTimes.Where(fpg => fpg.GameTimeId == id).Include(fpg => fpg.FootballPlayer);
+                homeViewModel = new HomeViewModel
+                {
+                    FootballPlayers = _context.FootballPlayers,
+                    Positions = _context.Positions,
+                    FootballPlayerGameTimes = footballPlayerGameTimes
+                };
                 ModelState.AddModelError("", "Choose football player");
-                return RedirectToAction("Update", id);
+                return View(homeViewModel);
             }
             IEnumerable<FootballPlayerGameTime> footballPlayerGameTimesFromDb = _context.FootballPlayerGameTimes.Where(fg => fg.GameTimeId == id);
             foreach (var item in footballPlayerGameTimesFromDb)
@@ -106,7 +118,6 @@ namespace December_24_2019_Football.Controllers
                     FootballPlayerGameTime footballPlayerGameTime = new FootballPlayerGameTime
                     {
                         GameTimeId = id,
-
                         FootballPlayerId = footballPlayerId
                     };
                     await _context.FootballPlayerGameTimes.AddAsync(footballPlayerGameTime);
@@ -117,6 +128,17 @@ namespace December_24_2019_Football.Controllers
 
                 }
             }
+            IEnumerable<FootballPlayerGameTime> footballPlayerGameTimess = _context.FootballPlayerGameTimes;
+            IEnumerable<FootballCart> footballCarts = _context.FootballCarts;
+            foreach (var item in footballCarts)
+            {
+                if(footballPlayerGameTimess.Where(fpg => fpg.FootballPlayerId == item.FootballPlayerId && fpg.GameTimeId == item.GameTimeId).Count() == 0)
+                {
+                    FootballCart footballCart = footballCarts.First(fc => fc.FootballPlayerId == item.FootballPlayerId && fc.GameTimeId == item.GameTimeId);
+                    _context.FootballCarts.Remove(footballCart);
+                }
+            }
+            await _context.SaveChangesAsync();
             TempData["Operation"] = true;
             return RedirectToAction("Index", "Gametime");
         }

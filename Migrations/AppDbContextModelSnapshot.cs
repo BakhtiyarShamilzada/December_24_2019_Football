@@ -112,21 +112,25 @@ namespace December_24_2019_Football.Migrations
 
                     b.Property<int>("PositionId");
 
+                    b.Property<int>("TeamId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PositionId");
 
+                    b.HasIndex("TeamId");
+
                     b.ToTable("FootballPlayers");
 
                     b.HasData(
-                        new { Id = 1, Age = 25, Firstname = "Messi", Lastname = "Lionel", PositionId = 1 },
-                        new { Id = 2, Age = 27, Firstname = "Ronaldo", Lastname = "Cristiano", PositionId = 2 },
-                        new { Id = 3, Age = 32, Firstname = "Xavi", Lastname = "Xavi", PositionId = 3 },
-                        new { Id = 4, Age = 28, Firstname = "Iniesta", Lastname = "Andres", PositionId = 4 },
-                        new { Id = 5, Age = 31, Firstname = "Ibrahimovic", Lastname = "Zlatan", PositionId = 5 },
-                        new { Id = 6, Age = 26, Firstname = "Falcao", Lastname = "Radamel", PositionId = 6 },
-                        new { Id = 7, Age = 29, Firstname = "Persie", Lastname = "Robin van", PositionId = 7 },
-                        new { Id = 8, Age = 33, Firstname = "Pirlo", Lastname = "Andrea", PositionId = 8 }
+                        new { Id = 1, Age = 25, Firstname = "Messi", Lastname = "Lionel", PositionId = 1, TeamId = 1 },
+                        new { Id = 2, Age = 27, Firstname = "Ronaldo", Lastname = "Cristiano", PositionId = 2, TeamId = 1 },
+                        new { Id = 3, Age = 32, Firstname = "Xavi", Lastname = "Xavi", PositionId = 3, TeamId = 2 },
+                        new { Id = 4, Age = 28, Firstname = "Iniesta", Lastname = "Andres", PositionId = 4, TeamId = 2 },
+                        new { Id = 5, Age = 31, Firstname = "Ibrahimovic", Lastname = "Zlatan", PositionId = 5, TeamId = 3 },
+                        new { Id = 6, Age = 26, Firstname = "Falcao", Lastname = "Radamel", PositionId = 6, TeamId = 3 },
+                        new { Id = 7, Age = 29, Firstname = "Persie", Lastname = "Robin van", PositionId = 7, TeamId = 4 },
+                        new { Id = 8, Age = 33, Firstname = "Pirlo", Lastname = "Andrea", PositionId = 8, TeamId = 4 }
                     );
                 });
 
@@ -164,7 +168,11 @@ namespace December_24_2019_Football.Migrations
 
                     b.Property<int>("StadiumId");
 
-                    b.Property<int>("TeamId");
+                    b.Property<int>("Team1Id");
+
+                    b.Property<int>("Team2Id");
+
+                    b.Property<int?>("TeamId");
 
                     b.HasKey("Id");
 
@@ -175,8 +183,8 @@ namespace December_24_2019_Football.Migrations
                     b.ToTable("GameTimes");
 
                     b.HasData(
-                        new { Id = 1, Date = new DateTime(2019, 12, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), StadiumId = 1, TeamId = 1 },
-                        new { Id = 2, Date = new DateTime(2019, 12, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), StadiumId = 2, TeamId = 2 }
+                        new { Id = 1, Date = new DateTime(2019, 12, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), StadiumId = 1, Team1Id = 1, Team2Id = 2 },
+                        new { Id = 2, Date = new DateTime(2019, 12, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), StadiumId = 2, Team1Id = 3, Team2Id = 4 }
                     );
                 });
 
@@ -437,6 +445,11 @@ namespace December_24_2019_Football.Migrations
                         .WithMany("FootballPlayers")
                         .HasForeignKey("PositionId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("December_24_2019_Football.Models.Team", "Team")
+                        .WithMany("FootballPlayers")
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("December_24_2019_Football.Models.FootballPlayerGameTime", b =>
@@ -461,8 +474,7 @@ namespace December_24_2019_Football.Migrations
 
                     b.HasOne("December_24_2019_Football.Models.Team", "Team")
                         .WithMany("GameTimes")
-                        .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("TeamId");
                 });
 
             modelBuilder.Entity("December_24_2019_Football.Models.Team", b =>

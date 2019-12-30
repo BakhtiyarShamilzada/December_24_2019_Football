@@ -28,12 +28,18 @@ namespace December_24_2019_Football.Controllers
             return View(homeViewModel);
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            List<FootballPlayer> footballPlayers = _context.FootballPlayers.ToList();
+            footballPlayers.Clear();
+            foreach (var item in _context.FootballPlayerGameTimes)
+            {
+                 footballPlayers.Add(await _context.FootballPlayers.FirstAsync(fp => fp.Id == item.FootballPlayerId));
+            }
             HomeViewModel homeViewModel = new HomeViewModel
             {
                 Carts = _context.Carts,
-                FootballPlayers = _context.FootballPlayers,
+                FootballPlayers = footballPlayers,
                 GameTimes = _context.GameTimes
             };
             return View(homeViewModel);

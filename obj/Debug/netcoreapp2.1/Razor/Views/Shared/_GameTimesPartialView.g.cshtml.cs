@@ -136,7 +136,7 @@ using December_24_2019_Football.ViewModels;
             WriteLiteral("\r\n            </td>\r\n            <td>\r\n                ");
             EndContext();
             BeginContext(469, 185, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d62b7e97f7d24de0b46bbc9c809457ce", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8fbb7c2068b44a8e8137ceff257d1ffd", async() => {
                 BeginContext(618, 32, true);
                 WriteLiteral("<i class=\"fas fa-users-cog\"></i>");
                 EndContext();
@@ -175,7 +175,7 @@ using December_24_2019_Football.ViewModels;
             WriteLiteral("\r\n                ");
             EndContext();
             BeginContext(672, 128, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e6355b7f423649ea8809406982d0451c", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ab7670969e544da69e610627f642c848", async() => {
                 BeginContext(769, 27, true);
                 WriteLiteral("<i class=\"far fa-edit\"></i>");
                 EndContext();
@@ -231,7 +231,7 @@ WriteAttributeValue("", 920, item.Id, 920, 8, false);
             WriteLiteral(" />\r\n                    ");
             EndContext();
             BeginContext(954, 150, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "16ee0a75adaf4cafb325529abe60db9a", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "91f7c3e1722f4ca286a54d0792ef5192", async() => {
                 BeginContext(1067, 33, true);
                 WriteLiteral(" <i class=\"far fa-trash-alt\"></i>");
                 EndContext();

@@ -15,7 +15,9 @@ namespace December_24_2019_Football.Models
         }
         public int Id { get; set; }
 
-        public int TeamId { get; set; }
+        public int Team1Id { get; set; }
+
+        public int Team2Id { get; set; }
 
         public int StadiumId { get; set; }
 

@@ -84,7 +84,7 @@ namespace December_24_2019_Football.Controllers
             {
                 Carts = _context.Carts,
                 FootballPlayers = _context.FootballPlayers,
-                FootballCarts = _context.FootballCarts.Include(fc => fc.FootballPlayer).Include(fc => fc.Cart),
+                FootballCarts = _context.FootballCarts.Include(fc => fc.FootballPlayer).Include(fc => fc.Cart).Include(fc => fc.GameTime),
                 Positions = _context.Positions
             };
             return PartialView("_FootballCartsPartialView", homeViewModel);
