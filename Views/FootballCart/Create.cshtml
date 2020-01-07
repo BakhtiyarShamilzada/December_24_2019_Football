@@ -27,6 +27,7 @@
                         </select>
                         <span asp-validation-for="@Model.FootballPlayerId" class="text-danger"></span>
                     </div>
+
                     <div class="form-group">
                         <label class="w-100" asp-for="@Model.CartId">Cart</label>
                         <div class="row">
@@ -38,7 +39,7 @@
                                         <div class="custom-control custom-radio">
                                             <input type="radio" id="customRadioInline@(++counter)" name="CartId" value="@item.Id" class="custom-control-input">
                                             <label class="custom-control-label" for="customRadioInline@(counter)">
-                                                <img class="w-50 mr-5" src="~/images/@item.Image" />
+                                                <img class="w-50 mr-5" src="~/images/@item.Image" style="cursor: pointer" />
                                             </label>
                                         </div>
                                     </div>

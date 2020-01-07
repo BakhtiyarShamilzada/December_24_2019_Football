@@ -51,24 +51,24 @@ namespace December_24_2019_Football.DAL
           );
 
             builder.Entity(typeof(FootballPlayer)).HasData(
-               new FootballPlayer { Id = 1, Firstname = "Messi", Lastname = "Lionel", Age = 25, PositionId = 1, TeamId = 1 },
-               new FootballPlayer { Id = 2, Firstname = "Ronaldo", Lastname = "Cristiano", Age = 27, PositionId = 2, TeamId = 1 },
-               new FootballPlayer { Id = 3, Firstname = "Xavi", Lastname = "Xavi", Age = 32, PositionId = 3, TeamId = 2 },
-               new FootballPlayer { Id = 4, Firstname = "Iniesta", Lastname = "Andres", Age = 28, PositionId = 4, TeamId = 2 },
-               new FootballPlayer { Id = 5, Firstname = "Ibrahimovic", Lastname = "Zlatan", Age = 31, PositionId = 5, TeamId = 3 },
-               new FootballPlayer { Id = 6, Firstname = "Falcao", Lastname = "Radamel", Age = 26, PositionId = 6, TeamId = 3 },
-               new FootballPlayer { Id = 7, Firstname = "Persie", Lastname = "Robin van", Age = 29, PositionId = 7, TeamId = 4 },
-               new FootballPlayer { Id = 8, Firstname = "Pirlo", Lastname = "Andrea", Age = 33, PositionId = 8, TeamId = 4 }
+               new FootballPlayer { Id = 1, Firstname = "Messi", Lastname = "Lionel", Age = 25, PositionId = 1, TeamId = 1, Image = "FootballPlayer/1.png" },
+               new FootballPlayer { Id = 2, Firstname = "Ronaldo", Lastname = "Cristiano", Age = 27, PositionId = 2, TeamId = 1, Image = "FootballPlayer/2.png" },
+               new FootballPlayer { Id = 3, Firstname = "Xavi", Lastname = "Xavi", Age = 32, PositionId = 3, TeamId = 2, Image = "FootballPlayer/3.png" },
+               new FootballPlayer { Id = 4, Firstname = "Iniesta", Lastname = "Andres", Age = 28, PositionId = 4, TeamId = 2, Image = "FootballPlayer/4.png" },
+               new FootballPlayer { Id = 5, Firstname = "Ibrahimovic", Lastname = "Zlatan", Age = 31, PositionId = 5, TeamId = 3, Image = "FootballPlayer/5.png" },
+               new FootballPlayer { Id = 6, Firstname = "Falcao", Lastname = "Radamel", Age = 26, PositionId = 6, TeamId = 3, Image = "FootballPlayer/6.png" },
+               new FootballPlayer { Id = 7, Firstname = "Persie", Lastname = "Robin van", Age = 29, PositionId = 7, TeamId = 4, Image = "FootballPlayer/7.png" },
+               new FootballPlayer { Id = 8, Firstname = "Pirlo", Lastname = "Andrea", Age = 33, PositionId = 8, TeamId = 4, Image = "FootballPlayer/8.png" }
            );
 
             builder.Entity(typeof(Cart)).HasData(
-               new Cart { Id = 1, Name = "Red" },
-               new Cart { Id = 2, Name = "Yellow" }
+               new Cart { Id = 1, Name = "Red", Image = "Cart/red.png" },
+               new Cart { Id = 2, Name = "Yellow", Image = "Cart/yellow.png" }
            );
 
             builder.Entity(typeof(Stadium)).HasData(
-              new Stadium { Id = 1, Name = "Infinity Ring", Address = "‎1 Scarlet Knight Way" },
-              new Stadium { Id = 2, Name = "Paragon Field", Address = "Jake Nevin Field House" }
+              new Stadium { Id = 1, Name = "Infinity Ring", Address = "‎1 Scarlet Knight Way", Image = "Stadium/1.png" },
+              new Stadium { Id = 2, Name = "Paragon Field", Address = "Jake Nevin Field House", Image = "Stadium/2.jfif" }
           );
 
             builder.Entity(typeof(GameTime)).HasData(

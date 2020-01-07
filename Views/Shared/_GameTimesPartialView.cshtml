@@ -5,7 +5,11 @@
     {
         <tr>
             <th scope="row">@(counter++)</th>
-            <td>@item.Team.Name</td>
+            <td>
+                @Model.Teams.FirstOrDefault(t => t.Id == item.Team1Id).Name
+                <br />
+                @Model.Teams.FirstOrDefault(t => t.Id == item.Team2Id).Name
+            </td>
             <td>@item.Stadium.Name</td>
             <td>@item.Stadium.Address</td>
             <td class="date">

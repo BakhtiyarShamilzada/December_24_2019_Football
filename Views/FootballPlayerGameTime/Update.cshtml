@@ -31,6 +31,9 @@
         </div>
         <form method="post">
             <div class="row py-3">
+                <div class="col-12 text-center pb-3">
+                    <h4>@Model.Teams.FirstOrDefault(t => t.Id == Model.Team1Id).Name</h4>
+                </div>
                 <div class="col-12">
                     <table class="table table-bordered table-hover">
                         <thead>
@@ -46,7 +49,7 @@
                         <tbody>
                             @{
                                 int counter = 0;
-                                foreach (var item in Model.FootballPlayers)
+                                foreach (var item in Model.FootballPlayers.Where(fp => fp.TeamId == Model.Team1Id))
                                 {
                                     <tr>
                                         <th scope="row">@(++counter)</th>
@@ -73,6 +76,53 @@
                         </tbody>
                     </table>
                 </div>
+
+                <div class="col-12 text-center pb-3">
+                    <h4>@Model.Teams.FirstOrDefault(t => t.Id == Model.Team2Id).Name</h4>
+                </div>
+                <div class="col-12">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Number</th>
+                                <th scope="col">Select</th>
+                                <th scope="col">Firstname</th>
+                                <th scope="col">Lastname</th>
+                                <th scope="col">Age</th>
+                                <th scope="col">Position</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int counter2 = 0;
+                                foreach (var item in Model.FootballPlayers.Where(fp => fp.TeamId == Model.Team2Id))
+                                {
+                                    <tr>
+                                        <th scope="row">@(++counter2)</th>
+                                        <td>
+                                            <div class="custom-control custom-checkbox">
+                                                @if (Model.FootballPlayerGameTimes.Where(fpg => fpg.FootballPlayerId == item.Id).Count() != 0)
+                                                {
+                                                    <input data-football-players-id="@item.Id" type="checkbox" checked class="custom-control-input football-players-id" id="customCheck@(counter + counter2)">
+                                                }
+                                                else
+                                                {
+                                                    <input data-football-players-id="@item.Id" type="checkbox" class="custom-control-input football-players-id" id="customCheck@(counter + counter2)">
+                                                }
+                                                <label class="custom-control-label pointer-checkbox" for="customCheck@(counter + counter2)"></label>
+                                            </div>
+                                        </td>
+                                        <td>@item.Firstname</td>
+                                        <td>@item.Lastname</td>
+                                        <td>@item.Age</td>
+                                        <td>@Model.Positions.FirstOrDefault(p => p.Id == item.PositionId).Name</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
             <div class="form-group d-flex justify-content-end">
                 <input asp-for="@Model.FootballPlayersId" type="hidden" />

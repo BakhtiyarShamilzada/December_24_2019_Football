@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace December_24_2019_Football.Migrations
 {
-    public partial class addFootballPlayerToTeam : Migration
+    public partial class football : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -267,7 +267,8 @@ namespace December_24_2019_Football.Migrations
                     Team1Id = table.Column<int>(nullable: false),
                     Team2Id = table.Column<int>(nullable: false),
                     StadiumId = table.Column<int>(nullable: false),
-                    Date = table.Column<DateTime>(nullable: false)
+                    Date = table.Column<DateTime>(nullable: false),
+                    TeamId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -278,7 +279,12 @@ namespace December_24_2019_Football.Migrations
                         principalTable: "Stadiums",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    
+                    table.ForeignKey(
+                        name: "FK_GameTimes_Teams_TeamId",
+                        column: x => x.TeamId,
+                        principalTable: "Teams",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -345,8 +351,8 @@ namespace December_24_2019_Football.Migrations
                 columns: new[] { "Id", "Image", "Name" },
                 values: new object[,]
                 {
-                    { 1, null, "Red" },
-                    { 2, null, "Yellow" }
+                    { 1, "Cart/red.png", "Red" },
+                    { 2, "Cart/yellow.png", "Yellow" }
                 });
 
             migrationBuilder.InsertData(
@@ -378,17 +384,17 @@ namespace December_24_2019_Football.Migrations
                 columns: new[] { "Id", "Address", "Image", "Name" },
                 values: new object[,]
                 {
-                    { 1, "‎1 Scarlet Knight Way", null, "Infinity Ring" },
-                    { 2, "Jake Nevin Field House", null, "Paragon Field" }
+                    { 1, "‎1 Scarlet Knight Way", "Stadium/1.png", "Infinity Ring" },
+                    { 2, "Jake Nevin Field House", "Stadium/2.jfif", "Paragon Field" }
                 });
 
             migrationBuilder.InsertData(
                 table: "GameTimes",
-                columns: new[] { "Id", "Date", "StadiumId", "Team1Id", "Team2Id" },
+                columns: new[] { "Id", "Date", "StadiumId", "Team1Id", "Team2Id", "TeamId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2019, 12, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 1, 2 },
-                    { 2, new DateTime(2019, 12, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, 3, 4 }
+                    { 1, new DateTime(2019, 12, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 1, 2, null },
+                    { 2, new DateTime(2019, 12, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, 3, 4, null }
                 });
 
             migrationBuilder.InsertData(
@@ -407,14 +413,14 @@ namespace December_24_2019_Football.Migrations
                 columns: new[] { "Id", "Age", "Firstname", "Image", "Lastname", "PositionId", "TeamId" },
                 values: new object[,]
                 {
-                    { 1, 25, "Messi", null, "Lionel", 1, 1 },
-                    { 2, 27, "Ronaldo", null, "Cristiano", 2, 1 },
-                    { 3, 32, "Xavi", null, "Xavi", 3, 2 },
-                    { 4, 28, "Iniesta", null, "Andres", 4, 2 },
-                    { 5, 31, "Ibrahimovic", null, "Zlatan", 5, 3 },
-                    { 6, 26, "Falcao", null, "Radamel", 6, 3 },
-                    { 7, 29, "Persie", null, "Robin van", 7, 4 },
-                    { 8, 33, "Pirlo", null, "Andrea", 8, 4 }
+                    { 1, 25, "Messi", "FootballPlayer/1.png", "Lionel", 1, 1 },
+                    { 2, 27, "Ronaldo", "FootballPlayer/2.png", "Cristiano", 2, 1 },
+                    { 3, 32, "Xavi", "FootballPlayer/3.png", "Xavi", 3, 2 },
+                    { 4, 28, "Iniesta", "FootballPlayer/4.png", "Andres", 4, 2 },
+                    { 5, 31, "Ibrahimovic", "FootballPlayer/5.png", "Zlatan", 5, 3 },
+                    { 6, 26, "Falcao", "FootballPlayer/6.png", "Radamel", 6, 3 },
+                    { 7, 29, "Persie", "FootballPlayer/7.png", "Robin van", 7, 4 },
+                    { 8, 33, "Pirlo", "FootballPlayer/8.png", "Andrea", 8, 4 }
                 });
 
             migrationBuilder.InsertData(
@@ -519,6 +525,11 @@ namespace December_24_2019_Football.Migrations
                 name: "IX_GameTimes_StadiumId",
                 table: "GameTimes",
                 column: "StadiumId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GameTimes_TeamId",
+                table: "GameTimes",
+                column: "TeamId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Teams_CountryId",

@@ -28,18 +28,12 @@ namespace December_24_2019_Football.Controllers
             return View(homeViewModel);
         }
 
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
-            List<FootballPlayer> footballPlayers = _context.FootballPlayers.ToList();
-            footballPlayers.Clear();
-            foreach (var item in _context.FootballPlayerGameTimes)
-            {
-                 footballPlayers.Add(await _context.FootballPlayers.FirstAsync(fp => fp.Id == item.FootballPlayerId));
-            }
             HomeViewModel homeViewModel = new HomeViewModel
             {
                 Carts = _context.Carts,
-                FootballPlayers = footballPlayers,
+                FootballPlayers = _context.FootballPlayerGameTimes.Select(fg => fg.FootballPlayer).ToHashSet(),
                 GameTimes = _context.GameTimes
             };
             return View(homeViewModel);
@@ -68,14 +62,21 @@ namespace December_24_2019_Football.Controllers
             if (footballCart == null) return NotFound();
             IEnumerable<FootballPlayerGameTime> footballPlayerGameTimes = _context.FootballPlayerGameTimes.Include(btct => btct.GameTime).Where(bct => bct.FootballPlayerId == footballCart.FootballPlayerId);
 
-        HomeViewModel homeViewModel = new HomeViewModel
+            List<FootballPlayer> footballPlayers = _context.FootballPlayers.ToList();
+            footballPlayers.Clear();
+            foreach (var item in _context.FootballPlayerGameTimes)
+            {
+                footballPlayers.Add(await _context.FootballPlayers.FirstAsync(fp => fp.Id == item.FootballPlayerId));
+            }
+
+            HomeViewModel homeViewModel = new HomeViewModel
             {
                 Carts = _context.Carts,
-                FootballPlayers = _context.FootballPlayers,
+                FootballPlayers = footballPlayers,
                 CartId = footballCart.CartId,
                 FootballPlayerId = footballCart.FootballPlayerId,
                 GameTimeId = footballCart.GameTimeId,
-                GameTimes = footballPlayerGameTimes.Select(fpgt => fpgt.GameTime)
+                GameTimes = footballPlayerGameTimes.Select(fpgt => fpgt.GameTime),
             };
             return View(homeViewModel);
         }

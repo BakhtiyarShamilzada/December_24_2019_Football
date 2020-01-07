@@ -14,6 +14,7 @@ namespace December_24_2019_Football.ViewModels
         public IEnumerable<FootballCart> FootballCarts { get; set; }
 
         public IEnumerable<FootballPlayer> FootballPlayers { get; set; }
+        public FootballPlayer FootballPlayer { get; set; }
 
         public IEnumerable<Position> Positions { get; set; }
 
@@ -27,13 +28,16 @@ namespace December_24_2019_Football.ViewModels
 
         public int GameTimeId { get; set; }
 
-        public int TeamId { get; set; }
+        public int Team1Id { get; set; }
+
+        public int Team2Id { get; set; }
 
         public int StadiumId { get; set; }
 
         public int FootballPlayerId { get; set; }
 
         public int CartId { get; set; }
+
         public int PositionId { get; set; }
 
         public string FootballPlayersId { get; set; }

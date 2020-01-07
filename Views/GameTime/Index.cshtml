@@ -34,8 +34,8 @@
                 <table class="table table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th scope="col">Number</th>
-                            <th scope="col">Team</th>
+                            <th scope="col">№</th>
+                            <th scope="col">Teams</th>
                             <th scope="col">Stadium</th>
                             <th scope="col">Address</th>
                             <th scope="col">Date</th>
@@ -49,7 +49,11 @@
                             {
                                 <tr>
                                     <th scope="row">@(counter++)</th>
-                                    <td>@item.Team.Name</td>
+                                    <td>
+                                        @Model.Teams.FirstOrDefault(t => t.Id == item.Team1Id).Name
+                                        <br />
+                                        @Model.Teams.FirstOrDefault(t => t.Id == item.Team2Id).Name
+                                    </td>
                                     <td>@item.Stadium.Name</td>
                                     <td>@item.Stadium.Address</td>
                                     <td class="date">

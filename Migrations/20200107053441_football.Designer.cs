@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace December_24_2019_Football.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20191230104424_addFootballPlayerToTeam")]
-    partial class addFootballPlayerToTeam
+    [Migration("20200107053441_football")]
+    partial class football
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -38,8 +38,8 @@ namespace December_24_2019_Football.Migrations
                     b.ToTable("Carts");
 
                     b.HasData(
-                        new { Id = 1, Name = "Red" },
-                        new { Id = 2, Name = "Yellow" }
+                        new { Id = 1, Image = "Cart/red.png", Name = "Red" },
+                        new { Id = 2, Image = "Cart/yellow.png", Name = "Yellow" }
                     );
                 });
 
@@ -125,14 +125,14 @@ namespace December_24_2019_Football.Migrations
                     b.ToTable("FootballPlayers");
 
                     b.HasData(
-                        new { Id = 1, Age = 25, Firstname = "Messi", Lastname = "Lionel", PositionId = 1, TeamId = 1 },
-                        new { Id = 2, Age = 27, Firstname = "Ronaldo", Lastname = "Cristiano", PositionId = 2, TeamId = 1 },
-                        new { Id = 3, Age = 32, Firstname = "Xavi", Lastname = "Xavi", PositionId = 3, TeamId = 2 },
-                        new { Id = 4, Age = 28, Firstname = "Iniesta", Lastname = "Andres", PositionId = 4, TeamId = 2 },
-                        new { Id = 5, Age = 31, Firstname = "Ibrahimovic", Lastname = "Zlatan", PositionId = 5, TeamId = 3 },
-                        new { Id = 6, Age = 26, Firstname = "Falcao", Lastname = "Radamel", PositionId = 6, TeamId = 3 },
-                        new { Id = 7, Age = 29, Firstname = "Persie", Lastname = "Robin van", PositionId = 7, TeamId = 4 },
-                        new { Id = 8, Age = 33, Firstname = "Pirlo", Lastname = "Andrea", PositionId = 8, TeamId = 4 }
+                        new { Id = 1, Age = 25, Firstname = "Messi", Image = "FootballPlayer/1.png", Lastname = "Lionel", PositionId = 1, TeamId = 1 },
+                        new { Id = 2, Age = 27, Firstname = "Ronaldo", Image = "FootballPlayer/2.png", Lastname = "Cristiano", PositionId = 2, TeamId = 1 },
+                        new { Id = 3, Age = 32, Firstname = "Xavi", Image = "FootballPlayer/3.png", Lastname = "Xavi", PositionId = 3, TeamId = 2 },
+                        new { Id = 4, Age = 28, Firstname = "Iniesta", Image = "FootballPlayer/4.png", Lastname = "Andres", PositionId = 4, TeamId = 2 },
+                        new { Id = 5, Age = 31, Firstname = "Ibrahimovic", Image = "FootballPlayer/5.png", Lastname = "Zlatan", PositionId = 5, TeamId = 3 },
+                        new { Id = 6, Age = 26, Firstname = "Falcao", Image = "FootballPlayer/6.png", Lastname = "Radamel", PositionId = 6, TeamId = 3 },
+                        new { Id = 7, Age = 29, Firstname = "Persie", Image = "FootballPlayer/7.png", Lastname = "Robin van", PositionId = 7, TeamId = 4 },
+                        new { Id = 8, Age = 33, Firstname = "Pirlo", Image = "FootballPlayer/8.png", Lastname = "Andrea", PositionId = 8, TeamId = 4 }
                     );
                 });
 
@@ -233,8 +233,8 @@ namespace December_24_2019_Football.Migrations
                     b.ToTable("Stadiums");
 
                     b.HasData(
-                        new { Id = 1, Address = "‎1 Scarlet Knight Way", Name = "Infinity Ring" },
-                        new { Id = 2, Address = "Jake Nevin Field House", Name = "Paragon Field" }
+                        new { Id = 1, Address = "‎1 Scarlet Knight Way", Image = "Stadium/1.png", Name = "Infinity Ring" },
+                        new { Id = 2, Address = "Jake Nevin Field House", Image = "Stadium/2.jfif", Name = "Paragon Field" }
                     );
                 });
 
@@ -474,7 +474,7 @@ namespace December_24_2019_Football.Migrations
                         .HasForeignKey("StadiumId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("December_24_2019_Football.Models.Team", "Team")
+                    b.HasOne("December_24_2019_Football.Models.Team")
                         .WithMany("GameTimes")
                         .HasForeignKey("TeamId");
                 });

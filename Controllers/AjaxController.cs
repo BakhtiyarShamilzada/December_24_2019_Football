@@ -99,7 +99,8 @@ namespace December_24_2019_Football.Controllers
             TempData["Operation"] = true;
             HomeViewModel homeViewModel = new HomeViewModel
             {
-                GameTimes = _context.GameTimes.Include(fc => fc.Team).Include(fc => fc.Stadium)
+                GameTimes = _context.GameTimes.Include(fc => fc.Stadium),
+                Teams = _context.Teams
             };
             return PartialView("_GameTimesPartialView", homeViewModel);
         }
@@ -120,6 +121,13 @@ namespace December_24_2019_Football.Controllers
         {
             IEnumerable<FootballPlayerGameTime> footballPlayerGameTimes = _context.FootballPlayerGameTimes.Include(btct => btct.GameTime).Where(bct => bct.FootballPlayerId == FootballPlayerId);
             return PartialView("_SelectGameTimesPartialView", footballPlayerGameTimes);
+        }
+
+        [HttpPost]
+        public IActionResult LoadSelectTeamsByTeamId(int TeamId)
+        {
+            IEnumerable<Team> teams = _context.Teams.Where(t => t.Id != TeamId);
+            return PartialView("_SelectTeamsPartialView", teams);
         }
     }
 }

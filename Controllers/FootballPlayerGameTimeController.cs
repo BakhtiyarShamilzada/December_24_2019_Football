@@ -22,12 +22,16 @@ namespace December_24_2019_Football.Controllers
             return View();
         }
 
-        public IActionResult Create(int id)
+        public async Task<IActionResult> Create(int id)
         {
+            GameTime gameTime = await _context.GameTimes.FindAsync(id);
             HomeViewModel homeViewModel = new HomeViewModel
             {
                 FootballPlayers = _context.FootballPlayers.Include(fp => fp.Position),
-                GameTimeId = id
+                GameTimeId = id,
+                Team1Id = gameTime.Team1Id,
+                Team2Id = gameTime.Team2Id,
+                Teams = _context.Teams.Where(t => t.Id == gameTime.Team1Id || t.Id == gameTime.Team2Id)
             };
             return View(homeViewModel);
         }
@@ -37,10 +41,14 @@ namespace December_24_2019_Football.Controllers
         {
             if (homeViewModel.FootballPlayersId == null)
             {
+                GameTime gameTime = await _context.GameTimes.FindAsync(id);
                 homeViewModel = new HomeViewModel
                 {
                     FootballPlayers = _context.FootballPlayers.Include(fp => fp.Position),
-                    GameTimeId = id
+                    GameTimeId = id,
+                    Team1Id = gameTime.Team1Id,
+                    Team2Id = gameTime.Team2Id,
+                    Teams = _context.Teams.Where(t => t.Id == gameTime.Team1Id || t.Id == gameTime.Team2Id)
                 };
                 ModelState.AddModelError("", "Choose football player");
                 return View(homeViewModel);
@@ -81,7 +89,10 @@ namespace December_24_2019_Football.Controllers
             {
                 FootballPlayers = _context.FootballPlayers,
                 Positions = _context.Positions,
-                FootballPlayerGameTimes = footballPlayerGameTimes
+                FootballPlayerGameTimes = footballPlayerGameTimes,
+                Team1Id = gameTime.Team1Id,
+                Team2Id = gameTime.Team2Id,
+                Teams = _context.Teams.Where(t => t.Id == gameTime.Team1Id || t.Id == gameTime.Team2Id)
             };
             return View(homeViewModel);
         }
@@ -92,15 +103,20 @@ namespace December_24_2019_Football.Controllers
             if (homeViewModel.FootballPlayersId == null)
             {
                 IEnumerable<FootballPlayerGameTime> footballPlayerGameTimes = _context.FootballPlayerGameTimes.Where(fpg => fpg.GameTimeId == id).Include(fpg => fpg.FootballPlayer);
+                GameTime gameTime = await _context.GameTimes.FindAsync(id);
                 homeViewModel = new HomeViewModel
                 {
                     FootballPlayers = _context.FootballPlayers,
                     Positions = _context.Positions,
-                    FootballPlayerGameTimes = footballPlayerGameTimes
+                    FootballPlayerGameTimes = footballPlayerGameTimes,
+                    Team1Id = gameTime.Team1Id,
+                    Team2Id = gameTime.Team2Id,
+                    Teams = _context.Teams.Where(t => t.Id == gameTime.Team1Id || t.Id == gameTime.Team2Id)
                 };
                 ModelState.AddModelError("", "Choose football player");
                 return View(homeViewModel);
             }
+
             IEnumerable<FootballPlayerGameTime> footballPlayerGameTimesFromDb = _context.FootballPlayerGameTimes.Where(fg => fg.GameTimeId == id);
             foreach (var item in footballPlayerGameTimesFromDb)
             {

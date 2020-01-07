@@ -231,4 +231,23 @@
         }
     })
 
+    $(document).on('change', '#team-1', function () {
+        var team1Id = $(this).val();
+        if (team1Id) {
+            $.ajax(
+                {
+                    url: "/Ajax/LoadSelectTeamsByTeamId?TeamId=" + team1Id,
+                    type: "POST",
+                    success: function (res) {
+                        $("#team-2").html(res).prepend("<option disabled selected >Choose</option>");
+                    },
+                    error: function () {
+                        swal("Xəta baş verdi !", {
+                            icon: "error",
+                        });
+                    }
+                })
+        }
+    })
+
 })

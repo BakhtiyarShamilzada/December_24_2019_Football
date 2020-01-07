@@ -21,7 +21,8 @@ namespace December_24_2019_Football.Controllers
         {
             HomeViewModel homeViewModel = new HomeViewModel
             {
-                GameTimes = _context.GameTimes.Include(fc => fc.Team).Include(fc => fc.Stadium)
+                GameTimes = _context.GameTimes.Include(fc => fc.Stadium),
+                Teams = _context.Teams
             };
             return View(homeViewModel);
         }
@@ -42,7 +43,8 @@ namespace December_24_2019_Football.Controllers
             //save
             GameTime gameTime = new GameTime
             {
-                //TeamId = homeViewModel.TeamId,
+                Team1Id = homeViewModel.Team1Id,
+                Team2Id = homeViewModel.Team2Id,
                 StadiumId = homeViewModel.StadiumId,
                 Date = homeViewModel.Date
             };
@@ -60,7 +62,8 @@ namespace December_24_2019_Football.Controllers
             {
                 Teams = _context.Teams,
                 Stadiums = _context.Stadiums,
-                //TeamId = gameTime.TeamId,
+                Team1Id = gameTime.Team1Id,
+                Team2Id = gameTime.Team2Id,
                 StadiumId = gameTime.StadiumId,
                 Date = gameTime.Date
             };
@@ -73,7 +76,8 @@ namespace December_24_2019_Football.Controllers
             if (!ModelState.IsValid) return View(homeViewModel);
             GameTime GameTimeFromDb = await _context.GameTimes.FindAsync(id);
 
-            //GameTimeFromDb.TeamId = homeViewModel.TeamId;
+            GameTimeFromDb.Team1Id = homeViewModel.Team1Id;
+            GameTimeFromDb.Team2Id = homeViewModel.Team2Id;
             GameTimeFromDb.StadiumId = homeViewModel.StadiumId;
             GameTimeFromDb.Date = homeViewModel.Date;
 
