@@ -91,7 +91,21 @@
                             {
                                 <tr>
                                     <th scope="row">@(counter++)</th>
-                                    <td><img style="width:100px" src="~/images/@item.Cart.Image" /></td>
+                                    <td class="cart-image-area">
+                                        @if (Model.FootballCarts.Where(fc => fc.FootballPlayerId == item.FootballPlayerId && fc.GameTimeId == item.GameTimeId && fc.CartId == 2).Count() == 2)
+                                        {
+                                        <a asp-controller="FootballCart" asp-action="Update" class="two-cart-image" asp-route-id="@item.Id">
+                                            <img style="width:50px" src="~/images/@item.Cart.Image" />
+                                            <img style="width:50px" src="~/images/@item.Cart.Image" />
+                                        </a>
+                                        }
+                                        else
+                                        {
+                                            <a asp-controller="FootballCart" asp-action="Update" asp-route-id="@item.Id">
+                                                <img style="width:100px" class="cart-image" src="~/images/@item.Cart.Image" />
+                                            </a>
+                                        }
+                                    </td>
 
                                     <td>@item.FootballPlayer.Firstname</td>
                                     <td>@item.FootballPlayer.Lastname</td>

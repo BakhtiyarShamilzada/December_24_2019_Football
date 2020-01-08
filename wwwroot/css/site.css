@@ -27,11 +27,13 @@
     color: #0061ff;
     background: #fff;
 }
+
 a[aria-expanded="true"] {
     color: #0061ff;
     background: #fff;
 }
-    a [aria-expanded="true"] {
+
+a [aria-expanded="true"] {
     color: #0061ff;
     background: #fff;
 }
@@ -48,4 +50,44 @@ ul ul a {
 ul ul a:hover {
     background: #fff !important;
     color: #0061ff !important;
+}
+.cart-image-area
+{
+    position: relative;
+    width: 136px;
+    height: 124px;
+}
+.cart-image {
+    transition: all .3s;
+    position: absolute;
+    top: 100%;
+    opacity: 0;
+}
+.cart-image-area:hover .cart-image {
+    top: 12px;
+    opacity: 1;
+}
+
+.two-cart-image img
+{
+    transition: all .3s;
+    position: absolute;
+    opacity: 0;
+}
+.two-cart-image img:first-child
+{
+    left: -100%;
+}
+.two-cart-image img:last-child {
+    left: 100%;
+}
+.cart-image-area:hover .two-cart-image img
+{
+    opacity: 1;
+}
+.cart-image-area:hover .two-cart-image img:first-child {
+    left: 12px;
+}
+.cart-image-area:hover .two-cart-image img:last-child {
+    left: 70px;
 }

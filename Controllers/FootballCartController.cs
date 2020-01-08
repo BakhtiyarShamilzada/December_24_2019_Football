@@ -42,6 +42,43 @@ namespace December_24_2019_Football.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(HomeViewModel homeViewModel)
         {
+            IEnumerable<FootballCart> footballCarts = _context.FootballCarts.Where(fc => fc.FootballPlayerId == homeViewModel.FootballPlayerId && fc.GameTimeId == homeViewModel.GameTimeId);
+            int countRed = footballCarts.Where(fc => fc.CartId == 1).Count();
+            int countYellow = footballCarts.Where(fc => fc.CartId == 2).Count();
+            if (countRed != 0)
+            {
+                homeViewModel = new HomeViewModel
+                {
+                    Carts = _context.Carts,
+                    FootballPlayers = _context.FootballPlayerGameTimes.Select(fg => fg.FootballPlayer).ToHashSet(),
+                    GameTimes = _context.GameTimes
+                };
+                ModelState.AddModelError("", "The player already has a red card");
+                return View(homeViewModel);
+            }
+
+            if(countYellow == 2)
+            {
+                homeViewModel = new HomeViewModel
+                {
+                    Carts = _context.Carts,
+                    FootballPlayers = _context.FootballPlayerGameTimes.Select(fg => fg.FootballPlayer).ToHashSet(),
+                    GameTimes = _context.GameTimes
+                };
+                ModelState.AddModelError("", "The player already has 2 yellow card");
+                return View(homeViewModel);
+            }
+
+            if(countYellow == 1 && homeViewModel.CartId == 1)
+            {
+                FootballCart footballCartFromDb = footballCarts.FirstOrDefault();
+                footballCartFromDb.CartId = 1;
+
+                await _context.SaveChangesAsync();
+                TempData["Operation"] = true;
+                return RedirectToAction(nameof(Index));
+            }
+
             //save
             FootballCart footballCart = new FootballCart
             {

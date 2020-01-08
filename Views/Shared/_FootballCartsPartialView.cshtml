@@ -5,6 +5,11 @@
     {
         <tr>
             <th scope="row">@(counter++)</th>
+            <td class="cart-image-area">
+                <a asp-controller="FootballCart" asp-action="Update" asp-route-id="@item.Id">
+                    <img style="width:100px" class="cart-image" src="~/images/@item.Cart.Image" />
+                </a>
+            </td>
             <td>@item.FootballPlayer.Firstname</td>
             <td>@item.FootballPlayer.Lastname</td>
             <td>@item.FootballPlayer.Age</td>
