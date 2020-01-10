@@ -15,13 +15,25 @@ namespace December_24_2019_Football.DAL
            
         }
         public DbSet<Position> Positions { get; set; }
+
         public DbSet<FootballPlayer> FootballPlayers { get; set; }
+
         public DbSet<Cart> Carts { get; set; }
+
+        public DbSet<PositionType> PositionTypes { get; set; }
+
+        public DbSet<FootballerPosition> FootballerPositions { get; set; }
+
         public DbSet<GameTime> GameTimes { get; set; }
+
         public DbSet<FootballCart> FootballCarts { get; set; }
+
         public DbSet<Country> Countries { get; set; }
+
         public DbSet<Team> Teams { get; set; }
+
         public DbSet<Stadium> Stadiums { get; set; }
+
         public DbSet<FootballPlayerGameTime> FootballPlayerGameTimes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -71,9 +83,27 @@ namespace December_24_2019_Football.DAL
               new Stadium { Id = 2, Name = "Paragon Field", Address = "Jake Nevin Field House", Image = "Stadium/2.jfif" }
           );
 
+            builder.Entity(typeof(PositionType)).HasData(
+              new PositionType { Id = 1, Name = "3-4-3"},
+              new PositionType { Id = 2, Name = "4-2-4"}
+          );
+
+            builder.Entity(typeof(FootballerPosition)).HasData(
+              new FootballerPosition { Id = 1, Name = "1" },
+              new FootballerPosition { Id = 2, Name = "2" },
+              new FootballerPosition { Id = 3, Name = "3" },
+              new FootballerPosition { Id = 4, Name = "4" },
+              new FootballerPosition { Id = 5, Name = "5" },
+              new FootballerPosition { Id = 6, Name = "6" },
+              new FootballerPosition { Id = 7, Name = "7" },
+              new FootballerPosition { Id = 8, Name = "8" },
+              new FootballerPosition { Id = 9, Name = "9" },
+              new FootballerPosition { Id = 10, Name = "10" }
+          );
+
             builder.Entity(typeof(GameTime)).HasData(
-               new GameTime { Id = 1, Team1Id = 1, Team2Id = 2, StadiumId = 1, Date = new DateTime(2019, 12, 26) },
-               new GameTime { Id = 2, Team1Id = 3, Team2Id = 4, StadiumId = 2, Date = new DateTime(2019, 12, 27) }
+               new GameTime { Id = 1, Team1Id = 1, Team2Id = 2, StadiumId = 1, Date = new DateTime(2019, 12, 26), PositionType1Id = 1, PositionType2Id = 2 },
+               new GameTime { Id = 2, Team1Id = 3, Team2Id = 4, StadiumId = 2, Date = new DateTime(2019, 12, 27), PositionType1Id = 2, PositionType2Id = 1 }
            );
 
             builder.Entity(typeof(FootballCart)).HasData(
@@ -88,8 +118,8 @@ namespace December_24_2019_Football.DAL
            );
 
             builder.Entity(typeof(FootballPlayerGameTime)).HasData(
-               new FootballPlayerGameTime { Id = 1, FootballPlayerId = 1, GameTimeId = 1 },
-               new FootballPlayerGameTime { Id = 2, FootballPlayerId = 2, GameTimeId = 2 }
+               new FootballPlayerGameTime { Id = 1, FootballPlayerId = 1, GameTimeId = 1, FootballerPositionId = 1 },
+               new FootballPlayerGameTime { Id = 2, FootballPlayerId = 2, GameTimeId = 2, FootballerPositionId = 2 }
            );
         }
     }

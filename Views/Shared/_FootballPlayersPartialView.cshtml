@@ -5,6 +5,11 @@
     {
     <tr>
         <th scope="row">@(counter++)</th>
+        <td>
+            <a asp-action="Update" asp-route-id="@item.Id">
+                <img style="width:100px" src="~/images/@item.Image" />
+            </a>
+        </td>
         <td>@item.Firstname</td>
         <td>@item.Lastname</td>
         <td>@item.Age</td>

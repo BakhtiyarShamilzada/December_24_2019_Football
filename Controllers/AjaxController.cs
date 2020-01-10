@@ -68,7 +68,7 @@ namespace December_24_2019_Football.Controllers
             TempData["Operation"] = true;
             HomeViewModel homeViewModel = new HomeViewModel
             {
-                FootballPlayers = _context.FootballPlayers.Include(fb => fb.Position),
+                FootballPlayers = _context.FootballPlayers.Include(fb => fb.Position).Include(fp => fp.Team),
             };
             return PartialView("_FootballPlayersPartialView", homeViewModel);
         }

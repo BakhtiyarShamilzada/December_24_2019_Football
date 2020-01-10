@@ -26,9 +26,15 @@ namespace December_24_2019_Football.ViewModels
 
         public IEnumerable<FootballPlayerGameTime> FootballPlayerGameTimes { get; set; }
 
+        public IEnumerable<PositionType> PositionTypes { get; set; }
+
         public int GameTimeId { get; set; }
 
         public int Team1Id { get; set; }
+
+        public int PositionType1Id { get; set; }
+
+        public int PositionType2Id { get; set; }
 
         public int Team2Id { get; set; }
 

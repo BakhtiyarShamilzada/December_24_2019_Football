@@ -1,11 +1,5 @@
 ﻿$(document).ready(function () {
 
-    // Select initial date from `eventDates`
-    $picker = $('.datepicker-here').each(function () {
-        var currentDate = currentDate = new Date();
-        $(this).data('datepicker').selectDate(new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()));
-    })
-
     $(document).on('click', '#DeleteFootballPlayer', function (e) {
         var FootballPlayerId = $(this).prev().val();
         e.preventDefault();
@@ -248,6 +242,12 @@
                     }
                 })
         }
+    })
+
+    // Select initial date from `eventDates`
+    $picker = $('.datepicker-here').each(function () {
+        var currentDate = currentDate = new Date();
+        $(this).data('datepicker').selectDate(new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()));
     })
 
 })

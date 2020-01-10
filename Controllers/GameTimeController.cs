@@ -32,7 +32,8 @@ namespace December_24_2019_Football.Controllers
             HomeViewModel homeViewModel = new HomeViewModel
             {
                 Teams = _context.Teams,
-                Stadiums = _context.Stadiums
+                Stadiums = _context.Stadiums,
+                PositionTypes = _context.PositionTypes,
             };
             return View(homeViewModel);
         }
@@ -62,7 +63,10 @@ namespace December_24_2019_Football.Controllers
             {
                 Teams = _context.Teams,
                 Stadiums = _context.Stadiums,
+                PositionTypes = _context.PositionTypes,
                 Team1Id = gameTime.Team1Id,
+                PositionType1Id = gameTime.PositionType1Id,
+                PositionType2Id = gameTime.PositionType2Id,
                 Team2Id = gameTime.Team2Id,
                 StadiumId = gameTime.StadiumId,
                 Date = gameTime.Date

@@ -97,12 +97,13 @@
                                         <a asp-controller="FootballCart" asp-action="Update" class="two-cart-image" asp-route-id="@item.Id">
                                             <img style="width:50px" src="~/images/@item.Cart.Image" />
                                             <img style="width:50px" src="~/images/@item.Cart.Image" />
+                                            <img style="width:1px" src="~/images/Cart/red.png" />
                                         </a>
                                         }
                                         else
                                         {
                                             <a asp-controller="FootballCart" asp-action="Update" asp-route-id="@item.Id">
-                                                <img style="width:100px" class="cart-image" src="~/images/@item.Cart.Image" />
+                                                <img style="width:1px" class="cart-image" src="~/images/@item.Cart.Image" />
                                             </a>
                                         }
                                     </td>

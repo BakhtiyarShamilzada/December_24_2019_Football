@@ -20,7 +20,7 @@
         }
         <div class="row pt-3">
             <div class="col-12">
-                <h3 class="mb-0 text-center">Game times</h3>
+                <h3 class="mb-0 text-center">Games</h3>
             </div>
         </div>
         <div class="row py-3">
@@ -61,6 +61,7 @@
                                         @item.Date.ToString("HH:mm")
                                     </td>
                                     <td>
+                                        @*<a asp-controller="FootballPlayerGameTime" asp-action="Update" asp-route-id="@item.Id" class="btn btn-outline-primary mr-3" title="Position Football Player"><i class="fas fa-street-view"></i></a>*@
                                         <a asp-controller="FootballPlayerGameTime" asp-action="Update" asp-route-id="@item.Id" class="btn btn-outline-info mr-3" title="Add Football Player"><i class="fas fa-users-cog"></i></a>
                                         <a asp-action="Update" asp-route-id="@item.Id" class="btn btn-outline-warning mr-3" title="Edit"><i class="far fa-edit"></i></a>
                                         @if (Model.GameTimes.Count() > 1)

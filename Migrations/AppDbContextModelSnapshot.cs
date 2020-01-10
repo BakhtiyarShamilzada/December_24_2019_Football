@@ -93,6 +93,32 @@ namespace December_24_2019_Football.Migrations
                     );
                 });
 
+            modelBuilder.Entity("December_24_2019_Football.Models.FootballerPosition", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FootballerPositions");
+
+                    b.HasData(
+                        new { Id = 1, Name = "1" },
+                        new { Id = 2, Name = "2" },
+                        new { Id = 3, Name = "3" },
+                        new { Id = 4, Name = "4" },
+                        new { Id = 5, Name = "5" },
+                        new { Id = 6, Name = "6" },
+                        new { Id = 7, Name = "7" },
+                        new { Id = 8, Name = "8" },
+                        new { Id = 9, Name = "9" },
+                        new { Id = 10, Name = "10" }
+                    );
+                });
+
             modelBuilder.Entity("December_24_2019_Football.Models.FootballPlayer", b =>
                 {
                     b.Property<int>("Id")
@@ -142,19 +168,23 @@ namespace December_24_2019_Football.Migrations
 
                     b.Property<int>("FootballPlayerId");
 
+                    b.Property<int>("FootballerPositionId");
+
                     b.Property<int>("GameTimeId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("FootballPlayerId");
 
+                    b.HasIndex("FootballerPositionId");
+
                     b.HasIndex("GameTimeId");
 
                     b.ToTable("FootballPlayerGameTimes");
 
                     b.HasData(
-                        new { Id = 1, FootballPlayerId = 1, GameTimeId = 1 },
-                        new { Id = 2, FootballPlayerId = 2, GameTimeId = 2 }
+                        new { Id = 1, FootballPlayerId = 1, FootballerPositionId = 1, GameTimeId = 1 },
+                        new { Id = 2, FootballPlayerId = 2, FootballerPositionId = 2, GameTimeId = 2 }
                     );
                 });
 
@@ -166,25 +196,25 @@ namespace December_24_2019_Football.Migrations
 
                     b.Property<DateTime>("Date");
 
+                    b.Property<int>("PositionType1Id");
+
+                    b.Property<int>("PositionType2Id");
+
                     b.Property<int>("StadiumId");
 
                     b.Property<int>("Team1Id");
 
                     b.Property<int>("Team2Id");
 
-                    b.Property<int?>("TeamId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("StadiumId");
 
-                    b.HasIndex("TeamId");
-
                     b.ToTable("GameTimes");
 
                     b.HasData(
-                        new { Id = 1, Date = new DateTime(2019, 12, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), StadiumId = 1, Team1Id = 1, Team2Id = 2 },
-                        new { Id = 2, Date = new DateTime(2019, 12, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), StadiumId = 2, Team1Id = 3, Team2Id = 4 }
+                        new { Id = 1, Date = new DateTime(2019, 12, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), PositionType1Id = 1, PositionType2Id = 2, StadiumId = 1, Team1Id = 1, Team2Id = 2 },
+                        new { Id = 2, Date = new DateTime(2019, 12, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), PositionType1Id = 2, PositionType2Id = 1, StadiumId = 2, Team1Id = 3, Team2Id = 4 }
                     );
                 });
 
@@ -211,6 +241,24 @@ namespace December_24_2019_Football.Migrations
                         new { Id = 6, Name = "Wide Midfield" },
                         new { Id = 7, Name = "Striker" },
                         new { Id = 8, Name = "Behind the Striker" }
+                    );
+                });
+
+            modelBuilder.Entity("December_24_2019_Football.Models.PositionType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PositionTypes");
+
+                    b.HasData(
+                        new { Id = 1, Name = "3-4-3" },
+                        new { Id = 2, Name = "4-2-4" }
                     );
                 });
 
@@ -459,6 +507,11 @@ namespace December_24_2019_Football.Migrations
                         .HasForeignKey("FootballPlayerId")
                         .OnDelete(DeleteBehavior.Cascade);
 
+                    b.HasOne("December_24_2019_Football.Models.FootballerPosition", "FootballerPosition")
+                        .WithMany("FootballPlayerGameTimes")
+                        .HasForeignKey("FootballerPositionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("December_24_2019_Football.Models.GameTime", "GameTime")
                         .WithMany("FootballPlayerGameTimes")
                         .HasForeignKey("GameTimeId")
@@ -471,10 +524,6 @@ namespace December_24_2019_Football.Migrations
                         .WithMany("GameTimes")
                         .HasForeignKey("StadiumId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("December_24_2019_Football.Models.Team")
-                        .WithMany("GameTimes")
-                        .HasForeignKey("TeamId");
                 });
 
             modelBuilder.Entity("December_24_2019_Football.Models.Team", b =>

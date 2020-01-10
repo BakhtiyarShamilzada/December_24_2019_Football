@@ -19,6 +19,10 @@ namespace December_24_2019_Football.Models
 
         public int Team2Id { get; set; }
 
+        public int PositionType1Id { get; set; }
+
+        public int PositionType2Id { get; set; }
+
         public int StadiumId { get; set; }
 
         [Required]

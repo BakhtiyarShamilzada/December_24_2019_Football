@@ -122,6 +122,34 @@ namespace December_24_2019_Football.Controllers
         public async Task<IActionResult> Update(int id, HomeViewModel homeViewModel)
         {
             if (!ModelState.IsValid) return View(homeViewModel);
+
+            IEnumerable<FootballCart> footballCarts = _context.FootballCarts.Where(fc => fc.FootballPlayerId == homeViewModel.FootballPlayerId && fc.GameTimeId == homeViewModel.GameTimeId);
+            int countRed = footballCarts.Where(fc => fc.CartId == 1 && fc.Id != id).Count();
+            int countYellow = footballCarts.Where(fc => fc.CartId == 2).Count();
+            if (countRed != 0)
+            {
+                homeViewModel = new HomeViewModel
+                {
+                    Carts = _context.Carts,
+                    FootballPlayers = _context.FootballPlayerGameTimes.Select(fg => fg.FootballPlayer).ToHashSet(),
+                    GameTimes = _context.GameTimes
+                };
+                ModelState.AddModelError("", "The player already has a red card");
+                return View(homeViewModel);
+            }
+
+            if (countYellow == 2 && homeViewModel.CartId == 1 && footballCarts.FirstOrDefault().Id == id)
+            {
+                homeViewModel = new HomeViewModel
+                {
+                    Carts = _context.Carts,
+                    FootballPlayers = _context.FootballPlayerGameTimes.Select(fg => fg.FootballPlayer).ToHashSet(),
+                    GameTimes = _context.GameTimes
+                };
+                ModelState.AddModelError("", "The player cannot get the red card before the yellow card");
+                return View(homeViewModel);
+            }
+
             FootballCart footballCartFromDb = await _context.FootballCarts.FindAsync(id);
 
             footballCartFromDb.FootballPlayerId = homeViewModel.FootballPlayerId;

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace December_24_2019_Football.Migrations
 {
-    public partial class football : Migration
+    public partial class FootballerPosition : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -75,6 +75,19 @@ namespace December_24_2019_Football.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "FootballerPositions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FootballerPositions", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Positions",
                 columns: table => new
                 {
@@ -85,6 +98,19 @@ namespace December_24_2019_Football.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Positions", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PositionTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PositionTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -229,6 +255,30 @@ namespace December_24_2019_Football.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "GameTimes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Team1Id = table.Column<int>(nullable: false),
+                    Team2Id = table.Column<int>(nullable: false),
+                    PositionType1Id = table.Column<int>(nullable: false),
+                    PositionType2Id = table.Column<int>(nullable: false),
+                    StadiumId = table.Column<int>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GameTimes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_GameTimes_Stadiums_StadiumId",
+                        column: x => x.StadiumId,
+                        principalTable: "Stadiums",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "FootballPlayers",
                 columns: table => new
                 {
@@ -256,35 +306,6 @@ namespace December_24_2019_Football.Migrations
                         principalTable: "Teams",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "GameTimes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Team1Id = table.Column<int>(nullable: false),
-                    Team2Id = table.Column<int>(nullable: false),
-                    StadiumId = table.Column<int>(nullable: false),
-                    Date = table.Column<DateTime>(nullable: false),
-                    TeamId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GameTimes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_GameTimes_Stadiums_StadiumId",
-                        column: x => x.StadiumId,
-                        principalTable: "Stadiums",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_GameTimes_Teams_TeamId",
-                        column: x => x.TeamId,
-                        principalTable: "Teams",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -327,6 +348,7 @@ namespace December_24_2019_Football.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     FootballPlayerId = table.Column<int>(nullable: false),
+                    FootballerPositionId = table.Column<int>(nullable: false),
                     GameTimeId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -336,6 +358,12 @@ namespace December_24_2019_Football.Migrations
                         name: "FK_FootballPlayerGameTimes_FootballPlayers_FootballPlayerId",
                         column: x => x.FootballPlayerId,
                         principalTable: "FootballPlayers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_FootballPlayerGameTimes_FootballerPositions_FootballerPositionId",
+                        column: x => x.FootballerPositionId,
+                        principalTable: "FootballerPositions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -365,18 +393,44 @@ namespace December_24_2019_Football.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "FootballerPositions",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 10, "10" },
+                    { 8, "8" },
+                    { 7, "7" },
+                    { 6, "6" },
+                    { 9, "9" },
+                    { 4, "4" },
+                    { 3, "3" },
+                    { 2, "2" },
+                    { 1, "1" },
+                    { 5, "5" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "PositionTypes",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 2, "4-2-4" },
+                    { 1, "3-4-3" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Positions",
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { 1, "Goalkeeper" },
-                    { 2, "Full-backs" },
-                    { 3, "Centre-Backs" },
-                    { 4, "Sweeper" },
-                    { 5, "Central Midfield" },
-                    { 6, "Wide Midfield" },
+                    { 8, "Behind the Striker" },
                     { 7, "Striker" },
-                    { 8, "Behind the Striker" }
+                    { 6, "Wide Midfield" },
+                    { 4, "Sweeper" },
+                    { 3, "Centre-Backs" },
+                    { 2, "Full-backs" },
+                    { 1, "Goalkeeper" },
+                    { 5, "Central Midfield" }
                 });
 
             migrationBuilder.InsertData(
@@ -390,11 +444,11 @@ namespace December_24_2019_Football.Migrations
 
             migrationBuilder.InsertData(
                 table: "GameTimes",
-                columns: new[] { "Id", "Date", "StadiumId", "Team1Id", "Team2Id", "TeamId" },
+                columns: new[] { "Id", "Date", "PositionType1Id", "PositionType2Id", "StadiumId", "Team1Id", "Team2Id" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2019, 12, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 1, 2, null },
-                    { 2, new DateTime(2019, 12, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, 3, 4, null }
+                    { 1, new DateTime(2019, 12, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 2, 1, 1, 2 },
+                    { 2, new DateTime(2019, 12, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, 1, 2, 3, 4 }
                 });
 
             migrationBuilder.InsertData(
@@ -440,11 +494,11 @@ namespace December_24_2019_Football.Migrations
 
             migrationBuilder.InsertData(
                 table: "FootballPlayerGameTimes",
-                columns: new[] { "Id", "FootballPlayerId", "GameTimeId" },
+                columns: new[] { "Id", "FootballPlayerId", "FootballerPositionId", "GameTimeId" },
                 values: new object[,]
                 {
-                    { 1, 1, 1 },
-                    { 2, 2, 2 }
+                    { 1, 1, 1, 1 },
+                    { 2, 2, 2, 2 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -507,6 +561,11 @@ namespace December_24_2019_Football.Migrations
                 column: "FootballPlayerId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_FootballPlayerGameTimes_FootballerPositionId",
+                table: "FootballPlayerGameTimes",
+                column: "FootballerPositionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_FootballPlayerGameTimes_GameTimeId",
                 table: "FootballPlayerGameTimes",
                 column: "GameTimeId");
@@ -525,11 +584,6 @@ namespace December_24_2019_Football.Migrations
                 name: "IX_GameTimes_StadiumId",
                 table: "GameTimes",
                 column: "StadiumId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_GameTimes_TeamId",
-                table: "GameTimes",
-                column: "TeamId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Teams_CountryId",
@@ -561,6 +615,9 @@ namespace December_24_2019_Football.Migrations
                 name: "FootballPlayerGameTimes");
 
             migrationBuilder.DropTable(
+                name: "PositionTypes");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -573,16 +630,19 @@ namespace December_24_2019_Football.Migrations
                 name: "FootballPlayers");
 
             migrationBuilder.DropTable(
+                name: "FootballerPositions");
+
+            migrationBuilder.DropTable(
                 name: "GameTimes");
 
             migrationBuilder.DropTable(
                 name: "Positions");
 
             migrationBuilder.DropTable(
-                name: "Stadiums");
+                name: "Teams");
 
             migrationBuilder.DropTable(
-                name: "Teams");
+                name: "Stadiums");
 
             migrationBuilder.DropTable(
                 name: "Countries");

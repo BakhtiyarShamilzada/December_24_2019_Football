@@ -6,15 +6,25 @@
         <tr>
             <th scope="row">@(counter++)</th>
             <td class="cart-image-area">
-                <a asp-controller="FootballCart" asp-action="Update" asp-route-id="@item.Id">
-                    <img style="width:100px" class="cart-image" src="~/images/@item.Cart.Image" />
-                </a>
+                @if (Model.FootballCarts.Where(fc => fc.FootballPlayerId == item.FootballPlayerId && fc.GameTimeId == item.GameTimeId && fc.CartId == 2).Count() == 2)
+                {
+                    <a asp-controller="FootballCart" asp-action="Update" class="two-cart-image" asp-route-id="@item.Id">
+                        <img style="width:50px" src="~/images/@item.Cart.Image" />
+                        <img style="width:50px" src="~/images/@item.Cart.Image" />
+                        <img style="width:1px" src="~/images/Cart/red.png" />
+                    </a>
+                }
+                else
+                {
+                    <a asp-controller="FootballCart" asp-action="Update" asp-route-id="@item.Id">
+                        <img style="width:1px" class="cart-image" src="~/images/@item.Cart.Image" />
+                    </a>
+                }
             </td>
             <td>@item.FootballPlayer.Firstname</td>
             <td>@item.FootballPlayer.Lastname</td>
             <td>@item.FootballPlayer.Age</td>
             <td>@Model.Positions.FirstOrDefault(c => c.Id == item.FootballPlayer.PositionId).Name</td>
-            <td>@item.Cart.Name</td>
             <td>
                 @item.GameTime.Date.ToString("MM.dd.yyyy")<br />
                 @item.GameTime.Date.ToString("HH:mm")

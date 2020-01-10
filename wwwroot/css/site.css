@@ -42,52 +42,76 @@ ul ul {
     background: linear-gradient(to top, #373b44, #4286f4);
 }
 
-ul ul a {
-    background: transparent;
-    color: #fff;
-}
+    ul ul a {
+        background: transparent;
+        color: #fff;
+    }
 
-ul ul a:hover {
-    background: #fff !important;
-    color: #0061ff !important;
-}
-.cart-image-area
-{
+        ul ul a:hover {
+            background: #fff !important;
+            color: #0061ff !important;
+        }
+
+.cart-image-area {
     position: relative;
     width: 136px;
     height: 124px;
 }
+
 .cart-image {
-    transition: all .3s;
+    transition: all 1s;
     position: absolute;
+    left: 60px;
     top: 100%;
-    opacity: 0;
-}
-.cart-image-area:hover .cart-image {
-    top: 12px;
-    opacity: 1;
 }
 
-.two-cart-image img
-{
-    transition: all .3s;
+.cart-image-area:hover .cart-image {
+    top: 54px;
+    opacity: 1;
+    visibility: visible;
+    transform: scale(90)
+}
+
+.two-cart-image img {
     position: absolute;
+    visibility: hidden;
     opacity: 0;
 }
-.two-cart-image img:first-child
-{
-    left: -100%;
-}
-.two-cart-image img:last-child {
-    left: 100%;
-}
-.cart-image-area:hover .two-cart-image img
-{
+
+    .two-cart-image img:first-child {
+        top: 40px;
+        transition: all 1s;
+        transition-delay: .5s;
+        left: -100%;
+    }
+
+    .two-cart-image img:nth-child(2) {
+        top: 40px;
+        transition: all 1s;
+        transition-delay: .5s;
+        left: 100%;
+    }
+
+    .two-cart-image img:last-child {
+        transition: all .5s;
+        top: 100%;
+        left: 60px;
+    }
+
+.cart-image-area:hover .two-cart-image img {
+    visibility: visible;
     opacity: 1;
+    left: 40px;
+    top: 40px;
 }
-.cart-image-area:hover .two-cart-image img:first-child {
-    left: 12px;
-}
-.cart-image-area:hover .two-cart-image img:last-child {
-    left: 70px;
-}
+
+    .cart-image-area:hover .two-cart-image img:first-child, .cart-image-area:hover .two-cart-image img:nth-child(2) {
+        transition-delay: 0s;
+    }
+
+    .cart-image-area:hover .two-cart-image img:last-child {
+        transform: scale(90);
+        transition-delay: .9s;
+        top: 55px;
+        left: 60px;
+    }

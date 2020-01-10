@@ -24,96 +24,146 @@
                     <h3 class="mb-0 text-center">Add a FootballPlayer to the Game Time</h3>
                 </div>
             </div>
-            <div class="row py-3">
-                <div class="col-12 d-flex justify-content-between">
-                    <a asp-controller="Home" class="btn btn-warning"><i class="fas fa-long-arrow-alt-left"></i></a>
+
+            <div class="row">
+                <div class="col-12">
+                    <main>
+                        <div class="static mt-5">
+                            <div class="js-switcher switcher">
+                                <a href="#" class="js-switch disabled switch-btn">@Model.Teams.FirstOrDefault(t => t.Id == Model.Team1Id).Name</a><a href="#" class="js-switch switch-btn">@Model.Teams.FirstOrDefault(t => t.Id == Model.Team2Id).Name</a>
+                            </div>
+                        </div>
+                        <div class="js-stage stage texture">
+                            <div class="js-world world">
+                                <div class="team js-team">
+                                    <!-- Team cards / icons goes here -->
+                                </div>
+                                <div class="terrain js-terrain">
+                                    <div class="field field--alt"></div>
+                                    <div class="field ground">
+                                        <div class="field__texture field__texture--gradient"></div>
+                                        <div class="field__texture field__texture--gradient-b"></div>
+                                        <div class="field__texture field__texture--grass"></div>
+                                        <div class="field__line field__line--goal"></div>
+                                        <div class="field__line field__line--goal field__line--goal--far"></div>
+                                        <div class="field__line field__line--outline"></div>
+                                        <div class="field__line field__line--penalty"></div>
+                                        <div class="field__line field__line--penalty-arc"></div>
+                                        <div class="field__line field__line--penalty-arc field__line--penalty-arc--far"></div>
+                                        <div class="field__line field__line--mid"></div>
+                                        <div class="field__line field__line--circle"></div>
+                                        <div class="field__line field__line--penalty field__line--penalty--far"></div>
+                                    </div>
+                                    <div class="field__side field__side--front"></div>
+                                    <div class="field__side field__side--left"></div>
+                                    <div class="field__side field__side--right"></div>
+                                    <div class="field__side field__side--back"></div>
+                                </div>
+                            </div>
+                            <div class="loading js-loading">PLEASE WAIT...</div>
+                        </div>
+                    </main>
+
                 </div>
             </div>
-            <form method="post">
-                <div class="row py-3">
-                    <div class="col-12 text-center pb-3">
-                        <h4>@Model.Teams.FirstOrDefault(t => t.Id == Model.Team1Id).Name</h4>
+
+            <div class="row pt-3">
+                @foreach (var item in Model.FootballPlayers.Where(fp => fp.TeamId == Model.Team1Id))
+                {
+                    <div class="col-3">
+                        <div class="team-1" data-id="@item.Id">
+                            <img src="~/images/@item.Image" class="rounded-circle" alt="Alternate Text" />
+                            <h6>@item.Firstname</h6>
+                        </div>
                     </div>
-                    <div class="col-12">
-                        <table class="table table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Number</th>
-                                    <th scope="col">Select</th>
-                                    <th scope="col">Firstname</th>
-                                    <th scope="col">Lastname</th>
-                                    <th scope="col">Age</th>
-                                    <th scope="col">Position</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @{
-                                    int counter = 0;
-                                    foreach (var item in Model.FootballPlayers.Where(fp => fp.TeamId == Model.Team1Id))
-                                    {
-                                        <tr>
-                                            <th scope="row">@(++counter)</th>
-                                            <td>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input data-football-players-id="@item.Id" type="checkbox" class="custom-control-input football-players-id" id="customCheck@(counter)">
-                                                    <label class="custom-control-label pointer-checkbox" for="customCheck@(counter)"></label>
-                                                </div>
-                                            </td>
-                                            <td>@item.Firstname</td>
-                                            <td>@item.Lastname</td>
-                                            <td>@item.Age</td>
-                                            <td>@item.Position.Name</td>
-                                        </tr>
-                                    }
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="col-12 text-center pt-5 pb-3">
-                        <h4>@Model.Teams.FirstOrDefault(t => t.Id == Model.Team2Id).Name</h4>
-                    </div>
-                    <div class="col-12">
-                        <table class="table table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Number</th>
-                                    <th scope="col">Select</th>
-                                    <th scope="col">Firstname</th>
-                                    <th scope="col">Lastname</th>
-                                    <th scope="col">Age</th>
-                                    <th scope="col">Position</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @{
-                                    int counter2 = 0;
-                                    foreach (var item in Model.FootballPlayers.Where(fp => fp.TeamId == Model.Team2Id))
-                                    {
-                                        <tr>
-                                            <th scope="row">@(++counter2)</th>
-                                            <td>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input data-football-players-id="@item.Id" type="checkbox" class="custom-control-input football-players-id" id="customCheck@(counter + counter2)">
-                                                    <label class="custom-control-label pointer-checkbox" for="customCheck@(counter + counter2)"></label>
-                                                </div>
-                                            </td>
-                                            <td>@item.Firstname</td>
-                                            <td>@item.Lastname</td>
-                                            <td>@item.Age</td>
-                                            <td>@item.Position.Name</td>
-                                        </tr>
-                                    }
-                                }
-                            </tbody>
-                        </table>
-                    </div>
+                }
+            </div>
+
+            @*<form method="post">
+            <div class="row py-3">
+                <div class="col-12 text-center pb-3">
+                    <h4>@Model.Teams.FirstOrDefault(t => t.Id == Model.Team1Id).Name</h4>
                 </div>
-                <div class="form-group d-flex justify-content-end">
-                    <input asp-for="@Model.FootballPlayersId" type="hidden" />
-                    <input asp-for="@Model.GameTimeId" type="hidden" />
-                    <button type="submit" class="btn btn-success"> Add</button>
+                <div class="col-12">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Number</th>
+                                <th scope="col">Select</th>
+                                <th scope="col">Firstname</th>
+                                <th scope="col">Lastname</th>
+                                <th scope="col">Age</th>
+                                <th scope="col">Position</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int counter = 0;
+                                foreach (var item in Model.FootballPlayers.Where(fp => fp.TeamId == Model.Team1Id))
+                                {
+                                    <tr>
+                                        <th scope="row">@(++counter)</th>
+                                        <td>
+                                            <div class="custom-control custom-checkbox">
+                                                <input data-football-players-id="@item.Id" type="checkbox" class="custom-control-input football-players-id" id="customCheck@(counter)">
+                                                <label class="custom-control-label pointer-checkbox" for="customCheck@(counter)"></label>
+                                            </div>
+                                        </td>
+                                        <td>@item.Firstname</td>
+                                        <td>@item.Lastname</td>
+                                        <td>@item.Age</td>
+                                        <td>@item.Position.Name</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
                 </div>
-            </form>
+                <div class="col-12 text-center pt-5 pb-3">
+                    <h4>@Model.Teams.FirstOrDefault(t => t.Id == Model.Team2Id).Name</h4>
+                </div>
+                <div class="col-12">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Number</th>
+                                <th scope="col">Select</th>
+                                <th scope="col">Firstname</th>
+                                <th scope="col">Lastname</th>
+                                <th scope="col">Age</th>
+                                <th scope="col">Position</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int counter2 = 0;
+                                foreach (var item in Model.FootballPlayers.Where(fp => fp.TeamId == Model.Team2Id))
+                                {
+                                    <tr>
+                                        <th scope="row">@(++counter2)</th>
+                                        <td>
+                                            <div class="custom-control custom-checkbox">
+                                                <input data-football-players-id="@item.Id" type="checkbox" class="custom-control-input football-players-id" id="customCheck@(counter + counter2)">
+                                                <label class="custom-control-label pointer-checkbox" for="customCheck@(counter + counter2)"></label>
+                                            </div>
+                                        </td>
+                                        <td>@item.Firstname</td>
+                                        <td>@item.Lastname</td>
+                                        <td>@item.Age</td>
+                                        <td>@item.Position.Name</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="form-group d-flex justify-content-end">
+                <input asp-for="@Model.FootballPlayersId" type="hidden" />
+                <input asp-for="@Model.GameTimeId" type="hidden" />
+                <button type="submit" class="btn btn-success"> Add</button>
+            </div>
+        </form>*@
         </div>
     </section>
 
