@@ -250,4 +250,31 @@
         $(this).data('datepicker').selectDate(new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()));
     })
 
+    $('.teams').draggable({ revert: true });
+    $('.player').droppable({
+        hoverClass: 'hover',
+        drop: function (e, ui) {
+            let footballerId = ui.draggable.attr('data-id');
+            let positionId = $(this).attr('data-name');
+            $('#FootballersIdPositionsId').val($('#FootballersIdPositionsId').val() + footballerId + "-" + positionId + ",");
+            $(this).find('img').attr('src', ui.draggable.remove().find('img').attr('src') );
+            $(this).droppable('destroy');
+        }
+    });
+
+    $(document).on('click', '#team-2', function () {
+        let psoitionType1Id = $('#PositionType1Id').val();
+        let psoitionType2Id = $('#PositionType2Id').val();
+        $('.team-2-area').fadeIn();
+        $('.team-1-area').hide();
+        $('.team').removeClass('position-type-' + psoitionType1Id).addClass('position-type-' + psoitionType2Id);
+    })
+
+    $(document).on('click', '#team-1', function () {
+        let psoitionType1Id = $('#PositionType1Id').val();
+        let psoitionType2Id = $('#PositionType2Id').val();
+        $('.team-1-area').fadeIn();
+        $('.team-2-area').hide();
+        $('.team').removeClass('position-type-' + psoitionType2Id).addClass('position-type-' + psoitionType1Id);
+    })
 })

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace December_24_2019_Football.Migrations
 {
-    public partial class FootballerPosition : Migration
+    public partial class Football : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -456,10 +456,8 @@ namespace December_24_2019_Football.Migrations
                 columns: new[] { "Id", "CountryId", "Name" },
                 values: new object[,]
                 {
-                    { 1, 1, "Amigos" },
-                    { 2, 1, "Mamacitas" },
-                    { 3, 2, "Liverpool FC" },
-                    { 4, 2, "Manchester City" }
+                    { 1, 1, "Real madrid" },
+                    { 2, 2, "SV werder bremen" }
                 });
 
             migrationBuilder.InsertData(
@@ -467,14 +465,26 @@ namespace December_24_2019_Football.Migrations
                 columns: new[] { "Id", "Age", "Firstname", "Image", "Lastname", "PositionId", "TeamId" },
                 values: new object[,]
                 {
-                    { 1, 25, "Messi", "FootballPlayer/1.png", "Lionel", 1, 1 },
-                    { 2, 27, "Ronaldo", "FootballPlayer/2.png", "Cristiano", 2, 1 },
-                    { 3, 32, "Xavi", "FootballPlayer/3.png", "Xavi", 3, 2 },
-                    { 4, 28, "Iniesta", "FootballPlayer/4.png", "Andres", 4, 2 },
-                    { 5, 31, "Ibrahimovic", "FootballPlayer/5.png", "Zlatan", 5, 3 },
-                    { 6, 26, "Falcao", "FootballPlayer/6.png", "Radamel", 6, 3 },
-                    { 7, 29, "Persie", "FootballPlayer/7.png", "Robin van", 7, 4 },
-                    { 8, 33, "Pirlo", "FootballPlayer/8.png", "Andrea", 8, 4 }
+                    { 1, 25, "Robben", "FootballPlayer/1.png", "Robben", 1, 1 },
+                    { 18, 26, "Pepe", "FootballPlayer/18.jpg", "Pepe", 6, 2 },
+                    { 17, 31, "Nacho", "FootballPlayer/17.jpg", "Nacho", 5, 2 },
+                    { 16, 33, "Modric", "FootballPlayer/16.jpg", "Modric", 8, 2 },
+                    { 15, 29, "Carvajal", "FootballPlayer/15.jpg", "Carvajal", 7, 2 },
+                    { 14, 26, "Silva", "FootballPlayer/14.jpg", "Silva", 6, 2 },
+                    { 13, 31, "Kroos", "FootballPlayer/13.jpg", "Kroos", 5, 2 },
+                    { 12, 28, "Benzema", "FootballPlayer/12.jpg", "Benzema", 4, 2 },
+                    { 11, 32, "Bale", "FootballPlayer/11.jpg", "Bale", 3, 2 },
+                    { 4, 28, "Schweinsteiger", "FootballPlayer/4.jpg", "Schweinsteiger", 1, 2 },
+                    { 10, 27, "Neuer", "FootballPlayer/10.jpg", "Neuer", 2, 1 },
+                    { 9, 25, "Benatia", "FootballPlayer/9.jpg", "Benatia", 1, 1 },
+                    { 8, 33, "Dante", "FootballPlayer/8.jpg", "Dante", 8, 1 },
+                    { 7, 29, "Lahm", "FootballPlayer/7.jpg", "Lahm", 7, 1 },
+                    { 6, 26, "Alaba", "FootballPlayer/6.jpg", "Alaba", 6, 1 },
+                    { 5, 31, "Rilbery", "FootballPlayer/5.jpg", "Rilbery", 5, 1 },
+                    { 3, 32, "Martinez", "FootballPlayer/3.jpg", "Martinez", 3, 1 },
+                    { 2, 27, "Pizarro", "FootballPlayer/2.jpg", "Pizarro", 2, 1 },
+                    { 19, 29, "Ramos", "FootballPlayer/19.jpg", "Ramos", 7, 2 },
+                    { 20, 33, "Casillas", "FootballPlayer/20.jpg", "Casillas", 8, 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -483,13 +493,13 @@ namespace December_24_2019_Football.Migrations
                 values: new object[,]
                 {
                     { 1, 1, 1, 1 },
-                    { 2, 2, 2, 2 },
-                    { 3, 1, 3, 1 },
-                    { 4, 2, 4, 2 },
+                    { 8, 2, 8, 2 },
+                    { 7, 1, 7, 1 },
                     { 5, 1, 5, 1 },
                     { 6, 2, 6, 2 },
-                    { 7, 1, 7, 1 },
-                    { 8, 2, 8, 2 }
+                    { 2, 2, 2, 2 },
+                    { 3, 1, 3, 1 },
+                    { 4, 2, 4, 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -497,8 +507,26 @@ namespace December_24_2019_Football.Migrations
                 columns: new[] { "Id", "FootballPlayerId", "FootballerPositionId", "GameTimeId" },
                 values: new object[,]
                 {
+                    { 16, 16, 6, 1 },
+                    { 17, 17, 7, 1 },
+                    { 15, 15, 5, 1 },
+                    { 4, 4, 4, 1 },
+                    { 14, 14, 4, 1 },
+                    { 13, 13, 3, 1 },
+                    { 18, 18, 8, 1 },
+                    { 12, 12, 2, 1 },
+                    { 11, 11, 1, 1 },
+                    { 8, 8, 8, 1 },
+                    { 9, 9, 9, 1 },
+                    { 19, 19, 9, 1 },
+                    { 7, 7, 7, 1 },
+                    { 6, 6, 6, 1 },
+                    { 5, 5, 5, 1 },
+                    { 3, 3, 3, 1 },
+                    { 2, 2, 2, 1 },
                     { 1, 1, 1, 1 },
-                    { 2, 2, 2, 2 }
+                    { 10, 10, 10, 1 },
+                    { 20, 20, 10, 1 }
                 });
 
             migrationBuilder.CreateIndex(

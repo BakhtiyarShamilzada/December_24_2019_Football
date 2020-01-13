@@ -48,6 +48,8 @@ namespace December_24_2019_Football.ViewModels
 
         public string FootballPlayersId { get; set; }
 
+        public string FootballersIdPositionsId { get; set; }
+
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
 

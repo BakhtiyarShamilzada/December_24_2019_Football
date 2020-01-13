@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace December_24_2019_Football.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200110103631_FootballerPosition")]
-    partial class FootballerPosition
+    [Migration("20200113065854_Football")]
+    partial class Football
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -151,14 +151,26 @@ namespace December_24_2019_Football.Migrations
                     b.ToTable("FootballPlayers");
 
                     b.HasData(
-                        new { Id = 1, Age = 25, Firstname = "Messi", Image = "FootballPlayer/1.png", Lastname = "Lionel", PositionId = 1, TeamId = 1 },
-                        new { Id = 2, Age = 27, Firstname = "Ronaldo", Image = "FootballPlayer/2.png", Lastname = "Cristiano", PositionId = 2, TeamId = 1 },
-                        new { Id = 3, Age = 32, Firstname = "Xavi", Image = "FootballPlayer/3.png", Lastname = "Xavi", PositionId = 3, TeamId = 2 },
-                        new { Id = 4, Age = 28, Firstname = "Iniesta", Image = "FootballPlayer/4.png", Lastname = "Andres", PositionId = 4, TeamId = 2 },
-                        new { Id = 5, Age = 31, Firstname = "Ibrahimovic", Image = "FootballPlayer/5.png", Lastname = "Zlatan", PositionId = 5, TeamId = 3 },
-                        new { Id = 6, Age = 26, Firstname = "Falcao", Image = "FootballPlayer/6.png", Lastname = "Radamel", PositionId = 6, TeamId = 3 },
-                        new { Id = 7, Age = 29, Firstname = "Persie", Image = "FootballPlayer/7.png", Lastname = "Robin van", PositionId = 7, TeamId = 4 },
-                        new { Id = 8, Age = 33, Firstname = "Pirlo", Image = "FootballPlayer/8.png", Lastname = "Andrea", PositionId = 8, TeamId = 4 }
+                        new { Id = 1, Age = 25, Firstname = "Robben", Image = "FootballPlayer/1.png", Lastname = "Robben", PositionId = 1, TeamId = 1 },
+                        new { Id = 2, Age = 27, Firstname = "Pizarro", Image = "FootballPlayer/2.jpg", Lastname = "Pizarro", PositionId = 2, TeamId = 1 },
+                        new { Id = 3, Age = 32, Firstname = "Martinez", Image = "FootballPlayer/3.jpg", Lastname = "Martinez", PositionId = 3, TeamId = 1 },
+                        new { Id = 4, Age = 28, Firstname = "Schweinsteiger", Image = "FootballPlayer/4.jpg", Lastname = "Schweinsteiger", PositionId = 1, TeamId = 2 },
+                        new { Id = 5, Age = 31, Firstname = "Rilbery", Image = "FootballPlayer/5.jpg", Lastname = "Rilbery", PositionId = 5, TeamId = 1 },
+                        new { Id = 6, Age = 26, Firstname = "Alaba", Image = "FootballPlayer/6.jpg", Lastname = "Alaba", PositionId = 6, TeamId = 1 },
+                        new { Id = 7, Age = 29, Firstname = "Lahm", Image = "FootballPlayer/7.jpg", Lastname = "Lahm", PositionId = 7, TeamId = 1 },
+                        new { Id = 8, Age = 33, Firstname = "Dante", Image = "FootballPlayer/8.jpg", Lastname = "Dante", PositionId = 8, TeamId = 1 },
+                        new { Id = 9, Age = 25, Firstname = "Benatia", Image = "FootballPlayer/9.jpg", Lastname = "Benatia", PositionId = 1, TeamId = 1 },
+                        new { Id = 10, Age = 27, Firstname = "Neuer", Image = "FootballPlayer/10.jpg", Lastname = "Neuer", PositionId = 2, TeamId = 1 },
+                        new { Id = 11, Age = 32, Firstname = "Bale", Image = "FootballPlayer/11.jpg", Lastname = "Bale", PositionId = 3, TeamId = 2 },
+                        new { Id = 12, Age = 28, Firstname = "Benzema", Image = "FootballPlayer/12.jpg", Lastname = "Benzema", PositionId = 4, TeamId = 2 },
+                        new { Id = 13, Age = 31, Firstname = "Kroos", Image = "FootballPlayer/13.jpg", Lastname = "Kroos", PositionId = 5, TeamId = 2 },
+                        new { Id = 14, Age = 26, Firstname = "Silva", Image = "FootballPlayer/14.jpg", Lastname = "Silva", PositionId = 6, TeamId = 2 },
+                        new { Id = 15, Age = 29, Firstname = "Carvajal", Image = "FootballPlayer/15.jpg", Lastname = "Carvajal", PositionId = 7, TeamId = 2 },
+                        new { Id = 16, Age = 33, Firstname = "Modric", Image = "FootballPlayer/16.jpg", Lastname = "Modric", PositionId = 8, TeamId = 2 },
+                        new { Id = 17, Age = 31, Firstname = "Nacho", Image = "FootballPlayer/17.jpg", Lastname = "Nacho", PositionId = 5, TeamId = 2 },
+                        new { Id = 18, Age = 26, Firstname = "Pepe", Image = "FootballPlayer/18.jpg", Lastname = "Pepe", PositionId = 6, TeamId = 2 },
+                        new { Id = 19, Age = 29, Firstname = "Ramos", Image = "FootballPlayer/19.jpg", Lastname = "Ramos", PositionId = 7, TeamId = 2 },
+                        new { Id = 20, Age = 33, Firstname = "Casillas", Image = "FootballPlayer/20.jpg", Lastname = "Casillas", PositionId = 8, TeamId = 2 }
                     );
                 });
 
@@ -186,7 +198,25 @@ namespace December_24_2019_Football.Migrations
 
                     b.HasData(
                         new { Id = 1, FootballPlayerId = 1, FootballerPositionId = 1, GameTimeId = 1 },
-                        new { Id = 2, FootballPlayerId = 2, FootballerPositionId = 2, GameTimeId = 2 }
+                        new { Id = 2, FootballPlayerId = 2, FootballerPositionId = 2, GameTimeId = 1 },
+                        new { Id = 3, FootballPlayerId = 3, FootballerPositionId = 3, GameTimeId = 1 },
+                        new { Id = 4, FootballPlayerId = 4, FootballerPositionId = 4, GameTimeId = 1 },
+                        new { Id = 5, FootballPlayerId = 5, FootballerPositionId = 5, GameTimeId = 1 },
+                        new { Id = 6, FootballPlayerId = 6, FootballerPositionId = 6, GameTimeId = 1 },
+                        new { Id = 7, FootballPlayerId = 7, FootballerPositionId = 7, GameTimeId = 1 },
+                        new { Id = 8, FootballPlayerId = 8, FootballerPositionId = 8, GameTimeId = 1 },
+                        new { Id = 9, FootballPlayerId = 9, FootballerPositionId = 9, GameTimeId = 1 },
+                        new { Id = 10, FootballPlayerId = 10, FootballerPositionId = 10, GameTimeId = 1 },
+                        new { Id = 11, FootballPlayerId = 11, FootballerPositionId = 1, GameTimeId = 1 },
+                        new { Id = 12, FootballPlayerId = 12, FootballerPositionId = 2, GameTimeId = 1 },
+                        new { Id = 13, FootballPlayerId = 13, FootballerPositionId = 3, GameTimeId = 1 },
+                        new { Id = 14, FootballPlayerId = 14, FootballerPositionId = 4, GameTimeId = 1 },
+                        new { Id = 15, FootballPlayerId = 15, FootballerPositionId = 5, GameTimeId = 1 },
+                        new { Id = 16, FootballPlayerId = 16, FootballerPositionId = 6, GameTimeId = 1 },
+                        new { Id = 17, FootballPlayerId = 17, FootballerPositionId = 7, GameTimeId = 1 },
+                        new { Id = 18, FootballPlayerId = 18, FootballerPositionId = 8, GameTimeId = 1 },
+                        new { Id = 19, FootballPlayerId = 19, FootballerPositionId = 9, GameTimeId = 1 },
+                        new { Id = 20, FootballPlayerId = 20, FootballerPositionId = 10, GameTimeId = 1 }
                     );
                 });
 
@@ -303,10 +333,8 @@ namespace December_24_2019_Football.Migrations
                     b.ToTable("Teams");
 
                     b.HasData(
-                        new { Id = 1, CountryId = 1, Name = "Amigos" },
-                        new { Id = 2, CountryId = 1, Name = "Mamacitas" },
-                        new { Id = 3, CountryId = 2, Name = "Liverpool FC" },
-                        new { Id = 4, CountryId = 2, Name = "Manchester City" }
+                        new { Id = 1, CountryId = 1, Name = "Real madrid" },
+                        new { Id = 2, CountryId = 2, Name = "SV werder bremen" }
                     );
                 });
 

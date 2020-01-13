@@ -115,3 +115,87 @@ ul ul {
         top: 55px;
         left: 60px;
     }
+
+.player.hover .player__img {
+    background: green;
+}
+
+
+.teams {
+    position: relative;
+    cursor: move;
+    z-index: 1;
+}
+
+.position-type-1 .player[data-name="10"]
+{
+    transform: translateZ(350px) !important;
+}
+.position-type-1 .player[data-name="9"] {
+    transform: translateX(-100px) translateZ(350px) translateY(0px) !important;
+}
+.position-type-1 .player[data-name="8"] {
+    transform: translateX(100px) translateZ(350px) translateY(0px) !important;
+}
+.position-type-1 .player[data-name="7"] {
+    transform: translateX(200px) translateZ(180px) translateY(0px) !important;
+}
+.position-type-1 .player[data-name="6"] {
+    transform: translateX(-200px) translateZ(180px) translateY(0px) !important;
+}
+.position-type-1 .player[data-name="5"] {
+    transform: translateX(-59px) translateZ(180px) translateY(0px) !important;
+}
+.position-type-1 .player[data-name="4"] {
+    transform: translateZ(180px) translateX(59px) translateY(0px) !important;
+}
+.position-type-1 .player[data-name="3"] {
+    transform: translateX(140px) translateZ(-20px) translateY(0px) !important;
+}
+.position-type-1 .player[data-name="2"] {
+    transform: translateX(-130px) translateZ(-20px) translateY(0px) !important;
+}
+.position-type-1 .player[data-name="1"] {
+    transform: translateX(3px) translateZ(-20px) translateY(0px) !important;
+}
+
+
+.position-type-2 .player[data-name="10"] {
+    transform: translateZ(350px) translateX(-70px) !important;
+}
+
+.position-type-2 .player[data-name="9"] {
+    transform: translateX(-208px) translateZ(350px) translateY(0px) !important;
+}
+
+.position-type-2 .player[data-name="8"] {
+    transform: translateX(68px) translateZ(350px) translateY(0px) !important;
+}
+
+.position-type-2 .player[data-name="7"] {
+    transform: translateX(200px) translateZ(350px) translateY(0px) !important;
+}
+
+.position-type-2 .player[data-name="6"] {
+    transform: translateX(-200px) translateZ(-20px) translateY(0px) !important;
+}
+
+.position-type-2 .player[data-name="5"] {
+    transform: translateX(-66px) translateZ(180px) translateY(0px) !important;
+}
+
+.position-type-2 .player[data-name="4"] {
+    transform: translateZ(180px) translateX(59px) translateY(0px) !important;
+}
+
+.position-type-2 .player[data-name="3"] {
+    transform: translateX(193px) translateZ(-20px) translateY(0px) !important;
+}
+
+.position-type-2 .player[data-name="2"] {
+    transform: translateX(-77px) translateZ(-20px) translateY(0px) !important;
+}
+
+.position-type-2 .player[data-name="1"] {
+    transform: translateX(76px) translateZ(-20px) translateY(0px) !important;
+}

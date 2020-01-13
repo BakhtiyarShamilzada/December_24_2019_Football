@@ -5,37 +5,64 @@
 
     <section id="home">
         <div class="container">
-            @if (TempData["Operation"] != null)
-            {
-                <div class="row pt-3">
-                    <div class="col-12">
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <p class="mb-0">Operation successful.</p>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            }
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="row pt-3">
                 <div class="col-12">
                     <h3 class="mb-0 text-center">Add a FootballPlayer to the Game Time</h3>
                 </div>
             </div>
+            <div class="row pt-3">
+                <div class="col-12">
+                    <div class="static mt-5">
+                        <div class="js-switcher switcher">
+                            <a href="#" class="js-switch disabled switch-btn" id="team-1">@Model.Teams.FirstOrDefault(t => t.Id == Model.Team1Id).Name</a><a href="#" class="js-switch switch-btn" id="team-2">@Model.Teams.FirstOrDefault(t => t.Id == Model.Team2Id).Name</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*<div class="row pt-3">
+                <div class="offset-4 col-4 mt-3">
+                    <div class="form-group">
+                        <label asp-for="@Model.PositionType1Id">Position type</label>
+                        <select asp-for="@Model.PositionType1Id" class="custom-select" asp-items="@(new SelectList(Model.PositionTypes, "Id", "Name"))">
+                            <option selected disabled value="">Choose</option>
+                        </select>
+                        <span asp-validation-for="@Model.PositionType1Id" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>*@
+            <div class="row pt-3 team-1-area">
+                @foreach (var item in Model.FootballPlayers.Where(fp => fp.TeamId == Model.Team1Id))
+                {
+                    <div class="col-2 mb-3">
+                        <div class="teams team-1 text-center" data-id="@item.Id">
+                            <img src="~/images/@item.Image" class="rounded-circle w-50" alt="Alternate Text" />
+                            <h6>@item.Firstname</h6>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="row pt-3 team-2-area" style="display: none">
+                @foreach (var item in Model.FootballPlayers.Where(fp => fp.TeamId == Model.Team2Id))
+                {
+                    <div class="col-2 mb-3">
+                        <div class="teams team-2 text-center" data-id="@item.Id">
+                            <img src="~/images/@item.Image" class="rounded-circle w-50" alt="Alternate Text" />
+                            <h6>@item.Firstname</h6>
+                        </div>
+                    </div>
+                }
+            </div>
 
             <div class="row">
                 <div class="col-12">
                     <main>
-                        <div class="static mt-5">
-                            <div class="js-switcher switcher">
-                                <a href="#" class="js-switch disabled switch-btn">@Model.Teams.FirstOrDefault(t => t.Id == Model.Team1Id).Name</a><a href="#" class="js-switch switch-btn">@Model.Teams.FirstOrDefault(t => t.Id == Model.Team2Id).Name</a>
-                            </div>
-                        </div>
                         <div class="js-stage stage texture">
                             <div class="js-world world">
-                                <div class="team js-team">
+                                <input asp-for="@Model.PositionType1Id" type="hidden" />
+                                <input asp-for="@Model.PositionType2Id" type="hidden" />
+                                <div class="team js-team position-type-@Model.PositionType1Id">
                                     <!-- Team cards / icons goes here -->
                                 </div>
                                 <div class="terrain js-terrain">
@@ -66,19 +93,12 @@
 
                 </div>
             </div>
-
-            <div class="row pt-3">
-                @foreach (var item in Model.FootballPlayers.Where(fp => fp.TeamId == Model.Team1Id))
-                {
-                    <div class="col-3">
-                        <div class="team-1" data-id="@item.Id">
-                            <img src="~/images/@item.Image" class="rounded-circle" alt="Alternate Text" />
-                            <h6>@item.Firstname</h6>
-                        </div>
-                    </div>
-                }
-            </div>
-
+            <form method="post">
+                <input asp-for="@Model.FootballersIdPositionsId" type="hidden" />
+                <div class="form-group d-flex justify-content-end">
+                    <button type="submit" class="btn btn-success"> Add</button>
+                </div>
+            </form>
             @*<form method="post">
             <div class="row py-3">
                 <div class="col-12 text-center pb-3">

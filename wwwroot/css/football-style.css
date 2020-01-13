@@ -57,7 +57,7 @@ main {
 .world {
   position: relative;
   left: 50%;
-  top: -90px;
+  top: 0px;
   margin-left: -336px;
   width: 672px;
   height: 840px;
