@@ -110,18 +110,20 @@ namespace December_24_2019_Football.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(int id, HomeViewModel homeViewModel)
         {
-            if (homeViewModel.FootballPlayersId == null)
+            if (homeViewModel.FootballersIdPositionsId == null)
             {
                 IEnumerable<FootballPlayerGameTime> footballPlayerGameTimes = _context.FootballPlayerGameTimes.Where(fpg => fpg.GameTimeId == id).Include(fpg => fpg.FootballPlayer);
                 GameTime gameTime = await _context.GameTimes.FindAsync(id);
                 homeViewModel = new HomeViewModel
                 {
-                    FootballPlayers = _context.FootballPlayers,
-                    Positions = _context.Positions,
-                    FootballPlayerGameTimes = footballPlayerGameTimes,
+                    FootballPlayers = _context.FootballPlayers.Where(f => f.TeamId == gameTime.Team1Id || f.TeamId == gameTime.Team2Id),
                     Team1Id = gameTime.Team1Id,
                     Team2Id = gameTime.Team2Id,
-                    Teams = _context.Teams.Where(t => t.Id == gameTime.Team1Id || t.Id == gameTime.Team2Id)
+                    Teams = _context.Teams.Where(t => t.Id == gameTime.Team1Id || t.Id == gameTime.Team2Id),
+                    PositionType1Id = gameTime.PositionType1Id,
+                    PositionType2Id = gameTime.PositionType2Id,
+                    PositionTypes = _context.PositionTypes.Where(pt => pt.Id == gameTime.PositionType1Id || pt.Id == gameTime.PositionType2Id),
+                    FootballPlayerGameTimes = footballPlayerGameTimes
                 };
                 ModelState.AddModelError("", "Choose football player");
                 return View(homeViewModel);
@@ -132,19 +134,23 @@ namespace December_24_2019_Football.Controllers
             {
                 _context.FootballPlayerGameTimes.Remove(item);
             }
-          
-            string[] footballPlayersId = homeViewModel.FootballPlayersId.Split(",");
-            foreach (var Id in footballPlayersId)
+
+            string[] FootballersIdPositionsId = homeViewModel.FootballersIdPositionsId.Split(",");
+            foreach (string footballersIdPositionsId in FootballersIdPositionsId)
             {
+                string[] footballerIdPositionId = footballersIdPositionsId.Split("-");
+
                 try
                 {
-                    int footballPlayerId = Convert.ToInt32(Id);
+                    int footballPlayerId = Convert.ToInt32(footballerIdPositionId[0]);
+                    int positionId = Convert.ToInt32(footballerIdPositionId[1]);
 
                     //save
                     FootballPlayerGameTime footballPlayerGameTime = new FootballPlayerGameTime
                     {
                         GameTimeId = id,
-                        FootballPlayerId = footballPlayerId
+                        FootballPlayerId = footballPlayerId,
+                        FootballerPositionId = positionId
                     };
                     await _context.FootballPlayerGameTimes.AddAsync(footballPlayerGameTime);
                     await _context.SaveChangesAsync();

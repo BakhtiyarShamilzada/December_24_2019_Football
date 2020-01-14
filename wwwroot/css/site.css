@@ -116,10 +116,13 @@ ul ul {
         left: 60px;
     }
 
-.player.hover .player__img {
-    background: green;
+.player.active .player__img {
+    background: darkgreen;
 }
 
+.player.hover .player__img {
+    background: lawngreen;
+}
 
 .teams {
     position: relative;
@@ -181,11 +184,11 @@ ul ul {
 }
 
 .position-type-2 .player[data-name="5"] {
-    transform: translateX(-66px) translateZ(180px) translateY(0px) !important;
+    transform: translateX(-157px) translateZ(210px) translateY(0px) !important;
 }
 
 .position-type-2 .player[data-name="4"] {
-    transform: translateZ(180px) translateX(59px) translateY(0px) !important;
+    transform: translateZ(213px) translateX(153px) translateY(0px) !important;
 }
 
 .position-type-2 .player[data-name="3"] {

@@ -24,7 +24,7 @@
         scenes,
         state;
 
-    ASSET_URL = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/215059/';
+    ASSET_URL = '';
 
     $stage = null;
 
@@ -195,7 +195,7 @@
             away: [
                 {
                     name: '1',
-                    asset: 'rm-benzema.jp',
+                    asset: '',
                     origin: 'France',
                     height: '1.87m',
                     shirt: '9',
@@ -208,7 +208,7 @@
                 },
                 {
                     name: '2',
-                    asset: 'rm-bale.jpg',
+                    asset: '',
                     origin: 'Wales',
                     height: '1.83m',
                     shirt: '11',
@@ -221,7 +221,7 @@
                 },
                 {
                     name: '3',
-                    asset: 'rm-carvajal.jpg',
+                    asset: '',
                     origin: 'Spain',
                     height: '1.70m',
                     shirt: '15',
@@ -234,7 +234,7 @@
                 },
                 {
                     name: '4',
-                    asset: 'rm-silva.jpg',
+                    asset: '',
                     origin: 'Brazil',
                     height: '1.87m',
                     shirt: '16',
@@ -247,7 +247,7 @@
                 },
                 {
                     name: '5',
-                    asset: 'rm-kroos.jpg',
+                    asset: '',
                     origin: 'Germany',
                     height: '1.82',
                     shirt: '8',
@@ -260,7 +260,7 @@
                 },
                 {
                     name: '6',
-                    asset: 'rm-modric.jpg',
+                    asset: '',
                     origin: 'Croatia',
                     height: '1.74m',
                     shirt: '19',
@@ -273,7 +273,7 @@
                 },
                 {
                     name: '7',
-                    asset: 'rm-nacho.jpg',
+                    asset: '',
                     origin: 'Germany',
                     height: '1.79',
                     shirt: '18',
@@ -286,7 +286,7 @@
                 },
                 {
                     name: '8',
-                    asset: 'rm-ramos.jpg',
+                    asset: '',
                     origin: 'Spain',
                     height: '1.83m',
                     shirt: '4',
@@ -299,7 +299,7 @@
                 },
                 {
                     name: '9',
-                    asset: 'rm-pepe.jpg',
+                    asset: '',
                     origin: 'Brazil',
                     height: '1.88m',
                     shirt: '3',
@@ -312,7 +312,7 @@
                 },
                 {
                     name: '10',
-                    asset: 'rm-casillas.jpg',
+                    asset: '',
                     origin: 'Spain',
                     height: '1.85m',
                     shirt: '1',
@@ -327,28 +327,30 @@
         }
     };
 
-
+    
     $('.game-team-1').each(function () {
-        let firstName = $(this).find('h6').text();
+        let footballerId = $(this).attr('data-id');
+        let positionId = $(this).find('h6').text();
         let image = $(this).find('img').attr('src');
-        let footballer =
-        {
-            name: firstName,
-            asset: image
+        for (let obj of data.players.home) {
+            if (obj.name == positionId) {
+                obj.footballerId = footballerId;
+                obj.asset = image
+            }
         }
-        data.players.home.push(footballer);
     })
 
-    //$('.game-team-2').each(function () {
-    //    let firstName = $(this).find('h6').text();
-    //    let image = $(this).find('img').attr('src');
-    //    let footballer =
-    //    {
-    //        name: firstName,
-    //        asset: image
-    //    }
-    //    data.players.away.push(footballer);
-    //})
+        $('.game-team-2').each(function () {
+        let footballerId = $(this).attr('data-id');
+        let positionId = $(this).find('h6').text();
+        let image = $(this).find('img').attr('src');
+        for (let obj of data.players.away) {
+            if (obj.name == positionId) {
+                obj.footballerId = footballerId;
+                obj.asset = image
+            }
+        }
+    })
 
     state = {
         home: true,
@@ -396,7 +398,7 @@
         },
         addPlayer: function (data) {
             var $el;
-            $el = $('<div class="js-player player" data-name="' + data.name + '" data-side="' + data.side + '" data-x="' + data.x + '" data-y="' + data.y + '"></div>');
+            $el = $('<div class="js-player player" data-name="' + data.name + '" data-side="' + data.side + '" data-id="' + data.footballerId + '" data-x="' + data.x + '" data-y="' + data.y + '"></div>');
             $el.append('<div class="player__label"><span>' + data.name + '</span></div>');
             $el.append('<div class="player__img"><img src= ' + data.asset + '></div>');
             $el.prepend('<div class="player__card"> </div>');
@@ -474,26 +476,26 @@
     scenes = {
         preLoad: function () {
             $teamListHome.velocity({
-                opacity: 0
+                opacity: 1
             }, 0);
             $players.velocity({
-                opacity: 0
+                opacity: 1
             }, 0);
             $loadBtn.velocity({
-                opacity: 0
+                opacity: 1
             }, 0);
             $switcher.velocity({
-                opacity: 0
+                opacity: 1
             }, 0);
             $heading.velocity({
-                opacity: 0
+                opacity: 1
             }, 0);
             $subHeading.velocity({
-                opacity: 0
+                opacity: 1
             }, 0);
             $playersAway.css('display', 'none');
             $world.velocity({
-                opacity: 0,
+                opacity: 1,
                 translateZ: -200,
                 translateY: -60
             }, 0);
@@ -529,7 +531,7 @@
                 val = ref[key];
                 images.push(ASSET_URL + val.asset);
             }
-            return dom.preloadImages(images);
+            //return dom.preloadImages(images);
         },
         endLoading: function () {
             return anim.fadeOutDir($loading, 300, 1000, 0, -20);

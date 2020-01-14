@@ -179,7 +179,7 @@
             $('#FootballPlayersId').val($('#FootballPlayersId').val() + footballPlayerId + ",");
         }
     })
-   
+
     $(document).on('click', '.football-players-id', function () {
         let footballPlayerId = $(this).attr('data-football-players-id');
         if ($(this).prop('checked') == true) {
@@ -190,9 +190,9 @@
             arr = arr.filter(el => el != footballPlayerId);
             $('#FootballPlayersId').val(arr.join(','));
         }
-        
+
     })
-    
+
     $(document).on('change', '#CreatePhoto', function (e) {
         if ($(this).val() != "") {
             if ([...e.target.files][0].type.match("image/*")) {
@@ -251,14 +251,51 @@
     })
 
     $('.teams').draggable({ revert: true });
+
+    $('.player').draggable({
+        revert: true,
+        start: function (e, ui) {
+            $(this).css({
+                'left': '',
+                'top': ''
+            })
+        },
+        stop: function (e, ui) {
+            $(this).css({
+                'left': '',
+                'top': ''
+            })
+        }
+    });
+
     $('.player').droppable({
+        activeClass: 'active',
         hoverClass: 'hover',
         drop: function (e, ui) {
             let footballerId = ui.draggable.attr('data-id');
+            ui.draggable.attr('data-id', 'undefined')
             let positionId = $(this).attr('data-name');
-            $('#FootballersIdPositionsId').val($('#FootballersIdPositionsId').val() + footballerId + "-" + positionId + ",");
-            $(this).find('img').attr('src', ui.draggable.remove().find('img').attr('src') );
-            $(this).droppable('destroy');
+            let dataName = ui.draggable.attr('data-name');
+            let dataId = $(this).attr('data-id');
+            $(this).attr('data-id', footballerId);
+
+            $('#FootballersIdPositionsId').val('');
+            $('.player').each(function () {
+
+                if ($(this).attr('data-id') != "undefined") {
+                    let footballerIdPositionId = $(this).attr('data-id') + "-" + $(this).attr('data-name') + ",";
+                    $('#FootballersIdPositionsId').val($('#FootballersIdPositionsId').val() + footballerIdPositionId)
+                }
+            })
+
+            if (dataName == undefined) {
+                $(this).find('img').attr('src', ui.draggable.remove().find('img').attr('src'));
+            }
+            else {
+                let src = $(this).find('img').attr('src');
+                $(this).find('img').attr('src', ui.draggable.find('img').attr('src')).attr('data-id', footballerId);
+                ui.draggable.attr('data-id', dataId).find('img').attr('src', src);
+            }
         }
     });
 
@@ -276,5 +313,13 @@
         $('.team-1-area').fadeIn();
         $('.team-2-area').hide();
         $('.team').removeClass('position-type-' + psoitionType2Id).addClass('position-type-' + psoitionType1Id);
+    })
+
+    $('.player').each(function () {
+        let footballerId = $(this).attr('data-id');
+        let positionId = $(this).attr('data-name');
+        if (footballerId !== "undefined" && positionId !== "undefined") {
+            $('#FootballersIdPositionsId').val($('#FootballersIdPositionsId').val() + footballerId + "-" + positionId + ",");
+        }
     })
 })
