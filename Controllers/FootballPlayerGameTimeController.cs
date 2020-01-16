@@ -33,7 +33,7 @@ namespace December_24_2019_Football.Controllers
                 Teams = _context.Teams.Where(t => t.Id == gameTime.Team1Id || t.Id == gameTime.Team2Id),
                 PositionType1Id = gameTime.PositionType1Id,
                 PositionType2Id = gameTime.PositionType2Id,
-                PositionTypes = _context.PositionTypes.Where(pt => pt.Id == gameTime.PositionType1Id || pt.Id == gameTime.PositionType2Id)
+                PositionTypes = _context.PositionTypes
             };
             return View(homeViewModel);
         }
@@ -41,9 +41,9 @@ namespace December_24_2019_Football.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(int id, HomeViewModel homeViewModel)
         {
+            GameTime gameTime = await _context.GameTimes.FindAsync(id);
             if (homeViewModel.FootballersIdPositionsId == null)
             {
-                GameTime gameTime = await _context.GameTimes.FindAsync(id);
                 homeViewModel = new HomeViewModel
                 {
                     FootballPlayers = _context.FootballPlayers.Where(f => f.TeamId == gameTime.Team1Id || f.TeamId == gameTime.Team2Id).Include(fp => fp.Position),
@@ -83,6 +83,12 @@ namespace December_24_2019_Football.Controllers
                     }
             }
 
+            // UPDATE POSITION TYPE
+            gameTime.PositionType1Id = homeViewModel.PositionType1Id;
+            gameTime.PositionType2Id = homeViewModel.PositionType2Id;
+
+            // SAVE
+            await _context.SaveChangesAsync();
             TempData["Operation"] = true;
             return RedirectToAction("Index", "Gametime");
         }
@@ -101,7 +107,7 @@ namespace December_24_2019_Football.Controllers
                 Teams = _context.Teams.Where(t => t.Id == gameTime.Team1Id || t.Id == gameTime.Team2Id),
                 PositionType1Id = gameTime.PositionType1Id,
                 PositionType2Id = gameTime.PositionType2Id,
-                PositionTypes = _context.PositionTypes.Where(pt => pt.Id == gameTime.PositionType1Id || pt.Id == gameTime.PositionType2Id),
+                PositionTypes = _context.PositionTypes,
                 FootballPlayerGameTimes = footballPlayerGameTimes
             };
             return View(homeViewModel);
@@ -110,10 +116,11 @@ namespace December_24_2019_Football.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(int id, HomeViewModel homeViewModel)
         {
+            GameTime gameTime = await _context.GameTimes.FindAsync(id);
+
             if (homeViewModel.FootballersIdPositionsId == null)
             {
                 IEnumerable<FootballPlayerGameTime> footballPlayerGameTimes = _context.FootballPlayerGameTimes.Where(fpg => fpg.GameTimeId == id).Include(fpg => fpg.FootballPlayer);
-                GameTime gameTime = await _context.GameTimes.FindAsync(id);
                 homeViewModel = new HomeViewModel
                 {
                     FootballPlayers = _context.FootballPlayers.Where(f => f.TeamId == gameTime.Team1Id || f.TeamId == gameTime.Team2Id),
@@ -170,6 +177,12 @@ namespace December_24_2019_Football.Controllers
                     _context.FootballCarts.Remove(footballCart);
                 }
             }
+
+            // UPDATE POSITION TYPE
+            gameTime.PositionType1Id = homeViewModel.PositionType1Id;
+            gameTime.PositionType2Id = homeViewModel.PositionType2Id;
+
+            // SAVE
             await _context.SaveChangesAsync();
             TempData["Operation"] = true;
             return RedirectToAction("Index", "Gametime");

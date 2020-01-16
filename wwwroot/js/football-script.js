@@ -332,10 +332,12 @@
         let footballerId = $(this).attr('data-id');
         let positionId = $(this).find('h6').text();
         let image = $(this).find('img').attr('src');
+        let firstName = $(this).attr('data-first-name');
         for (let obj of data.players.home) {
             if (obj.name == positionId) {
                 obj.footballerId = footballerId;
-                obj.asset = image
+                obj.asset = image;
+                obj.firstName = firstName;
             }
         }
     })
@@ -343,11 +345,13 @@
         $('.game-team-2').each(function () {
         let footballerId = $(this).attr('data-id');
         let positionId = $(this).find('h6').text();
-        let image = $(this).find('img').attr('src');
+            let image = $(this).find('img').attr('src');
+            let firstName = $(this).attr('data-first-name');
         for (let obj of data.players.away) {
             if (obj.name == positionId) {
                 obj.footballerId = footballerId;
-                obj.asset = image
+                obj.asset = image;
+                obj.firstName = firstName;
             }
         }
     })
@@ -398,7 +402,7 @@
         },
         addPlayer: function (data) {
             var $el;
-            $el = $('<div class="js-player player" data-name="' + data.name + '" data-side="' + data.side + '" data-id="' + data.footballerId + '" data-x="' + data.x + '" data-y="' + data.y + '"></div>');
+            $el = $('<div class="js-player player" data-name="' + data.name + '" data-side="' + data.side + '" data-id="' + data.footballerId + '" data-first-name="' + data.firstName + '" data-x="' + data.x + '" data-y="' + data.y + '"></div>');
             $el.append('<div class="player__label"><span>' + data.name + '</span></div>');
             $el.append('<div class="player__img"><img src= ' + data.asset + '></div>');
             $el.prepend('<div class="player__card"> </div>');
@@ -451,19 +455,19 @@
                 e.preventDefault();
                 return scenes.loadIn();
             });
-            return $players.on('click', function (e) {
-                var $el;
-                e.preventDefault();
-                $el = $(this);
-                if ($('.active').length) {
-                    return false;
-                }
-                $el.addClass('active');
-                scenes.focusPlayer($el);
-                return setTimeout((function () {
-                    return events.attachClose();
-                }), 1);
-            });
+            //return $players.on('click', function (e) {
+            //    var $el;
+            //    e.preventDefault();
+            //    $el = $(this);
+            //    if ($('.active').length) {
+            //        return false;
+            //    }
+            //    $el.addClass('active');
+            //    scenes.focusPlayer($el);
+            //    return setTimeout((function () {
+            //        return events.attachClose();
+            //    }), 1);
+            //});
         },
         attachClose: function () {
             return $stage.one('click', function (e) {

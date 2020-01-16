@@ -27,13 +27,13 @@
                         </select>
                         <span asp-validation-for="@Model.Team1Id" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
+                    @*<div class="form-group">
                         <label asp-for="@Model.PositionType1Id">Team 1 position type</label>
                         <select asp-for="@Model.PositionType1Id" class="custom-select" asp-items="@(new SelectList(Model.PositionTypes, "Id", "Name"))">
                             <option selected disabled value="">Choose</option>
                         </select>
                         <span asp-validation-for="@Model.PositionType1Id" class="text-danger"></span>
-                    </div>
+                    </div>*@
 
                     <div class="form-group">
                         <label asp-for="@Model.Team2Id">Team 2</label>
@@ -42,13 +42,13 @@
                         </select>
                         <span asp-validation-for="@Model.Team2Id" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
+                    @*<div class="form-group">
                         <label asp-for="@Model.PositionType2Id">Team 2 position type</label>
                         <select asp-for="@Model.PositionType2Id" class="custom-select" asp-items="@(new SelectList(Model.PositionTypes, "Id", "Name"))">
                             <option selected disabled value="">Choose</option>
                         </select>
                         <span asp-validation-for="@Model.PositionType2Id" class="text-danger"></span>
-                    </div>
+                    </div>*@
                     <div class="form-group">
                         <label asp-for="@Model.StadiumId">Stadium</label>
                         <select asp-for="@Model.StadiumId" id="Oss" class="custom-select" asp-items="@(new SelectList(Model.Stadiums, "Id", "Name"))">

@@ -117,13 +117,20 @@ ul ul {
     }
 
 .player.active .player__img {
-    background: darkgreen;
-}
-
-.player.hover .player__img {
     background: lawngreen;
 }
 
+.player.custom-border .player__img {
+    border: 4px solid white;
+}
+
+.player.hover .player__img {
+    background: darkgreen;
+}
+/*.player.current-drag
+{
+    position: relative;
+}*/
 .teams {
     position: relative;
     cursor: move;

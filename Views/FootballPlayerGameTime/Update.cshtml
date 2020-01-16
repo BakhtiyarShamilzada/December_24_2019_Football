@@ -13,123 +13,136 @@
         </div>
         <div class="row pt-3">
             <div class="col-12">
-                <div class="static mt-5">
+                <a asp-controller="GameTime" asp-action="Index" class="btn btn-warning"><i class="fas fa-long-arrow-alt-left"></i></a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="static">
                     <div class="js-switcher switcher">
                         <a href="#" class="js-switch disabled switch-btn" id="team-1">@Model.Teams.FirstOrDefault(t => t.Id == Model.Team1Id).Name</a><a href="#" class="js-switch switch-btn" id="team-2">@Model.Teams.FirstOrDefault(t => t.Id == Model.Team2Id).Name</a>
                     </div>
                 </div>
             </div>
         </div>
-        @*<div class="row pt-3">
-            <div class="offset-4 col-4 mt-3">
-                <div class="form-group">
-                    <label asp-for="@Model.PositionType1Id">Position type</label>
-                    <select asp-for="@Model.PositionType1Id" class="custom-select" asp-items="@(new SelectList(Model.PositionTypes, "Id", "Name"))">
-                        <option selected disabled value="">Choose</option>
-                    </select>
-                    <span asp-validation-for="@Model.PositionType1Id" class="text-danger"></span>
+        <form method="post">
+            <div class="row pt-3">
+                <div class="offset-4 col-4 mt-3">
+                    <div class="form-group position-type-1-select">
+                        <label asp-for="@Model.PositionType1Id">Position type</label>
+                        <select asp-for="@Model.PositionType1Id" class="custom-select position-type" asp-items="@(new SelectList(Model.PositionTypes, "Id", "Name"))">
+                            <option selected disabled value="">Choose</option>
+                        </select>
+                        <span asp-validation-for="@Model.PositionType1Id" class="text-danger"></span>
+                    </div>
+                    <div class="form-group position-type-2-select" style="display: none">
+                        <label asp-for="@Model.PositionType2Id">Position type</label>
+                        <select asp-for="@Model.PositionType2Id" class="custom-select position-type" asp-items="@(new SelectList(Model.PositionTypes, "Id", "Name"))">
+                            <option selected disabled value="">Choose</option>
+                        </select>
+                        <span asp-validation-for="@Model.PositionType2Id" class="text-danger"></span>
+                    </div>
                 </div>
             </div>
-        </div>*@
-        <div class="row pt-3 team-1-area">
-            @foreach (var item in Model.FootballPlayers.Where(fp => fp.TeamId == Model.Team1Id))
-            {
-                if (Model.FootballPlayerGameTimes.Where(fg => fg.FootballPlayerId == item.Id).Count() == 0)
-                {
-                    <div class="col-2 mb-3">
-                        <div class="teams team-1 text-center" data-id="@item.Id">
-                            <img src="~/images/@item.Image" class="rounded-circle w-50" alt="Alternate Text" />
-                            <h6>@item.Firstname</h6>
-                        </div>
-                    </div>
-                }
-            }
-        </div>
 
-        <div class="row pt-3 team-1-hidden-area" style="display: none">
-            @foreach (var item in Model.FootballPlayers.Where(fp => fp.TeamId == Model.Team1Id))
-            {
-                if (Model.FootballPlayerGameTimes.Where(fg => fg.FootballPlayerId == item.Id).Count() == 1)
+            <div class="row pt-3 team-1-area">
+                @foreach (var item in Model.FootballPlayers.Where(fp => fp.TeamId == Model.Team1Id))
                 {
-                    <div class="col-2 mb-3">
-                        <div class="teams game-team-1 text-center" data-id="@item.Id">
-                            <img src="~/images/@item.Image" class="rounded-circle w-50" alt="Alternate Text" />
-                            <h6>@Model.FootballPlayerGameTimes.FirstOrDefault(fg => fg.FootballPlayerId == item.Id).FootballerPositionId</h6>
-                        </div>
-                    </div>
-                }
-            }
-        </div>
-
-        <div class="row pt-3 team-2-hidden-area" style="display: none">
-            @foreach (var item in Model.FootballPlayers.Where(fp => fp.TeamId == Model.Team2Id))
-            {
-                if (Model.FootballPlayerGameTimes.Where(fg => fg.FootballPlayerId == item.Id).Count() == 1)
-                {
-                    <div class="col-2 mb-3">
-                        <div class="teams game-team-2 text-center" data-id="@item.Id">
-                            <img src="~/images/@item.Image" class="rounded-circle w-50" alt="Alternate Text" />
-                            <h6>@Model.FootballPlayerGameTimes.FirstOrDefault(fg => fg.FootballPlayerId == item.Id).FootballerPositionId</h6>
-                        </div>
-                    </div>
-                }
-            }
-        </div>
-
-        <div class="row pt-3 team-2-area" style="display: none">
-            @foreach (var item in Model.FootballPlayers.Where(fp => fp.TeamId == Model.Team2Id))
-            {
-                if (Model.FootballPlayerGameTimes.Where(fg => fg.FootballPlayerId == item.Id).Count() == 0)
-                {
-                    <div class="col-2 mb-3">
-                        <div class="teams team-2 text-center" data-id="@item.Id">
-                            <img src="~/images/@item.Image" class="rounded-circle w-50" alt="Alternate Text" />
-                            <h6>@item.Firstname</h6>
-                        </div>
-                    </div>
-                }
-            }
-        </div>
-
-        <div class="row">
-            <div class="col-12">
-                <main>
-                    <div class="js-stage stage texture">
-                        <div class="js-world world">
-                            <input asp-for="@Model.PositionType1Id" type="hidden" />
-                            <input asp-for="@Model.PositionType2Id" type="hidden" />
-                            <div class="team js-team position-type-@Model.PositionType1Id">
-                                <!-- Team cards / icons goes here -->
-                            </div>
-                            <div class="terrain js-terrain">
-                                <div class="field field--alt"></div>
-                                <div class="field ground">
-                                    <div class="field__texture field__texture--gradient"></div>
-                                    <div class="field__texture field__texture--gradient-b"></div>
-                                    <div class="field__texture field__texture--grass"></div>
-                                    <div class="field__line field__line--goal"></div>
-                                    <div class="field__line field__line--goal field__line--goal--far"></div>
-                                    <div class="field__line field__line--outline"></div>
-                                    <div class="field__line field__line--penalty"></div>
-                                    <div class="field__line field__line--penalty-arc"></div>
-                                    <div class="field__line field__line--penalty-arc field__line--penalty-arc--far"></div>
-                                    <div class="field__line field__line--mid"></div>
-                                    <div class="field__line field__line--circle"></div>
-                                    <div class="field__line field__line--penalty field__line--penalty--far"></div>
-                                </div>
-                                <div class="field__side field__side--front"></div>
-                                <div class="field__side field__side--left"></div>
-                                <div class="field__side field__side--right"></div>
-                                <div class="field__side field__side--back"></div>
+                    if (Model.FootballPlayerGameTimes.Where(fg => fg.FootballPlayerId == item.Id).Count() == 0)
+                    {
+                        <div class="col-2 mb-3">
+                            <div class="teams team-1 text-center" data-id="@item.Id" data-first-name="@item.Firstname">
+                                <img src="~/images/@item.Image" class="rounded-circle w-50" alt="Alternate Text" />
+                                <h6>@item.Firstname</h6>
                             </div>
                         </div>
-                        <div class="loading js-loading">PLEASE WAIT...</div>
-                    </div>
-                </main>
-
+                    }
+                }
             </div>
-        </div>
-        <form method="post">
+
+            <div class="row pt-3 team-1-hidden-area" style="display: none">
+                @foreach (var item in Model.FootballPlayers.Where(fp => fp.TeamId == Model.Team1Id))
+                {
+                    if (Model.FootballPlayerGameTimes.Where(fg => fg.FootballPlayerId == item.Id).Count() == 1)
+                    {
+                        <div class="col-2 mb-3">
+                            <div class="teams game-team-1 text-center" data-id="@item.Id" data-first-name="@item.Firstname">
+                                <img src="~/images/@item.Image" class="rounded-circle w-50" alt="Alternate Text" />
+                                <h6>@Model.FootballPlayerGameTimes.FirstOrDefault(fg => fg.FootballPlayerId == item.Id).FootballerPositionId</h6>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+
+            <div class="row pt-3 team-2-hidden-area" style="display: none">
+                @foreach (var item in Model.FootballPlayers.Where(fp => fp.TeamId == Model.Team2Id))
+                {
+                    if (Model.FootballPlayerGameTimes.Where(fg => fg.FootballPlayerId == item.Id).Count() == 1)
+                    {
+                        <div class="col-2 mb-3">
+                            <div class="teams game-team-2 text-center" data-id="@item.Id" data-first-name="@item.Firstname">
+                                <img src="~/images/@item.Image" class="rounded-circle w-50" alt="Alternate Text" />
+                                <h6>@Model.FootballPlayerGameTimes.FirstOrDefault(fg => fg.FootballPlayerId == item.Id).FootballerPositionId</h6>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+
+            <div class="row pt-3 team-2-area" style="display: none">
+                @foreach (var item in Model.FootballPlayers.Where(fp => fp.TeamId == Model.Team2Id))
+                {
+                    if (Model.FootballPlayerGameTimes.Where(fg => fg.FootballPlayerId == item.Id).Count() == 0)
+                    {
+                        <div class="col-2 mb-3">
+                            <div class="teams team-2 text-center" data-id="@item.Id" data-first-name="@item.Firstname">
+                                <img src="~/images/@item.Image" class="rounded-circle w-50" alt="Alternate Text" />
+                                <h6>@item.Firstname</h6>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <main>
+                        <div class="js-stage stage texture">
+                            <div class="js-world world">
+                                <input asp-for="@Model.PositionType1Id" type="hidden" />
+                                <input asp-for="@Model.PositionType2Id" type="hidden" />
+                                <div class="team js-team position-type-@Model.PositionType1Id">
+                                    <!-- Team cards / icons goes here -->
+                                </div>
+                                <div class="terrain js-terrain">
+                                    <div class="field field--alt"></div>
+                                    <div class="field ground">
+                                        <div class="field__texture field__texture--gradient"></div>
+                                        <div class="field__texture field__texture--gradient-b"></div>
+                                        <div class="field__texture field__texture--grass"></div>
+                                        <div class="field__line field__line--goal"></div>
+                                        <div class="field__line field__line--goal field__line--goal--far"></div>
+                                        <div class="field__line field__line--outline"></div>
+                                        <div class="field__line field__line--penalty"></div>
+                                        <div class="field__line field__line--penalty-arc"></div>
+                                        <div class="field__line field__line--penalty-arc field__line--penalty-arc--far"></div>
+                                        <div class="field__line field__line--mid"></div>
+                                        <div class="field__line field__line--circle"></div>
+                                        <div class="field__line field__line--penalty field__line--penalty--far"></div>
+                                    </div>
+                                    <div class="field__side field__side--front"></div>
+                                    <div class="field__side field__side--left"></div>
+                                    <div class="field__side field__side--right"></div>
+                                    <div class="field__side field__side--back"></div>
+                                </div>
+                            </div>
+                            <div class="loading js-loading">PLEASE WAIT...</div>
+                        </div>
+                    </main>
+
+                </div>
+            </div>
             <input asp-for="@Model.FootballersIdPositionsId" type="hidden" />
             <div class="form-group d-flex justify-content-end">
                 <button type="submit" class="btn btn-success"> Edit</button>

@@ -144,10 +144,6 @@
             });
     })
 
-    $(document).on('change', '#input-date', function () {
-        console.log($(this).val())
-    })
-
     $(document).on('click', '#search', function () {
         let date1 = $('#date-1').val();
         let date2 = $('#date-2').val();
@@ -252,32 +248,31 @@
 
     $('.teams').draggable({ revert: true });
 
-    $('.player').draggable({
-        revert: true,
-        start: function (e, ui) {
-            $(this).css({
-                'left': '',
-                'top': ''
-            })
-        },
-        stop: function (e, ui) {
-            $(this).css({
-                'left': '',
-                'top': ''
-            })
-        }
-    });
-
     $('.player').droppable({
         activeClass: 'active',
         hoverClass: 'hover',
         drop: function (e, ui) {
             let footballerId = ui.draggable.attr('data-id');
             ui.draggable.attr('data-id', 'undefined')
-            let positionId = $(this).attr('data-name');
+            let dataFirstName = $(this).attr('data-first-name');
             let dataName = ui.draggable.attr('data-name');
+            let draggableSrc = ui.draggable.find('img').attr('src');
             let dataId = $(this).attr('data-id');
+
             $(this).attr('data-id', footballerId);
+
+                if (dataId !== "undefined") {
+                    let src = $(this).find('img').attr('src');
+                    $(this).find('img').attr('src', draggableSrc).attr('data-id', footballerId);
+                    ui.draggable.attr('data-id', dataId).find('img').attr('src', src);
+                    ui.draggable.find('h6').text(dataFirstName);
+                }
+                else {
+                    $(this).find('img').attr('src', ui.draggable.parent().remove().find('img').attr('src'));
+                }
+
+            $(this).attr('data-first-name', ui.draggable.attr('data-first-name'));
+            ui.draggable.attr('data-first-name', dataFirstName);
 
             $('#FootballersIdPositionsId').val('');
             $('.player').each(function () {
@@ -287,15 +282,6 @@
                     $('#FootballersIdPositionsId').val($('#FootballersIdPositionsId').val() + footballerIdPositionId)
                 }
             })
-
-            if (dataName == undefined) {
-                $(this).find('img').attr('src', ui.draggable.remove().find('img').attr('src'));
-            }
-            else {
-                let src = $(this).find('img').attr('src');
-                $(this).find('img').attr('src', ui.draggable.find('img').attr('src')).attr('data-id', footballerId);
-                ui.draggable.attr('data-id', dataId).find('img').attr('src', src);
-            }
         }
     });
 
@@ -305,6 +291,8 @@
         $('.team-2-area').fadeIn();
         $('.team-1-area').hide();
         $('.team').removeClass('position-type-' + psoitionType1Id).addClass('position-type-' + psoitionType2Id);
+        $('.position-type-1-select').hide();
+        $('.position-type-2-select').fadeIn();
     })
 
     $(document).on('click', '#team-1', function () {
@@ -313,6 +301,17 @@
         $('.team-1-area').fadeIn();
         $('.team-2-area').hide();
         $('.team').removeClass('position-type-' + psoitionType2Id).addClass('position-type-' + psoitionType1Id);
+
+        $('.position-type-2-select').hide();
+        $('.position-type-1-select').fadeIn();
+    })
+
+    $(document).on('change', '.position-type', function () {
+        let id = $(this).val();
+
+        $('.team').removeClass('position-type-1')
+            .removeClass('position-type-2')
+            .addClass('position-type-' + id);
     })
 
     $('.player').each(function () {
@@ -322,4 +321,94 @@
             $('#FootballersIdPositionsId').val($('#FootballersIdPositionsId').val() + footballerId + "-" + positionId + ",");
         }
     })
+
+    $('body').on('dblclick', '.player', function (e) {
+        let id = $(this).attr('data-id');
+        let firstName = $(this).attr('data-first-name');
+        let image = $(this).find('img').attr('src');
+        let dataSide = $(this).attr('data-side');
+
+        if (id == "undefined" || firstName == "undefined") return;
+
+        let col = $('<div></div>').addClass('col-2 mb-3');
+        let team = $('<div></div>')
+            .addClass('teams team-1 text-center')
+            .attr('data-id', id).attr('data-first-name', firstName);
+        let img = $('<img>').attr('src', image).addClass('rounded-circle w-50');
+        let h6 = $('<h6></h6>').text(firstName);
+
+        team.append(img, h6);
+        col.append(team);
+
+        if (dataSide == 'home') {
+            $('.team-1-area').append(col);
+        }
+        else if (dataSide == 'away') {
+            $('.team-2-area').append(col);
+        }
+
+        // UPDATE DRAGGABLE
+        $('.teams').draggable({ revert: true });
+
+        $(this).find('img').attr('src', '');
+        $(this).attr('data-id', 'undefined');
+        $(this).attr('data-first-name', 'undefined');
+
+        $('#FootballersIdPositionsId').val('');
+        $('.player').each(function () {
+            let footballerId = $(this).attr('data-id');
+            let positionId = $(this).attr('data-name');
+            if (footballerId !== "undefined" && positionId !== "undefined") {
+                $('#FootballersIdPositionsId').val($('#FootballersIdPositionsId').val() + footballerId + "-" + positionId + ",");
+            }
+        })
+    })
+
+    let id1, id2, src1, src2, firstName1, firstName2, player1;
+    $(document).on('click', '.player', function () {
+
+        if ($('.player-1').length == 0) {
+
+            if ($(this).attr('data-id') === "undefined") {
+                return;
+            }
+
+            player1 = $(this);
+            id1 = $(this).attr('data-id');
+            firstName1 = $(this).attr('data-first-name');
+            src1 = $(this).find('img').attr('src');
+
+            $('.player').toggleClass('active');
+            $(this).toggleClass('custom-border player-1');
+        }
+        else {
+
+            player2 = $(this);
+            id2 = $(this).attr('data-id');
+            firstName2 = $(this).attr('data-first-name');
+            src2 = $(this).find('img').attr('src');
+
+            $(this).attr('data-id', id1);
+            $(this).attr('data-first-name', firstName1);
+            $(this).find('img').attr('src', src1);
+
+            player1.attr('data-id', id2);
+            player1.attr('data-first-name', firstName2);
+            player1.find('img').attr('src', src2);
+
+            $('.player-1').removeClass('player-1 custom-border');
+            $('.player').removeClass('active');
+        }
+
+        $('#FootballersIdPositionsId').val('');
+        $('.player').each(function () {
+            let footballerId = $(this).attr('data-id');
+            let positionId = $(this).attr('data-name');
+            if (footballerId !== "undefined" && positionId !== "undefined") {
+                $('#FootballersIdPositionsId').val($('#FootballersIdPositionsId').val() + footballerId + "-" + positionId + ",");
+            }
+        })
+
+    })
+
 })

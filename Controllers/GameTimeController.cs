@@ -46,8 +46,8 @@ namespace December_24_2019_Football.Controllers
             {
                 Team1Id = homeViewModel.Team1Id,
                 Team2Id = homeViewModel.Team2Id,
-                PositionType1Id = homeViewModel.PositionType1Id,
-                PositionType2Id = homeViewModel.PositionType2Id,
+                PositionType1Id = 1,
+                PositionType2Id = 2,
                 StadiumId = homeViewModel.StadiumId,
                 Date = homeViewModel.Date
             };
@@ -67,8 +67,8 @@ namespace December_24_2019_Football.Controllers
                 Stadiums = _context.Stadiums,
                 PositionTypes = _context.PositionTypes,
                 Team1Id = gameTime.Team1Id,
-                PositionType1Id = gameTime.PositionType1Id,
-                PositionType2Id = gameTime.PositionType2Id,
+                //PositionType1Id = gameTime.PositionType1Id,
+                //PositionType2Id = gameTime.PositionType2Id,
                 Team2Id = gameTime.Team2Id,
                 StadiumId = gameTime.StadiumId,
                 Date = gameTime.Date
@@ -84,8 +84,8 @@ namespace December_24_2019_Football.Controllers
 
             GameTimeFromDb.Team1Id = homeViewModel.Team1Id;
             GameTimeFromDb.Team2Id = homeViewModel.Team2Id;
-            GameTimeFromDb.PositionType1Id = homeViewModel.PositionType1Id;
-            GameTimeFromDb.PositionType2Id = homeViewModel.PositionType2Id;
+            //GameTimeFromDb.PositionType1Id = homeViewModel.PositionType1Id;
+            //GameTimeFromDb.PositionType2Id = homeViewModel.PositionType2Id;
             GameTimeFromDb.StadiumId = homeViewModel.StadiumId;
             GameTimeFromDb.Date = homeViewModel.Date;
 
