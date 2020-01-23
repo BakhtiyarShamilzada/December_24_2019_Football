@@ -30,6 +30,10 @@ namespace December_24_2019_Football.Models
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
         public DateTime Date { get; set; }
 
+        public string Color1 { get; set; }
+
+        public string Color2 { get; set; }
+
         public virtual Stadium Stadium { get; set; }
 
         public virtual ICollection<FootballCart> FootballCarts { get; set; }

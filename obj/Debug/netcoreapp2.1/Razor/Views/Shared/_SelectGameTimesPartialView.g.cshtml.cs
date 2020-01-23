@@ -66,7 +66,7 @@ using December_24_2019_Football.ViewModels;
             WriteLiteral("        ");
             EndContext();
             BeginContext(98, 91, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9706c71580eb4f78b36090d751d334b9", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2e94d307536f4e0f9901f5cb63520953", async() => {
                 BeginContext(133, 47, false);
 #line 6 "C:\Users\Bakht\OneDrive\Desktop\GTS\December_24_2019_Football\December_24_2019_Football\Views\Shared\_SelectGameTimesPartialView.cshtml"
                                      Write(item.GameTime.Date.ToString("dd.MM.yyyy HH:mm"));

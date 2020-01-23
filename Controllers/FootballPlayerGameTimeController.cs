@@ -22,18 +22,26 @@ namespace December_24_2019_Football.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Create(int id)
+        public async Task<IActionResult> Create(int? id)
         {
+            if (id == null) return NotFound();
             GameTime gameTime = await _context.GameTimes.FindAsync(id);
+            if (gameTime == null) return NotFound();
+            GameTime previousGameTime = await _context.GameTimes.OrderByDescending(g => g.Date).FirstOrDefaultAsync(g => g.Date < gameTime.Date);
             HomeViewModel homeViewModel = new HomeViewModel
             {
-                FootballPlayers = _context.FootballPlayers.Where(f => f.TeamId == gameTime.Team1Id || f.TeamId == gameTime.Team2Id).Include(fp => fp.Position),
+                FootballPlayers = _context.FootballPlayers.
+                Where(f => f.TeamId == gameTime.Team1Id || f.TeamId == gameTime.Team2Id),
                 Team1Id = gameTime.Team1Id,
                 Team2Id = gameTime.Team2Id,
-                Teams = _context.Teams.Where(t => t.Id == gameTime.Team1Id || t.Id == gameTime.Team2Id),
+                Teams = _context.Teams.
+                Where(t => t.Id == gameTime.Team1Id || t.Id == gameTime.Team2Id),
                 PositionType1Id = gameTime.PositionType1Id,
                 PositionType2Id = gameTime.PositionType2Id,
-                PositionTypes = _context.PositionTypes
+                PositionTypes = _context.PositionTypes,
+                PreviousGameTimeId = previousGameTime.Id,
+                FootballCarts = _context.FootballCarts.Where(fc => fc.GameTimeId == previousGameTime.Id),
+                Carts = _context.Carts
             };
             return View(homeViewModel);
         }
@@ -42,6 +50,9 @@ namespace December_24_2019_Football.Controllers
         public async Task<IActionResult> Create(int id, HomeViewModel homeViewModel)
         {
             GameTime gameTime = await _context.GameTimes.FindAsync(id);
+            if (gameTime == null) return NotFound();
+            GameTime previousGameTime = await _context.GameTimes.OrderByDescending(g => g.Date).FirstOrDefaultAsync(g => g.Date < gameTime.Date);
+
             if (homeViewModel.FootballersIdPositionsId == null)
             {
                 homeViewModel = new HomeViewModel
@@ -52,7 +63,12 @@ namespace December_24_2019_Football.Controllers
                     Teams = _context.Teams.Where(t => t.Id == gameTime.Team1Id || t.Id == gameTime.Team2Id),
                     PositionType1Id = gameTime.PositionType1Id,
                     PositionType2Id = gameTime.PositionType2Id,
-                    PositionTypes = _context.PositionTypes.Where(pt => pt.Id == gameTime.PositionType1Id || pt.Id == gameTime.PositionType2Id)
+                    PositionTypes = _context.PositionTypes.Where(pt => pt.Id == gameTime.PositionType1Id || pt.Id == gameTime.PositionType2Id),
+                    Color1 = homeViewModel.Color1,
+                    Color2 = homeViewModel.Color2,
+                    PreviousGameTimeId = previousGameTime.Id,
+                    FootballCarts = _context.FootballCarts.Where(fc => fc.GameTimeId == previousGameTime.Id),
+                    Carts = _context.Carts
                 };
                 ModelState.AddModelError("", "Choose football player");
                 return View(homeViewModel);
@@ -61,31 +77,34 @@ namespace December_24_2019_Football.Controllers
             foreach (string footballersIdPositionsId in FootballersIdPositionsId)
             {
                 string[] footballerIdPositionId = footballersIdPositionsId.Split("-");
-                
-                    try
-                    {
-                        int footballPlayerId = Convert.ToInt32(footballerIdPositionId[0]);
-                        int positionId = Convert.ToInt32(footballerIdPositionId[1]);
 
-                        //save
-                        FootballPlayerGameTime footballPlayerGameTime = new FootballPlayerGameTime
-                        {
-                            GameTimeId = id,
-                            FootballPlayerId = footballPlayerId,
-                            FootballerPositionId = positionId
-                        };
-                        await _context.FootballPlayerGameTimes.AddAsync(footballPlayerGameTime);
-                        await _context.SaveChangesAsync();
-                    }
-                    catch
-                    {
+                try
+                {
+                    int footballPlayerId = Convert.ToInt32(footballerIdPositionId[0]);
+                    int positionId = Convert.ToInt32(footballerIdPositionId[1]);
 
-                    }
+                    //save
+                    FootballPlayerGameTime footballPlayerGameTime = new FootballPlayerGameTime
+                    {
+                        GameTimeId = id,
+                        FootballPlayerId = footballPlayerId,
+                        FootballerPositionId = positionId
+                    };
+                    await _context.FootballPlayerGameTimes.AddAsync(footballPlayerGameTime);
+                    await _context.SaveChangesAsync();
+                }
+                catch
+                {
+
+                }
             }
 
             // UPDATE POSITION TYPE
             gameTime.PositionType1Id = homeViewModel.PositionType1Id;
             gameTime.PositionType2Id = homeViewModel.PositionType2Id;
+
+            gameTime.Color1 = homeViewModel.Color1;
+            gameTime.Color2 = homeViewModel.Color2;
 
             // SAVE
             await _context.SaveChangesAsync();
@@ -97,19 +116,49 @@ namespace December_24_2019_Football.Controllers
         {
             if (id == null) return NotFound();
             GameTime gameTime = await _context.GameTimes.FindAsync(id);
-            if(gameTime == null) return NotFound();
-            IEnumerable<FootballPlayerGameTime> footballPlayerGameTimes = _context.FootballPlayerGameTimes.Where(fpg => fpg.GameTimeId == id);
+            if (gameTime == null) return NotFound();
+            GameTime previousGameTime = await _context.GameTimes.OrderByDescending(g => g.Date).FirstOrDefaultAsync(g => g.Date < gameTime.Date);
+
+            IEnumerable<FootballPlayerGameTime> footballPlayerGameTimes =
+                _context.FootballPlayerGameTimes.Where(fpg => fpg.GameTimeId == id);
+
             HomeViewModel homeViewModel = new HomeViewModel
             {
-                FootballPlayers = _context.FootballPlayers.Where(f => f.TeamId == gameTime.Team1Id || f.TeamId == gameTime.Team2Id),
+                FootballPlayers = _context.FootballPlayers.
+                Where(f => f.TeamId == gameTime.Team1Id || f.TeamId == gameTime.Team2Id),
                 Team1Id = gameTime.Team1Id,
                 Team2Id = gameTime.Team2Id,
-                Teams = _context.Teams.Where(t => t.Id == gameTime.Team1Id || t.Id == gameTime.Team2Id),
+                Teams = _context.Teams
+                .Where(t => t.Id == gameTime.Team1Id || t.Id == gameTime.Team2Id),
                 PositionType1Id = gameTime.PositionType1Id,
                 PositionType2Id = gameTime.PositionType2Id,
                 PositionTypes = _context.PositionTypes,
-                FootballPlayerGameTimes = footballPlayerGameTimes
+                FootballPlayerGameTimes = footballPlayerGameTimes,
+                Color1 = gameTime.Color1,
+                Color2 = gameTime.Color2
             };
+
+            if (previousGameTime != null)
+            {
+                    homeViewModel = new HomeViewModel
+                {
+                    FootballPlayers = _context.FootballPlayers.
+                Where(f => f.TeamId == gameTime.Team1Id || f.TeamId == gameTime.Team2Id),
+                    Team1Id = gameTime.Team1Id,
+                    Team2Id = gameTime.Team2Id,
+                    Teams = _context.Teams
+                .Where(t => t.Id == gameTime.Team1Id || t.Id == gameTime.Team2Id),
+                    PositionType1Id = gameTime.PositionType1Id,
+                    PositionType2Id = gameTime.PositionType2Id,
+                    PositionTypes = _context.PositionTypes,
+                    FootballPlayerGameTimes = footballPlayerGameTimes,
+                    Color1 = gameTime.Color1,
+                    Color2 = gameTime.Color2,
+                    PreviousGameTimeId = previousGameTime.Id,
+                    FootballCarts = _context.FootballCarts.Where(fc => fc.GameTimeId == previousGameTime.Id),
+                    Carts = _context.Carts
+                };
+            }
             return View(homeViewModel);
         }
 
@@ -117,6 +166,8 @@ namespace December_24_2019_Football.Controllers
         public async Task<IActionResult> Update(int id, HomeViewModel homeViewModel)
         {
             GameTime gameTime = await _context.GameTimes.FindAsync(id);
+            if (gameTime == null) return NotFound();
+            GameTime previousGameTime = await _context.GameTimes.OrderByDescending(g => g.Date).FirstOrDefaultAsync(g => g.Date < gameTime.Date);
 
             if (homeViewModel.FootballersIdPositionsId == null)
             {
@@ -130,7 +181,12 @@ namespace December_24_2019_Football.Controllers
                     PositionType1Id = gameTime.PositionType1Id,
                     PositionType2Id = gameTime.PositionType2Id,
                     PositionTypes = _context.PositionTypes.Where(pt => pt.Id == gameTime.PositionType1Id || pt.Id == gameTime.PositionType2Id),
-                    FootballPlayerGameTimes = footballPlayerGameTimes
+                    FootballPlayerGameTimes = footballPlayerGameTimes,
+                    Color1 = gameTime.Color1,
+                    Color2 = gameTime.Color2,
+                    PreviousGameTimeId = previousGameTime.Id,
+                    FootballCarts = _context.FootballCarts.Where(fc => fc.GameTimeId == previousGameTime.Id),
+                    Carts = _context.Carts
                 };
                 ModelState.AddModelError("", "Choose football player");
                 return View(homeViewModel);
@@ -171,7 +227,7 @@ namespace December_24_2019_Football.Controllers
             IEnumerable<FootballCart> footballCarts = _context.FootballCarts;
             foreach (var item in footballCarts)
             {
-                if(footballPlayerGameTimess.Where(fpg => fpg.FootballPlayerId == item.FootballPlayerId && fpg.GameTimeId == item.GameTimeId).Count() == 0)
+                if (footballPlayerGameTimess.Where(fpg => fpg.FootballPlayerId == item.FootballPlayerId && fpg.GameTimeId == item.GameTimeId).Count() == 0)
                 {
                     FootballCart footballCart = footballCarts.First(fc => fc.FootballPlayerId == item.FootballPlayerId && fc.GameTimeId == item.GameTimeId);
                     _context.FootballCarts.Remove(footballCart);
@@ -181,6 +237,9 @@ namespace December_24_2019_Football.Controllers
             // UPDATE POSITION TYPE
             gameTime.PositionType1Id = homeViewModel.PositionType1Id;
             gameTime.PositionType2Id = homeViewModel.PositionType2Id;
+
+            gameTime.Color1 = homeViewModel.Color1;
+            gameTime.Color2 = homeViewModel.Color2;
 
             // SAVE
             await _context.SaveChangesAsync();

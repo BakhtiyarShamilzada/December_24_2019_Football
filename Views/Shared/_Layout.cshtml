@@ -7,11 +7,16 @@
 
     <environment include="Development">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <link href="~/dist/css/datepicker.min.css" rel="stylesheet" type="text/css">
-        @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">*@
+        
+        @*DATEPICKER*@
+        <link href="~/dist/datepicker/css/datepicker.min.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <link href="~/css/football-style.css" rel="stylesheet" />
         <link rel="stylesheet" href="~/css/sidebar.css">
+
+        @*COLOR*@
+        <link href="~/dist/color/css/classic.min.css" rel="stylesheet" type="text/css">
+
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
     <environment exclude="Development">
@@ -42,16 +47,16 @@
                     <a asp-controller="FootballPlayer" asp-action="Index">Football Players</a>
                     @*<a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Football Players</a>*@
                     @*<ul class="collapse list-unstyled" id="homeSubmenu">
-                            <li>
-                                <a href="#">Home 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Home 2</a>
-                            </li>
-                            <li>
-                                <a href="#">Home 3</a>
-                            </li>
-                        </ul>*@
+                <li>
+                    <a href="#">Home 1</a>
+                </li>
+                <li>
+                    <a href="#">Home 2</a>
+                </li>
+                <li>
+                    <a href="#">Home 3</a>
+                </li>
+            </ul>*@
                 </li>
                 <li>
                     <a asp-controller="FootballCart" asp-action="Index">Football Carts</a>
@@ -67,6 +72,9 @@
                             <a asp-controller="Stadium" asp-action="Index">Stadiums</a>
                         </li>
                     </ul>
+                </li>
+                <li>
+                    <a asp-controller="Transfer" asp-action="Index">Transfers</a>
                 </li>
             </ul>
         </nav>
@@ -127,8 +135,11 @@
         <script src="~/js/football-script.js"></script>
 
         @*DATA PICKER*@
-        <script src="~/dist/js/datepicker.min.js"></script>
-        <script src="~/dist/js/i18n/datepicker.en.js"></script>
+        <script src="~/dist/datepicker/js/datepicker.min.js"></script>
+        <script src="~/dist/datepicker/js/i18n/datepicker.en.js"></script>
+
+        @*COLOR*@
+        <script src="~/dist/color/js/pickr.min.js"></script>
 
         <script type="text/javascript">
             $(document).ready(function () {

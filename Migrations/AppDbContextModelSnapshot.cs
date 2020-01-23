@@ -83,13 +83,9 @@ namespace December_24_2019_Football.Migrations
 
                     b.HasData(
                         new { Id = 1, CartId = 1, FootballPlayerId = 1, GameTimeId = 1 },
-                        new { Id = 2, CartId = 2, FootballPlayerId = 2, GameTimeId = 2 },
-                        new { Id = 3, CartId = 1, FootballPlayerId = 3, GameTimeId = 1 },
-                        new { Id = 4, CartId = 2, FootballPlayerId = 4, GameTimeId = 2 },
-                        new { Id = 5, CartId = 1, FootballPlayerId = 5, GameTimeId = 1 },
-                        new { Id = 6, CartId = 2, FootballPlayerId = 6, GameTimeId = 2 },
-                        new { Id = 7, CartId = 1, FootballPlayerId = 7, GameTimeId = 1 },
-                        new { Id = 8, CartId = 2, FootballPlayerId = 8, GameTimeId = 2 }
+                        new { Id = 2, CartId = 1, FootballPlayerId = 3, GameTimeId = 1 },
+                        new { Id = 3, CartId = 1, FootballPlayerId = 5, GameTimeId = 1 },
+                        new { Id = 4, CartId = 1, FootballPlayerId = 7, GameTimeId = 1 }
                     );
                 });
 
@@ -152,7 +148,7 @@ namespace December_24_2019_Football.Migrations
                         new { Id = 1, Age = 25, Firstname = "Robben", Image = "FootballPlayer/1.png", Lastname = "Robben", PositionId = 1, TeamId = 1 },
                         new { Id = 2, Age = 27, Firstname = "Pizarro", Image = "FootballPlayer/2.jpg", Lastname = "Pizarro", PositionId = 2, TeamId = 1 },
                         new { Id = 3, Age = 32, Firstname = "Martinez", Image = "FootballPlayer/3.jpg", Lastname = "Martinez", PositionId = 3, TeamId = 1 },
-                        new { Id = 4, Age = 28, Firstname = "Schweinsteiger", Image = "FootballPlayer/4.jpg", Lastname = "Schweinsteiger", PositionId = 1, TeamId = 2 },
+                        new { Id = 4, Age = 28, Firstname = "Schweinsteiger", Image = "FootballPlayer/4.jpg", Lastname = "Schweinsteiger", PositionId = 1, TeamId = 1 },
                         new { Id = 5, Age = 31, Firstname = "Rilbery", Image = "FootballPlayer/5.jpg", Lastname = "Rilbery", PositionId = 5, TeamId = 1 },
                         new { Id = 6, Age = 26, Firstname = "Alaba", Image = "FootballPlayer/6.jpg", Lastname = "Alaba", PositionId = 6, TeamId = 1 },
                         new { Id = 7, Age = 29, Firstname = "Lahm", Image = "FootballPlayer/7.jpg", Lastname = "Lahm", PositionId = 7, TeamId = 1 },
@@ -224,6 +220,10 @@ namespace December_24_2019_Football.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Color1");
+
+                    b.Property<string>("Color2");
+
                     b.Property<DateTime>("Date");
 
                     b.Property<int>("PositionType1Id");
@@ -243,8 +243,7 @@ namespace December_24_2019_Football.Migrations
                     b.ToTable("GameTimes");
 
                     b.HasData(
-                        new { Id = 1, Date = new DateTime(2019, 12, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), PositionType1Id = 1, PositionType2Id = 2, StadiumId = 1, Team1Id = 1, Team2Id = 2 },
-                        new { Id = 2, Date = new DateTime(2019, 12, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), PositionType1Id = 2, PositionType2Id = 1, StadiumId = 2, Team1Id = 3, Team2Id = 4 }
+                        new { Id = 1, Date = new DateTime(2019, 12, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), PositionType1Id = 1, PositionType2Id = 2, StadiumId = 1, Team1Id = 1, Team2Id = 2 }
                     );
                 });
 
@@ -334,6 +333,31 @@ namespace December_24_2019_Football.Migrations
                         new { Id = 1, CountryId = 1, Name = "Real madrid" },
                         new { Id = 2, CountryId = 2, Name = "SV werder bremen" }
                     );
+                });
+
+            modelBuilder.Entity("December_24_2019_Football.Models.Transfer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("FootballPlayerId");
+
+                    b.Property<int>("NewTeamId");
+
+                    b.Property<int>("OldTeamId");
+
+                    b.Property<decimal>("Price");
+
+                    b.Property<int?>("TeamId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FootballPlayerId");
+
+                    b.HasIndex("TeamId");
+
+                    b.ToTable("Transfers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -560,6 +584,18 @@ namespace December_24_2019_Football.Migrations
                         .WithMany("Teams")
                         .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("December_24_2019_Football.Models.Transfer", b =>
+                {
+                    b.HasOne("December_24_2019_Football.Models.FootballPlayer", "FootballPlayer")
+                        .WithMany("Transfers")
+                        .HasForeignKey("FootballPlayerId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("December_24_2019_Football.Models.Team")
+                        .WithMany("Transfers")
+                        .HasForeignKey("TeamId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

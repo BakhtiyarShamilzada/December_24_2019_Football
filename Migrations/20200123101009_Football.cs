@@ -265,7 +265,9 @@ namespace December_24_2019_Football.Migrations
                     PositionType1Id = table.Column<int>(nullable: false),
                     PositionType2Id = table.Column<int>(nullable: false),
                     StadiumId = table.Column<int>(nullable: false),
-                    Date = table.Column<DateTime>(nullable: false)
+                    Date = table.Column<DateTime>(nullable: false),
+                    Color1 = table.Column<string>(nullable: true),
+                    Color2 = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -374,6 +376,35 @@ namespace December_24_2019_Football.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Transfers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    FootballPlayerId = table.Column<int>(nullable: false),
+                    OldTeamId = table.Column<int>(nullable: false),
+                    NewTeamId = table.Column<int>(nullable: false),
+                    Price = table.Column<decimal>(nullable: false),
+                    TeamId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Transfers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Transfers_FootballPlayers_FootballPlayerId",
+                        column: x => x.FootballPlayerId,
+                        principalTable: "FootballPlayers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Transfers_Teams_TeamId",
+                        column: x => x.TeamId,
+                        principalTable: "Teams",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.InsertData(
                 table: "Carts",
                 columns: new[] { "Id", "Image", "Name" },
@@ -444,21 +475,18 @@ namespace December_24_2019_Football.Migrations
 
             migrationBuilder.InsertData(
                 table: "GameTimes",
-                columns: new[] { "Id", "Date", "PositionType1Id", "PositionType2Id", "StadiumId", "Team1Id", "Team2Id" },
-                values: new object[,]
-                {
-                    { 1, new DateTime(2019, 12, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 2, 1, 1, 2 },
-                    { 2, new DateTime(2019, 12, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, 1, 2, 3, 4 }
-                });
+                columns: new[] { "Id", "Color1", "Color2", "Date", "PositionType1Id", "PositionType2Id", "StadiumId", "Team1Id", "Team2Id" },
+                values: new object[] { 1, null, null, new DateTime(2019, 12, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 2, 1, 1, 2 });
 
             migrationBuilder.InsertData(
                 table: "Teams",
                 columns: new[] { "Id", "CountryId", "Name" },
-                values: new object[,]
-                {
-                    { 1, 1, "Real madrid" },
-                    { 2, 2, "SV werder bremen" }
-                });
+                values: new object[] { 2, 2, "SV werder bremen" });
+
+            migrationBuilder.InsertData(
+                table: "Teams",
+                columns: new[] { "Id", "CountryId", "Name" },
+                values: new object[] { 1, 1, "Real madrid" });
 
             migrationBuilder.InsertData(
                 table: "FootballPlayers",
@@ -474,13 +502,13 @@ namespace December_24_2019_Football.Migrations
                     { 13, 31, "Kroos", "FootballPlayer/13.jpg", "Kroos", 5, 2 },
                     { 12, 28, "Benzema", "FootballPlayer/12.jpg", "Benzema", 4, 2 },
                     { 11, 32, "Bale", "FootballPlayer/11.jpg", "Bale", 3, 2 },
-                    { 4, 28, "Schweinsteiger", "FootballPlayer/4.jpg", "Schweinsteiger", 1, 2 },
                     { 10, 27, "Neuer", "FootballPlayer/10.jpg", "Neuer", 2, 1 },
                     { 9, 25, "Benatia", "FootballPlayer/9.jpg", "Benatia", 1, 1 },
                     { 8, 33, "Dante", "FootballPlayer/8.jpg", "Dante", 8, 1 },
                     { 7, 29, "Lahm", "FootballPlayer/7.jpg", "Lahm", 7, 1 },
                     { 6, 26, "Alaba", "FootballPlayer/6.jpg", "Alaba", 6, 1 },
                     { 5, 31, "Rilbery", "FootballPlayer/5.jpg", "Rilbery", 5, 1 },
+                    { 4, 28, "Schweinsteiger", "FootballPlayer/4.jpg", "Schweinsteiger", 1, 1 },
                     { 3, 32, "Martinez", "FootballPlayer/3.jpg", "Martinez", 3, 1 },
                     { 2, 27, "Pizarro", "FootballPlayer/2.jpg", "Pizarro", 2, 1 },
                     { 19, 29, "Ramos", "FootballPlayer/19.jpg", "Ramos", 7, 2 },
@@ -493,13 +521,9 @@ namespace December_24_2019_Football.Migrations
                 values: new object[,]
                 {
                     { 1, 1, 1, 1 },
-                    { 8, 2, 8, 2 },
-                    { 7, 1, 7, 1 },
-                    { 5, 1, 5, 1 },
-                    { 6, 2, 6, 2 },
-                    { 2, 2, 2, 2 },
-                    { 3, 1, 3, 1 },
-                    { 4, 2, 4, 2 }
+                    { 2, 1, 3, 1 },
+                    { 3, 1, 5, 1 },
+                    { 4, 1, 7, 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -507,25 +531,25 @@ namespace December_24_2019_Football.Migrations
                 columns: new[] { "Id", "FootballPlayerId", "FootballerPositionId", "GameTimeId" },
                 values: new object[,]
                 {
-                    { 16, 16, 6, 1 },
+                    { 18, 18, 8, 1 },
                     { 17, 17, 7, 1 },
+                    { 16, 16, 6, 1 },
                     { 15, 15, 5, 1 },
-                    { 4, 4, 4, 1 },
                     { 14, 14, 4, 1 },
                     { 13, 13, 3, 1 },
-                    { 18, 18, 8, 1 },
                     { 12, 12, 2, 1 },
                     { 11, 11, 1, 1 },
+                    { 10, 10, 10, 1 },
                     { 8, 8, 8, 1 },
-                    { 9, 9, 9, 1 },
                     { 19, 19, 9, 1 },
                     { 7, 7, 7, 1 },
                     { 6, 6, 6, 1 },
                     { 5, 5, 5, 1 },
+                    { 4, 4, 4, 1 },
                     { 3, 3, 3, 1 },
                     { 2, 2, 2, 1 },
                     { 1, 1, 1, 1 },
-                    { 10, 10, 10, 1 },
+                    { 9, 9, 9, 1 },
                     { 20, 20, 10, 1 }
                 });
 
@@ -617,6 +641,16 @@ namespace December_24_2019_Football.Migrations
                 name: "IX_Teams_CountryId",
                 table: "Teams",
                 column: "CountryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transfers_FootballPlayerId",
+                table: "Transfers",
+                column: "FootballPlayerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transfers_TeamId",
+                table: "Transfers",
+                column: "TeamId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -646,6 +680,9 @@ namespace December_24_2019_Football.Migrations
                 name: "PositionTypes");
 
             migrationBuilder.DropTable(
+                name: "Transfers");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -655,22 +692,22 @@ namespace December_24_2019_Football.Migrations
                 name: "Carts");
 
             migrationBuilder.DropTable(
-                name: "FootballPlayers");
-
-            migrationBuilder.DropTable(
                 name: "FootballerPositions");
 
             migrationBuilder.DropTable(
                 name: "GameTimes");
 
             migrationBuilder.DropTable(
+                name: "FootballPlayers");
+
+            migrationBuilder.DropTable(
+                name: "Stadiums");
+
+            migrationBuilder.DropTable(
                 name: "Positions");
 
             migrationBuilder.DropTable(
                 name: "Teams");
-
-            migrationBuilder.DropTable(
-                name: "Stadiums");
 
             migrationBuilder.DropTable(
                 name: "Countries");

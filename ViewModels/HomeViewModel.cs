@@ -24,9 +24,13 @@ namespace December_24_2019_Football.ViewModels
 
         public IEnumerable<GameTime> GameTimes { get; set; }
 
+        public int PreviousGameTimeId { get; set; }
+
         public IEnumerable<FootballPlayerGameTime> FootballPlayerGameTimes { get; set; }
 
         public IEnumerable<PositionType> PositionTypes { get; set; }
+
+        public IEnumerable<Transfer> Transfers { get; set; }
 
         public int GameTimeId { get; set; }
 
@@ -49,6 +53,10 @@ namespace December_24_2019_Football.ViewModels
         public string FootballPlayersId { get; set; }
 
         public string FootballersIdPositionsId { get; set; }
+
+        public string Color1 { get; set; }
+
+        public string Color2 { get; set; }
 
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }

@@ -261,15 +261,28 @@
 
             $(this).attr('data-id', footballerId);
 
-                if (dataId !== "undefined") {
-                    let src = $(this).find('img').attr('src');
-                    $(this).find('img').attr('src', draggableSrc).attr('data-id', footballerId);
-                    ui.draggable.attr('data-id', dataId).find('img').attr('src', src);
-                    ui.draggable.find('h6').text(dataFirstName);
-                }
-                else {
-                    $(this).find('img').attr('src', ui.draggable.parent().remove().find('img').attr('src'));
-                }
+            // ADD FOOTBALLER TO FULL FOOTBALLER
+            if (dataId !== "undefined") {
+                let src = $(this).find('img').attr('src');
+                $(this).find('img').attr('src', draggableSrc).attr('data-id', footballerId);
+                ui.draggable.attr('data-id', dataId).find('img').attr('src', src);
+                ui.draggable.find('h6').text(dataFirstName);
+            }
+
+            // ADD FOOTBALLER EMPTY POSITION
+            else {
+                $(this).find('img').attr('src', ui.draggable.parent().remove().find('img').attr('src'));
+            }
+
+            let color1 = $('#Color1').val();
+            let color2 = $('#Color2').val();
+
+            if ($(this).attr('data-side') === 'home') {
+                $(this).find('.player__img').css('border', '4px solid' + color1);
+            }
+            else {
+                $(this).find('.player__img').css('border', '4px solid' + color2);
+            }
 
             $(this).attr('data-first-name', ui.draggable.attr('data-first-name'));
             ui.draggable.attr('data-first-name', dataFirstName);
@@ -291,8 +304,12 @@
         $('.team-2-area').fadeIn();
         $('.team-1-area').hide();
         $('.team').removeClass('position-type-' + psoitionType1Id).addClass('position-type-' + psoitionType2Id);
+
         $('.position-type-1-select').hide();
         $('.position-type-2-select').fadeIn();
+
+        $('.team-color-1-area').hide();
+        $('.team-color-2-area').fadeIn();
     })
 
     $(document).on('click', '#team-1', function () {
@@ -304,6 +321,9 @@
 
         $('.position-type-2-select').hide();
         $('.position-type-1-select').fadeIn();
+
+        $('.team-color-2-area').hide();
+        $('.team-color-1-area').fadeIn();
     })
 
     $(document).on('change', '.position-type', function () {
@@ -337,13 +357,24 @@
         let img = $('<img>').attr('src', image).addClass('rounded-circle w-50');
         let h6 = $('<h6></h6>').text(firstName);
 
+        let color1 = $('#Color1').val();
+        let color2 = $('#Color2').val();
+
         team.append(img, h6);
         col.append(team);
 
         if (dataSide == 'home') {
+            img.css(
+                {
+                    'border': '4px solid' + color1,
+                })
             $('.team-1-area').append(col);
         }
         else if (dataSide == 'away') {
+            img.css(
+                {
+                    'border': '4px solid' + color2,
+                })
             $('.team-2-area').append(col);
         }
 
@@ -364,7 +395,7 @@
         })
     })
 
-    let id1, id2, src1, src2, firstName1, firstName2, player1;
+    let dataName1, dataName2, player1;
     $(document).on('click', '.player', function () {
 
         if ($('.player-1').length == 0) {
@@ -374,9 +405,7 @@
             }
 
             player1 = $(this);
-            id1 = $(this).attr('data-id');
-            firstName1 = $(this).attr('data-first-name');
-            src1 = $(this).find('img').attr('src');
+            dataName1 = $(this).attr('data-name');
 
             $('.player').toggleClass('active');
             $(this).toggleClass('custom-border player-1');
@@ -384,17 +413,11 @@
         else {
 
             player2 = $(this);
-            id2 = $(this).attr('data-id');
-            firstName2 = $(this).attr('data-first-name');
-            src2 = $(this).find('img').attr('src');
+            dataName2 = $(this).attr('data-name');
 
-            $(this).attr('data-id', id1);
-            $(this).attr('data-first-name', firstName1);
-            $(this).find('img').attr('src', src1);
+            $(this).attr('data-name', dataName1);
 
-            player1.attr('data-id', id2);
-            player1.attr('data-first-name', firstName2);
-            player1.find('img').attr('src', src2);
+            player1.attr('data-name', dataName2);
 
             $('.player-1').removeClass('player-1 custom-border');
             $('.player').removeClass('active');
@@ -409,6 +432,291 @@
             }
         })
 
+    })
+
+    const btns = document.querySelectorAll('.team-color');
+
+    if (btns !== null) {
+        for (let btn of btns) {
+            btn.addEventListener('click', function (e) {
+
+                e.preventDefault();
+
+                let container;
+
+                if (this.classList.contains('team-color-1')) {
+                    container = document.querySelector('.color-pickers-1');
+                    const newElement = document.createElement('div');
+                    container.appendChild(newElement);
+
+                    const pickr = new Pickr({
+                        el: newElement,
+                        default: $('#Color1').val() || '#42445A',
+                        theme: 'classic',
+                        appClass: 'pcr-app-1',
+                        swatches: [
+                            'rgba(244, 67, 54, 1)',
+                            'rgba(233, 30, 99, 0.95)',
+                            'rgba(156, 39, 176, 0.9)',
+                            'rgba(103, 58, 183, 0.85)',
+                            'rgba(63, 81, 181, 0.8)',
+                            'rgba(33, 150, 243, 0.75)',
+                            'rgba(3, 169, 244, 0.7)',
+                            'rgba(0, 188, 212, 0.7)',
+                            'rgba(0, 150, 136, 0.75)',
+                            'rgba(76, 175, 80, 0.8)',
+                            'rgba(139, 195, 74, 0.85)',
+                            'rgba(205, 220, 57, 0.9)',
+                            'rgba(255, 235, 59, 0.95)',
+                            'rgba(255, 193, 7, 1)'
+                        ],
+
+                        components: {
+                            preview: true,
+                            opacity: true,
+                            hue: true,
+
+                            interaction: {
+                                hex: true,
+                                rgba: true,
+                                hsva: true,
+                                input: true,
+                                clear: true,
+                                save: true
+                            }
+                        }
+                    });
+
+                    $(document).on('click', '.pcr-app-1 .pcr-save', function () {
+                        let color1 = $('.pcr-app-1.visible').find('.pcr-result').val();
+                        $('#Color1').val(color1);
+                        $('.team-1 img').css(
+                            {
+                                'border': '4px solid' + color1,
+                            })
+                        $('.player[data-side="home"] .player__img').css(
+                            {
+                                'background': color1,
+                                'border': '4px solid' + color1
+                            });
+                    })
+                }
+                else {
+                    container = document.querySelector('.color-pickers-2');
+                    const newElement = document.createElement('div');
+                    container.appendChild(newElement);
+
+                    const pickr = new Pickr({
+                        el: newElement,
+                        default: $('#Color2').val() || '#42445A',
+                        theme: 'classic',
+                        appClass: 'pcr-app-2',
+
+                        swatches: [
+                            'rgba(244, 67, 54, 1)',
+                            'rgba(233, 30, 99, 0.95)',
+                            'rgba(156, 39, 176, 0.9)',
+                            'rgba(103, 58, 183, 0.85)',
+                            'rgba(63, 81, 181, 0.8)',
+                            'rgba(33, 150, 243, 0.75)',
+                            'rgba(3, 169, 244, 0.7)',
+                            'rgba(0, 188, 212, 0.7)',
+                            'rgba(0, 150, 136, 0.75)',
+                            'rgba(76, 175, 80, 0.8)',
+                            'rgba(139, 195, 74, 0.85)',
+                            'rgba(205, 220, 57, 0.9)',
+                            'rgba(255, 235, 59, 0.95)',
+                            'rgba(255, 193, 7, 1)'
+                        ],
+
+                        components: {
+                            preview: true,
+                            opacity: true,
+                            hue: true,
+
+                            interaction: {
+                                hex: true,
+                                rgba: true,
+                                hsva: true,
+                                input: true,
+                                clear: true,
+                                save: true
+                            }
+                        }
+                    });
+                    $(document).on('click', '.pcr-app-2 .pcr-save', function () {
+                        let color2 = $('.pcr-app-2.visible').find('.pcr-result').val();
+                        $('#Color2').val(color2);
+                        $('.team-2 img').css(
+                            {
+                                'border': '4px solid' + color2,
+                            })
+                        $('.player[data-side="away"] .player__img').css(
+                            {
+                                'background': color2,
+                                'border': '4px solid' + color2
+                            });
+                    })
+                }
+
+            });
+        }
+    }
+
+    if ($('#Color1').val() !== "") {
+        let color1 = $('#Color1').val();
+        $('.team-1 img').css({ 'border': '4px solid' + color1 })
+        $('.player[data-side="home"] .player__img').css(
+            {
+                'background': color1,
+                'border': '4px solid' + color1
+            });
+    }
+
+    if ($('#Color2').val() !== "") {
+        let color2 = $('#Color2').val();
+        $('.team-2 img').css({ 'border': '4px solid' + color2 });
+        $('.player[data-side="away"] .player__img').css(
+            {
+                'background': color2,
+                'border': '4px solid' + color2
+            });
+    }
+
+    $(document).on('change', '#team-select', function () {
+        let teamId = $(this).val();
+        if (teamId) {
+            $.ajax(
+                {
+                    url: "/Ajax/LoadFootballersByTeamId?TeamId=" + teamId,
+                    type: "POST",
+                    success: function (res) {
+                        $(".team-area").hide();
+                        $(".team-area").html(res).fadeIn();
+                    },
+                    error: function () {
+                        swal("Xəta baş verdi !", {
+                            icon: "error",
+                        });
+                    }
+                })
+        }
+    })
+
+    $(document).on('click', '.alert-team', function () {
+        swal({
+            content: {
+                element: "select",
+                attributes: {
+                    name: "Team2Id",
+                    className: "custom-select",
+                    id: "team-select-2"
+                },
+            },
+        }).then((value) => {
+            let team2Id = $('#team-select-2').val();
+            let price = $('#Price').val();
+            if (value && footballerId && team1Id && price && team2Id) {
+                let demo = new Object();
+                demo.footballerId = footballerId;
+                demo.team1Id = team1Id;
+                demo.team2Id = team2Id;
+                demo.price = price;
+
+                if (demo != null) {
+                    $.ajax(
+                        {
+                            url: "/Ajax/CreateTransfers",
+                            type: "GET",
+                            data: { demo: JSON.stringify(demo)},
+                            datatype: 'json',
+                            contentType: 'application/json; charset=utf-8',
+                            success: function (res) {
+                                $(".team-area").html(res);
+                                swal("Successful !", {
+                                    icon: "success",
+                                });
+                            },
+                            error: function () {
+                                swal("An error occurred !", {
+                                    icon: "error",
+                                });
+                            }
+                        })
+                }
+
+                //swal(`Ok: ${teamId} ${team2Id} ${footballerId} ${price}`);
+            }
+            else {
+                swal(`No change`);
+            }
+        });
+
+        let swalContent = $('.swal-content');
+        let input = $('<input>').addClass('form-control').attr('placeholder', "Price")
+            .attr('name', 'Price').attr('id', 'Price');
+
+        let labelTeam = $('<label></label>').text('Team').addClass('w-100 text-left');
+
+        swalContent.prepend(labelTeam);
+        swalContent.append(input);
+
+        let labelPrice = $('<label></label>').text('Price').addClass('w-100 text-left mt-3');
+        input.before(labelPrice);
+
+        let footballerId = $(this).attr('data-id');
+        let team1Id = $(this).attr('data-team-id');
+        if (team1Id) {
+            $.ajax(
+                {
+                    url: "/Ajax/LoadTeamsByTeamId?TeamId=" + team1Id,
+                    type: "POST",
+                    success: function (res) {
+                        $("#team-select-2").html(res).prepend('<option disabled selected>Choose</option>');
+                    },
+                    error: function () {
+                        swal("Xəta baş verdi !", {
+                            icon: "error",
+                        });
+                    }
+                })
+        }
+
+    })
+
+    $(document).on('click', '#DeleteTransfer', function (e) {
+        var TransferId = $(this).prev().val();
+        e.preventDefault();
+        swal({
+            title: "Are you sure ?",
+            text: "Once deleted, you will not be able to recover this !",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax(
+                        {
+                            url: "/Ajax/DeleteByTransferId?TransferId=" + TransferId,
+                            type: "POST",
+                            success: function (res) {
+                                $("tbody").html(res);
+                                swal("Deleted !", {
+                                    icon: "success",
+                                });
+                            },
+                            error: function () {
+                                swal("An error occurred !", {
+                                    icon: "error",
+                                });
+                            }
+                        });
+
+                } else {
+                    swal("This is safe !");
+                }
+            });
     })
 
 })

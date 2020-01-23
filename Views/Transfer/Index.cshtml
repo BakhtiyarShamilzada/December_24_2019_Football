@@ -1,0 +1,90 @@
+﻿@model HomeViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<section id="home">
+    <div class="container">
+        @if (TempData["Operation"] != null)
+        {
+            <div class="row pt-3">
+                <div class="col-12">
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <p class="mb-0">Operation successful.</p>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="row pt-3">
+            <div class="col-12">
+                <h3 class="mb-0 text-center">Transfers</h3>
+            </div>
+        </div>
+        <div class="row py-3">
+            <div class="col-12 d-flex justify-content-between">
+                <a asp-controller="Home" class="btn btn-warning"><i class="fas fa-long-arrow-alt-left"></i></a>
+                <a asp-action="Create" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+            </div>
+        </div>
+        @if (Model.Transfers.Count() != 0)
+        {
+            <div class="row py-3">
+                <div class="col-12">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">№</th>
+                                <th scope="col">Image</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Old Team</th>
+                                <th scope="col">New Team</th>
+                                <th scope="col">Price</th>
+                                <th scope="col" style="min-width: 129px">Operation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int counter = 1;
+                                foreach (var item in Model.Transfers)
+                                {
+                                    <tr>
+                                        <th scope="row">@(counter++)</th>
+                                        <td>
+                                            <a asp-action="Update" asp-route-id="@item.Id">
+                                                <img style="width:100px" src="~/images/@item.FootballPlayer.Image" />
+                                            </a>
+                                        </td>
+                                        <td>@item.FootballPlayer.Firstname</td>
+                                        <td>@Model.Teams.FirstOrDefault(t => t.Id == item.OldTeamId).Name</td>
+                                        <td>@Model.Teams.FirstOrDefault(t => t.Id == item.NewTeamId).Name</td>
+                                        <td>$ @item.Price</td>
+                                        <td class="text-center">
+                                            @*<a asp-action="Update" asp-route-id="@item.Id" id="UpdateTransfer" class="btn btn-outline-warning mr-3" title="Düzəliş et"><i class="far fa-edit"></i></a>*@
+                                            @if (Model.Transfers.Count() > 1)
+                                            {
+                                                <input type="hidden" value="@item.Id" />
+                                                <a asp-action="Delete" asp-route-id="@item.Id" id="DeleteTransfer" class="btn btn-outline-danger" title="Sil"> <i class="far fa-trash-alt"></i></a>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row pt-3">
+                <div class="col-12">
+                    <h6 class="mb-0 text-center">No transfers yet</h6>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+

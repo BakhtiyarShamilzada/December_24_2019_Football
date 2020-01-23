@@ -1,0 +1,27 @@
+﻿@model HomeViewModel
+@{
+    int counter = 1;
+    foreach (var item in Model.Transfers)
+    {
+        <tr>
+            <th scope="row">@(counter++)</th>
+            <td>
+                <a asp-action="Update" asp-route-id="@item.Id">
+                    <img style="width:100px" src="~/images/@item.FootballPlayer.Image" />
+                </a>
+            </td>
+            <td>@item.FootballPlayer.Firstname</td>
+            <td>@Model.Teams.FirstOrDefault(t => t.Id == item.OldTeamId).Name</td>
+            <td>@Model.Teams.FirstOrDefault(t => t.Id == item.NewTeamId).Name</td>
+            <td>$ @item.Price</td>
+            <td>
+                <a asp-action="Update" asp-route-id="@item.Id" class="btn btn-outline-warning mr-3" title="Düzəliş et"><i class="far fa-edit"></i></a>
+                @if (Model.Transfers.Count() > 1)
+                {
+                    <input type="hidden" value="@item.Id" />
+                    <a asp-action="Delete" asp-route-id="@item.Id" id="DeleteTransfer" class="btn btn-outline-danger" title="Sil"> <i class="far fa-trash-alt"></i></a>
+                }
+            </td>
+        </tr>
+    }
+}

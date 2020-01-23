@@ -1,6 +1,6 @@
 ﻿@model HomeViewModel
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Update";
 }
 
 <section id="home">
@@ -25,6 +25,7 @@
                 </div>
             </div>
         </div>
+
         <form method="post">
             <div class="row pt-3">
                 <div class="offset-4 col-4 mt-3">
@@ -45,17 +46,89 @@
                 </div>
             </div>
 
+            <div class="row pt-3 team-color-1-area">
+                <div class="col-12 d-flex flex-column align-items-center">
+                    <div class="color-pickers-1"></div>
+                    <button class="btn btn-info team-color team-color-1 mt-3">Team color</button>
+                </div>
+            </div>
+
+            <div class="row pt-3 team-color-2-area" style="display: none">
+                <div class="col-12 d-flex flex-column align-items-center">
+                    <div class="color-pickers-2"></div>
+                    <button type="button" class="btn btn-info team-color team-color-2 mt-3">Team color</button>
+                </div>
+            </div>
+
+            <input asp-for="@Model.Color1" type="hidden" value="@Model.Color1" />
+            <input asp-for="@Model.Color2" type="hidden" value="@Model.Color2" />
+
             <div class="row pt-3 team-1-area">
                 @foreach (var item in Model.FootballPlayers.Where(fp => fp.TeamId == Model.Team1Id))
                 {
                     if (Model.FootballPlayerGameTimes.Where(fg => fg.FootballPlayerId == item.Id).Count() == 0)
                     {
-                        <div class="col-2 mb-3">
-                            <div class="teams team-1 text-center" data-id="@item.Id" data-first-name="@item.Firstname">
-                                <img src="~/images/@item.Image" class="rounded-circle w-50" alt="Alternate Text" />
-                                <h6>@item.Firstname</h6>
+                        if (Model.FootballCarts != null && Model.Carts != null)
+                        {
+                            if (Model.FootballCarts.Where(fc => fc.FootballPlayerId == item.Id && fc.CartId == 2).Count() == 2)
+                            {
+                                <div class="col-2 mb-3">
+                                    <div class="team-cart team-1 text-center pointer" data-id="@item.Id" data-first-name="@item.Firstname">
+                                        <img src="~/images/@item.Image" class="rounded-circle w-50" alt="Alternate Text" />
+                                        <img src="~/images/@Model.Carts.FirstOrDefault(c => c.Id == 2).Image" class="two-yellow-cart w-50 rounded-circle" alt="Alternate Text" />
+                                        <img src="~/images/@Model.Carts.FirstOrDefault(c => c.Id == 2).Image" class="two-yellow-cart w-50 rounded-circle" alt="Alternate Text" />
+                                        <img src="~/images/@Model.Carts.FirstOrDefault(c => c.Id == 1).Image" class="cart red w-50 rounded-circle" alt="Alternate Text" />
+                                        <h6>@item.Firstname</h6>
+                                    </div>
+                                </div>
+                            }
+                            else if (
+                               Model.FootballCarts.Where(fc => fc.FootballPlayerId == item.Id && fc.CartId == 2).Count() == 1 &&
+                               Model.FootballCarts.Where(fc => fc.FootballPlayerId == item.Id && fc.CartId == 1).Count() == 1
+                               )
+                            {
+                                <div class="col-2 mb-3">
+                                    <div class="team-cart team-1 text-center pointer" data-id="@item.Id" data-first-name="@item.Firstname">
+                                        <img src="~/images/@item.Image" class="rounded-circle w-50" alt="Alternate Text" />
+                                        <img src="~/images/@Model.Carts.FirstOrDefault(c => c.Id == 2).Image" class="two-yellow-cart one-red w-50 rounded-circle" alt="Alternate Text" />
+                                        <img src="~/images/@Model.Carts.FirstOrDefault(c => c.Id == 1).Image" class="two-yellow-cart one-yellow w-50 rounded-circle" alt="Alternate Text" />
+                                        <h6>@item.Firstname</h6>
+                                    </div>
+                                </div>
+                            }
+                            else if (
+                                Model.FootballCarts.Where(fc => fc.FootballPlayerId == item.Id && fc.CartId == 1).Count() != 0 &&
+                                Model.FootballCarts.Where(fc => fc.FootballPlayerId == item.Id && fc.CartId == 2).Count() == 0)
+                            {
+                                <div class="col-2 mb-3">
+                                    <div class="team-cart team-1 text-center pointer" data-id="@item.Id" data-first-name="@item.Firstname">
+                                        <img src="~/images/@item.Image" class="rounded-circle w-50" alt="Alternate Text" />
+                                        <img src="~/images/@Model.Carts.FirstOrDefault(c => c.Id == 1).Image" class="cart w-50 rounded-circle" alt="Alternate Text" />
+                                        <h6>@item.Firstname</h6>
+                                    </div>
+                                </div>
+                            }
+
+                            else
+                            {
+                                <div class="col-2 mb-3">
+                                    <div class="teams team-1 text-center" data-id="@item.Id" data-first-name="@item.Firstname">
+                                        <img src="~/images/@item.Image" class="rounded-circle w-50" alt="Alternate Text" />
+                                        <h6>@item.Firstname</h6>
+                                    </div>
+                                </div>
+                            }
+
+                        }
+                        else
+                        {
+                            <div class="col-2 mb-3">
+                                <div class="teams team-1 text-center" data-id="@item.Id" data-first-name="@item.Firstname">
+                                    <img src="~/images/@item.Image" class="rounded-circle w-50" alt="Alternate Text" />
+                                    <h6>@item.Firstname</h6>
+                                </div>
                             </div>
-                        </div>
+                        }
                     }
                 }
             </div>
@@ -95,12 +168,67 @@
                 {
                     if (Model.FootballPlayerGameTimes.Where(fg => fg.FootballPlayerId == item.Id).Count() == 0)
                     {
-                        <div class="col-2 mb-3">
-                            <div class="teams team-2 text-center" data-id="@item.Id" data-first-name="@item.Firstname">
-                                <img src="~/images/@item.Image" class="rounded-circle w-50" alt="Alternate Text" />
-                                <h6>@item.Firstname</h6>
+                        if (Model.FootballCarts != null && Model.Carts != null)
+                        {
+                            if (Model.FootballCarts.Where(fc => fc.FootballPlayerId == item.Id && fc.CartId == 2).Count() == 2)
+                            {
+                                <div class="col-2 mb-3">
+                                    <div class="team-cart team-2 text-center pointer" data-id="@item.Id" data-first-name="@item.Firstname">
+                                        <img src="~/images/@item.Image" class="rounded-circle w-50" alt="Alternate Text" />
+                                        <img src="~/images/@Model.Carts.FirstOrDefault(c => c.Id == 2).Image" class="two-yellow-cart w-50 rounded-circle" alt="Alternate Text" />
+                                        <img src="~/images/@Model.Carts.FirstOrDefault(c => c.Id == 2).Image" class="two-yellow-cart w-50 rounded-circle" alt="Alternate Text" />
+                                        <img src="~/images/@Model.Carts.FirstOrDefault(c => c.Id == 1).Image" class="cart red w-50 rounded-circle" alt="Alternate Text" />
+                                        <h6>@item.Firstname</h6>
+                                    </div>
+                                </div>
+                            }
+                            else if (
+                               Model.FootballCarts.Where(fc => fc.FootballPlayerId == item.Id && fc.CartId == 2).Count() == 1 &&
+                               Model.FootballCarts.Where(fc => fc.FootballPlayerId == item.Id && fc.CartId == 1).Count() == 1
+                               )
+                            {
+                                <div class="col-2 mb-3">
+                                    <div class="team-cart team-2 text-center pointer" data-id="@item.Id" data-first-name="@item.Firstname">
+                                        <img src="~/images/@item.Image" class="rounded-circle w-50" alt="Alternate Text" />
+                                        <img src="~/images/@Model.Carts.FirstOrDefault(c => c.Id == 2).Image" class="two-yellow-cart one-red w-50 rounded-circle" alt="Alternate Text" />
+                                        <img src="~/images/@Model.Carts.FirstOrDefault(c => c.Id == 1).Image" class="two-yellow-cart one-yellow w-50 rounded-circle" alt="Alternate Text" />
+                                        <h6>@item.Firstname</h6>
+                                    </div>
+                                </div>
+                            }
+                            else if (
+                                Model.FootballCarts.Where(fc => fc.FootballPlayerId == item.Id && fc.CartId == 1).Count() != 0 &&
+                                Model.FootballCarts.Where(fc => fc.FootballPlayerId == item.Id && fc.CartId == 2).Count() == 0)
+                            {
+                                <div class="col-2 mb-3">
+                                    <div class="team-cart team-2 text-center pointer" data-id="@item.Id" data-first-name="@item.Firstname">
+                                        <img src="~/images/@item.Image" class="rounded-circle w-50" alt="Alternate Text" />
+                                        <img src="~/images/@Model.Carts.FirstOrDefault(c => c.Id == 1).Image" class="cart w-50 rounded-circle" alt="Alternate Text" />
+                                        <h6>@item.Firstname</h6>
+                                    </div>
+                                </div>
+                            }
+
+                            else
+                            {
+                                <div class="col-2 mb-3">
+                                    <div class="team-cart teams team-2 text-center" data-id="@item.Id" data-first-name="@item.Firstname">
+                                        <img src="~/images/@item.Image" class="rounded-circle w-50" alt="Alternate Text" />
+                                        <h6>@item.Firstname</h6>
+                                    </div>
+                                </div>
+                            }
+
+                        }
+                        else
+                        {
+                            <div class="col-2 mb-3">
+                                <div class="team-cart teams team-2 text-center" data-id="@item.Id" data-first-name="@item.Firstname">
+                                    <img src="~/images/@item.Image" class="rounded-circle w-50" alt="Alternate Text" />
+                                    <h6>@item.Firstname</h6>
+                                </div>
                             </div>
-                        </div>
+                        }
                     }
                 }
             </div>
@@ -149,90 +277,90 @@
             </div>
         </form>
         @*<form method="post">
-            <div class="row py-3">
-                <div class="col-12 text-center pb-3">
-                    <h4>@Model.Teams.FirstOrDefault(t => t.Id == Model.Team1Id).Name</h4>
-                </div>
-                <div class="col-12">
-                    <table class="table table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">Number</th>
-                                <th scope="col">Select</th>
-                                <th scope="col">Firstname</th>
-                                <th scope="col">Lastname</th>
-                                <th scope="col">Age</th>
-                                <th scope="col">Position</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @{
-                                int counter = 0;
-                                foreach (var item in Model.FootballPlayers.Where(fp => fp.TeamId == Model.Team1Id))
-                                {
-                                    <tr>
-                                        <th scope="row">@(++counter)</th>
-                                        <td>
-                                            <div class="custom-control custom-checkbox">
-                                                <input data-football-players-id="@item.Id" type="checkbox" class="custom-control-input football-players-id" id="customCheck@(counter)">
-                                                <label class="custom-control-label pointer-checkbox" for="customCheck@(counter)"></label>
-                                            </div>
-                                        </td>
-                                        <td>@item.Firstname</td>
-                                        <td>@item.Lastname</td>
-                                        <td>@item.Age</td>
-                                        <td>@item.Position.Name</td>
-                                    </tr>
+                <div class="row py-3">
+                    <div class="col-12 text-center pb-3">
+                        <h4>@Model.Teams.FirstOrDefault(t => t.Id == Model.Team1Id).Name</h4>
+                    </div>
+                    <div class="col-12">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Number</th>
+                                    <th scope="col">Select</th>
+                                    <th scope="col">Firstname</th>
+                                    <th scope="col">Lastname</th>
+                                    <th scope="col">Age</th>
+                                    <th scope="col">Position</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int counter = 0;
+                                    foreach (var item in Model.FootballPlayers.Where(fp => fp.TeamId == Model.Team1Id))
+                                    {
+                                        <tr>
+                                            <th scope="row">@(++counter)</th>
+                                            <td>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input data-football-players-id="@item.Id" type="checkbox" class="custom-control-input football-players-id" id="customCheck@(counter)">
+                                                    <label class="custom-control-label pointer-checkbox" for="customCheck@(counter)"></label>
+                                                </div>
+                                            </td>
+                                            <td>@item.Firstname</td>
+                                            <td>@item.Lastname</td>
+                                            <td>@item.Age</td>
+                                            <td>@item.Position.Name</td>
+                                        </tr>
+                                    }
                                 }
-                            }
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col-12 text-center pt-5 pb-3">
-                    <h4>@Model.Teams.FirstOrDefault(t => t.Id == Model.Team2Id).Name</h4>
-                </div>
-                <div class="col-12">
-                    <table class="table table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">Number</th>
-                                <th scope="col">Select</th>
-                                <th scope="col">Firstname</th>
-                                <th scope="col">Lastname</th>
-                                <th scope="col">Age</th>
-                                <th scope="col">Position</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @{
-                                int counter2 = 0;
-                                foreach (var item in Model.FootballPlayers.Where(fp => fp.TeamId == Model.Team2Id))
-                                {
-                                    <tr>
-                                        <th scope="row">@(++counter2)</th>
-                                        <td>
-                                            <div class="custom-control custom-checkbox">
-                                                <input data-football-players-id="@item.Id" type="checkbox" class="custom-control-input football-players-id" id="customCheck@(counter + counter2)">
-                                                <label class="custom-control-label pointer-checkbox" for="customCheck@(counter + counter2)"></label>
-                                            </div>
-                                        </td>
-                                        <td>@item.Firstname</td>
-                                        <td>@item.Lastname</td>
-                                        <td>@item.Age</td>
-                                        <td>@item.Position.Name</td>
-                                    </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-12 text-center pt-5 pb-3">
+                        <h4>@Model.Teams.FirstOrDefault(t => t.Id == Model.Team2Id).Name</h4>
+                    </div>
+                    <div class="col-12">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Number</th>
+                                    <th scope="col">Select</th>
+                                    <th scope="col">Firstname</th>
+                                    <th scope="col">Lastname</th>
+                                    <th scope="col">Age</th>
+                                    <th scope="col">Position</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int counter2 = 0;
+                                    foreach (var item in Model.FootballPlayers.Where(fp => fp.TeamId == Model.Team2Id))
+                                    {
+                                        <tr>
+                                            <th scope="row">@(++counter2)</th>
+                                            <td>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input data-football-players-id="@item.Id" type="checkbox" class="custom-control-input football-players-id" id="customCheck@(counter + counter2)">
+                                                    <label class="custom-control-label pointer-checkbox" for="customCheck@(counter + counter2)"></label>
+                                                </div>
+                                            </td>
+                                            <td>@item.Firstname</td>
+                                            <td>@item.Lastname</td>
+                                            <td>@item.Age</td>
+                                            <td>@item.Position.Name</td>
+                                        </tr>
+                                    }
                                 }
-                            }
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group d-flex justify-content-end">
-                <input asp-for="@Model.FootballPlayersId" type="hidden" />
-                <input asp-for="@Model.GameTimeId" type="hidden" />
-                <button type="submit" class="btn btn-success"> Add</button>
-            </div>
-        </form>*@
+                <div class="form-group d-flex justify-content-end">
+                    <input asp-for="@Model.FootballPlayersId" type="hidden" />
+                    <input asp-for="@Model.GameTimeId" type="hidden" />
+                    <button type="submit" class="btn btn-success"> Add</button>
+                </div>
+            </form>*@
     </div>
 </section>
 

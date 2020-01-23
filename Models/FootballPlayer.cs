@@ -14,6 +14,7 @@ namespace December_24_2019_Football.Models
         {
             FootballCarts = new HashSet<FootballCart>();
             FootballPlayerGameTimes = new HashSet<FootballPlayerGameTime>();
+            Transfers = new HashSet<Transfer>();
         }
         public int Id { get; set; }
 
@@ -41,5 +42,7 @@ namespace December_24_2019_Football.Models
         public virtual ICollection<FootballCart> FootballCarts { get; set; }
 
         public virtual ICollection<FootballPlayerGameTime> FootballPlayerGameTimes { get; set; }
+
+        public virtual ICollection<Transfer> Transfers { get; set; }
     }
 }

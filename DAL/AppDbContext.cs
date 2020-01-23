@@ -36,6 +36,8 @@ namespace December_24_2019_Football.DAL
 
         public DbSet<FootballPlayerGameTime> FootballPlayerGameTimes { get; set; }
 
+        public DbSet<Transfer> Transfers { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -117,13 +119,9 @@ namespace December_24_2019_Football.DAL
 
             builder.Entity(typeof(FootballCart)).HasData(
                new FootballCart { Id = 1, FootballPlayerId = 1, CartId = 1, GameTimeId = 1 },
-               new FootballCart { Id = 2, FootballPlayerId = 2, CartId = 2, GameTimeId = 2 },
-               new FootballCart { Id = 3, FootballPlayerId = 3, CartId = 1, GameTimeId = 1 },
-               new FootballCart { Id = 4, FootballPlayerId = 4, CartId = 2, GameTimeId = 2 },
-               new FootballCart { Id = 5, FootballPlayerId = 5, CartId = 1, GameTimeId = 1 },
-               new FootballCart { Id = 6, FootballPlayerId = 6, CartId = 2, GameTimeId = 2 },
-               new FootballCart { Id = 7, FootballPlayerId = 7, CartId = 1, GameTimeId = 1 },
-               new FootballCart { Id = 8, FootballPlayerId = 8, CartId = 2, GameTimeId = 2 }
+               new FootballCart { Id = 2, FootballPlayerId = 3, CartId = 1, GameTimeId = 1 },
+               new FootballCart { Id = 3, FootballPlayerId = 5, CartId = 1, GameTimeId = 1 },
+               new FootballCart { Id = 4, FootballPlayerId = 7, CartId = 1, GameTimeId = 1 }
            );
 
             builder.Entity(typeof(FootballPlayerGameTime)).HasData(

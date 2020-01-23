@@ -1,0 +1,9 @@
+﻿@foreach (var item in Model)
+{
+    <div class="col-2 mb-3">
+        <div class="teams alert-team text-center" data-id="@item.Id" data-team-id="@item.TeamId" data-first-name="@item.Firstname">
+            <img src="~/images/@item.Image" class="rounded-circle w-50" alt="Alternate Text" />
+            <h6>@item.Firstname</h6>
+        </div>
+    </div>
+}
